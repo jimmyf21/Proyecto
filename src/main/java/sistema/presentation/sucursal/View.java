@@ -53,7 +53,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 }
             }
         });
-        referenciaSucursalTxt.addKeyListener(new KeyAdapter() {
+        referenciaSucursalTxt.addKeyListener(new KeyAdapter(){
             @Override
             public void keyTyped(KeyEvent e) {
                 int key = e.getKeyChar();
@@ -64,6 +64,39 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 if (!(minusculas || mayusculas || espacio))
                 {
                     e.consume();
+                }
+            }
+        });
+        guardarSucursalBtn.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String campoCodigo = codigoSucursalTxt.getText();
+                    String campoReferencia = referenciaSucursalTxt.getText();
+                    String campoDireccion = direccionSucursalTxt.getText();
+                    String campoZonaje = zonajeSucursalTxt.getText();
+                    campoCodigo = campoCodigo.replaceAll(" ", "");
+                    campoReferencia = campoReferencia.replaceAll(" ", "");
+                    campoDireccion = campoDireccion.replaceAll(" ", "");
+                    campoZonaje = campoZonaje.replaceAll(" ", "");
+                    if (campoCodigo.length() != 0 && campoReferencia.length() != 0 && campoDireccion.length() != 0 && campoZonaje.length() != 0) {
+                        int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar los cambios?");
+                        if (JOptionPane.OK_OPTION == value) {
+                            JOptionPane.showMessageDialog(null, "Guardado con exito");
+                            controller.hide();
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }
+        });
+        cancelarSucursalBtn.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    controller.hide();
                 }
             }
         });

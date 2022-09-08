@@ -28,12 +28,12 @@ public class Controller {
         Service.instance().store();
     }
 
-    public void empleadosShow(){
+    public void empleadosAgregar(){
         this.hide();
         Application.EMPLEADOS.show();
     }
 
-    public void sucursalesShow(){
+    public void sucursalesAgregar(){
         this.hide();
         Application.SUCURSALES.show();
     }

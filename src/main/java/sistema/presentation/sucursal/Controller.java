@@ -27,8 +27,8 @@ public class Controller {
 
 
     public void show(){
-
         Application.window.setContentPane(view.getPanel1());
+        Application.window.setVisible(true);
     }
 
     public void hide(){

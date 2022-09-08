@@ -7,9 +7,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 
-
-import javax.swing.*;
-
 public class View extends javax.swing.JFrame implements java.util.Observer  {
 
     private JTabbedPane tabbedPane;
@@ -19,12 +16,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer  {
     private JButton buscarReferenciaButton;
     private JTextField nombreTxt;
     private JButton buscarButton;
-    private JButton agregarButton1;
-    private JButton borrarButton1;
-    private JButton reporteButton1;
-    private JButton agregarButton;
-    private JButton borrarButton;
-    private JButton reporteButton;
+    private JButton agregarEmpleadoBtn;
+    private JButton borrarEmpleadoBtn;
+    private JButton reporteEmpleadoBtn;
+    private JButton agregarSucursalBtn;
+    private JButton borrarSucursalBtn;
+    private JButton reporteSucursalBtn;
 
     public JPanel getJPanel(){
         return panel1;
@@ -87,6 +84,18 @@ public class View extends javax.swing.JFrame implements java.util.Observer  {
                     JOptionPane.showMessageDialog(null, "¡El campo no puede estar vacio!", "Aviso",
                             JOptionPane.WARNING_MESSAGE);
                 }
+            }
+        });
+        agregarEmpleadoBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.empleadosAgregar();
+            }
+        });
+        agregarSucursalBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.sucursalesAgregar();
             }
         });
     }

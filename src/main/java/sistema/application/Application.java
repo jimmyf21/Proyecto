@@ -2,6 +2,7 @@ package sistema.application;
 
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Application {
     public static void main(String[] args) {
@@ -31,7 +32,12 @@ public class Application {
 
 
         window = new JFrame();
-        window.setSize(650,550);
+        //Coloca el JFrame en algun lugar de la pantalla
+        /*Dimension pantallaTamano = Toolkit.getDefaultToolkit().getScreenSize();
+        window.setLocation((pantallaTamano.width/4)-(window.getWidth()/4), (pantallaTamano.height/8)-(window.getHeight()/8));
+        window.setSize(650,550);*/
+
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setTitle("SISE: Sistema de Sucursales y Empleados");
         window.setVisible(true);

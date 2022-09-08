@@ -8,25 +8,25 @@ import java.util.Observer;
 import sistema.logic.Sucursal;
 
 public class Model extends Observable{
-    Sucursal Sucursal;
-    List<Sucursal> Sucursales;
+    Sucursal sucursal;
+    List<Sucursal> sucursales;
     
 
     public Sucursal getSucursal() {
-        return Sucursal;
+        return sucursal;
     }
 
-    public void setSucursal(Sucursal Sucursal) {
-        this.Sucursal = Sucursal;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 
 
     public List<Sucursal> getSucursals() {
-        return Sucursales;
+        return sucursales;
     }
 
-    public void setSucursales(List<Sucursal> Sucursals) {
-        this.Sucursales = Sucursals;
+    public void setSucursales(List<Sucursal> sucursals) {
+        sucursales = sucursals;
     }
 
 

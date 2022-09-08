@@ -63,11 +63,11 @@ public class Controller {
         model.commit();
     }
 
-    public void SucursalAdd(Sucursal Sucursal){
+    public void SucursalAdd(Sucursal sucursal){
         try {
-            Service.instance().sucursalAdd(Sucursal);
+            Service.instance().sucursalAdd(sucursal);
             model.setSucursal(new Sucursal("","", "", 0));
-            model.setSucursales(Arrays.asList(Sucursal));
+            model.setSucursales(Arrays.asList(sucursal));
             model.commit();
         } catch (Exception ex) {
 

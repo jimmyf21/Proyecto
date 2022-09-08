@@ -5,8 +5,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Observable;
 
-public class View extends JFrame {
+
+import javax.swing.*;
+
+public class View extends javax.swing.JFrame implements java.util.Observer  {
+
     private JTabbedPane tabbedPane;
     private JPanel panel1;
     private JLabel refenciaLbl;
@@ -23,6 +28,8 @@ public class View extends JFrame {
 
     public View() {
 //        setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono-empleados.png")).getImage());
+
+
         buscarReferenciaButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -51,5 +58,34 @@ public class View extends JFrame {
                 }
             }
         });
+    }
+
+    Controller controller;
+    Model model;
+
+    public void setController(Controller controller){
+        this.controller=controller;
+    }
+
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setModel(Model model){
+        this.model=model;
+        model.addObserver(this);
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
+
+    public JPanel getPanel1() {
+        return panel1;
     }
 }

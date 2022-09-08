@@ -12,7 +12,6 @@ public class Controller {
     Model model;
     View view;
 
-
     public Controller(Model modelEmpleado, View viewEmpleado) {
         this.model = modelEmpleado;
         this.view = viewEmpleado;
@@ -28,8 +27,8 @@ public class Controller {
 
 
     public void show(){
-
         Application.window.setContentPane(view.getPanel1());
+        Application.window.setVisible(true);
     }
 
     public void hide(){

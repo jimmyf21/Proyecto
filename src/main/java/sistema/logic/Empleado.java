@@ -13,15 +13,15 @@ public class Empleado {
     private String telefono;
     private double salario;
     private String sucursal;
-    private float zonaje;
 
-    public Empleado(String cedula, String nombre, String telefono, double salario, String sucursal, float zonaje) {
+
+    public Empleado(String cedula, String nombre, String telefono, double salario, String sucursal) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.telefono = telefono;
         this.salario = salario;
         this.sucursal = sucursal;
-        this.zonaje = zonaje;
+
     }
 
     public Empleado() {
@@ -30,7 +30,7 @@ public class Empleado {
         this.telefono = "";
         this.salario = 0;
         this.sucursal = "";
-        this.zonaje = 0;
+
     }
 
     public String getCedula() {
@@ -73,13 +73,7 @@ public class Empleado {
         this.sucursal = sucursal;
     }
 
-    public float getZonaje() {
-        return zonaje;
-    }
 
-    public void setZonaje(float zonaje) {
-        this.zonaje = zonaje;
-    }
 
     @Override
     public String toString() {
@@ -89,7 +83,6 @@ public class Empleado {
                 ", telefono='" + telefono + '\'' +
                 ", salario=" + salario +
                 ", sucursal='" + sucursal + '\'' +
-                ", zonaje=" + zonaje +
                 '}';
     }
 }

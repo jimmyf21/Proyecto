@@ -135,6 +135,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+
         Sucursal sucursalO = model.getSucursal();
         codigoSucursalTxt.setText(sucursalO.getCodigo());
         referenciaSucursalTxt.setText(sucursalO.getReferencia());

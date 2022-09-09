@@ -32,7 +32,7 @@ public class EmpleadoTableModel extends AbstractTableModel implements TableModel
             case 1:return empleado.getNombre();
             case 2: return empleado.getTelefono();
             case 3:return empleado.getSalario();
-            case 4: return empleado.getSucursal();
+            case 4: return empleado.getSucursal().getReferencia();
             case 5:return empleado.getSucursal().getZonaje();
             case 6:return empleado.calSalTotal();
             default: return "";

@@ -32,6 +32,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         cancelarEmpleadoBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                cedulaEmpleadoTxt.setText("");
+                nombreEmpleadoTxt.setText("");
+                telefonoEmpleadoTxt.setText("");
+                salarioEmpleadoTxt.setText("");
+                sucursalEmpleadoTxt.setText("");
+
                 controller.hide();
             }
         });
@@ -43,19 +49,22 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 String campoCedula = cedulaEmpleadoTxt.getText();
                 String campoNombre = nombreEmpleadoTxt.getText();
                 String campoTelefono = telefonoEmpleadoTxt.getText();
-                double campoSalario = Double.valueOf(salarioEmpleadoTxt.getText());
+                String campoSalario = salarioEmpleadoTxt.getText();
                 String campoSucursal = sucursalEmpleadoTxt.getText();
 
 
                 campoCedula = campoCedula.replaceAll(" ", "");
                 campoNombre = campoNombre.replaceAll(" ", "");
                 campoTelefono = campoTelefono.replaceAll(" ", "");
+                campoSalario = campoSalario.replaceAll(" ", "");
                 campoSucursal = campoSucursal.replaceAll(" ", "");
 
-                if (campoCedula.length() != 0 && campoNombre.length() != 0 && campoTelefono.length() != 0 && campoSucursal.length() != 0) {
+
+                if (campoCedula.length() != 0 && campoNombre.length() != 0 && campoTelefono.length() != 0 && campoSalario.length() != 0 && campoSucursal.length() != 0) {
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar los cambios?");
+                    double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
-                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, campoSalario, new Sucursal()));
+                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, new Sucursal()));
                         JOptionPane.showMessageDialog(null, "Guardado con exito");
                         cedulaEmpleadoTxt.setText("");
                         nombreEmpleadoTxt.setText("");
@@ -140,7 +149,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
 
-        // Application.PRINCIPAL.getView().getEmpleados().setModel(new EmpleadoTableModel(model.getEmpleados()));
+        //Application.PRINCIPAL.getView().getEmpleados().setModel(new EmpleadoTableModel(model.getEmpleados()));
 
 
     }

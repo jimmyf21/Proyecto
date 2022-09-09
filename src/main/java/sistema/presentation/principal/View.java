@@ -27,7 +27,6 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
     private JButton reporteSucursalBtn;
     private JPanel jPanelAcercaDe;
     private JPanel PanelAcerca;
-    private JTable table1;
     private JTable sucursales;
     private JTable empleados;
 

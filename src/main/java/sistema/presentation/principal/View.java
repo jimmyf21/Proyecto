@@ -1,8 +1,5 @@
 package sistema.presentation.principal;
 
-import sistema.logic.Empleado;
-import sistema.logic.Sucursal;
-
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -96,25 +93,25 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         agregarEmpleadoBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                controller.empleadosAgregar();
+                controllerPrincipal.empleadosAgregar();
             }
         });
         agregarSucursalBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                controller.sucursalesAgregar();
+                controllerPrincipal.sucursalesAgregar();
             }
         });
     }
-    Controller controller;
+    ControllerPrincipal controllerPrincipal;
     Model model;
 
-    public void setController(Controller controller){
-        this.controller=controller;
+    public void setController(ControllerPrincipal controllerPrincipal){
+        this.controllerPrincipal = controllerPrincipal;
     }
 
-    public Controller getController() {
-        return controller;
+    public ControllerPrincipal getController() {
+        return controllerPrincipal;
     }
 
     public void setModel(Model model){

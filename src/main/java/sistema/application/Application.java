@@ -1,9 +1,9 @@
 package sistema.application;
 
 
+import sistema.presentation.principal.ControllerPrincipal;
+
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 
 public class Application {
     public static void main(String[] args){
@@ -11,25 +11,26 @@ public class Application {
         try { UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");}
         catch (Exception ex) {};
 
+
+
+        sistema.presentation.principal.Model modelPrincipal=new sistema.presentation.principal.Model() ;
+        sistema.presentation.principal.View viewPrincipal = new sistema.presentation.principal.View();
+        ControllerPrincipal controllerPrincipal =
+                new ControllerPrincipal(modelPrincipal,viewPrincipal);
+        PRINCIPAL = controllerPrincipal;
+
+
         sistema.presentation.empleado.Model modelEmpleados = new sistema.presentation.empleado.Model() ;
         sistema.presentation.empleado.View viewEmpleados = new sistema.presentation.empleado.View();
         sistema.presentation.empleado.Controller controllerEmpleados =
-                new sistema.presentation.empleado.Controller(modelEmpleados,viewEmpleados);
+                new sistema.presentation.empleado.Controller(modelEmpleados,viewEmpleados, controllerPrincipal);
         EMPLEADOS = controllerEmpleados;
 
         sistema.presentation.sucursal.Model modelSucursales=new sistema.presentation.sucursal.Model() ;
         sistema.presentation.sucursal.View viewSucursales = new sistema.presentation.sucursal.View();
         sistema.presentation.sucursal.Controller controllerSucursales =
-                new sistema.presentation.sucursal.Controller(modelSucursales,viewSucursales);
+                new sistema.presentation.sucursal.Controller(modelSucursales,viewSucursales, controllerPrincipal);
         SUCURSALES = controllerSucursales;
-
-
-
-        sistema.presentation.principal.Model modelPrincipal=new sistema.presentation.principal.Model() ;
-        sistema.presentation.principal.View viewPrincipal = new sistema.presentation.principal.View();
-        sistema.presentation.principal.Controller controllerPrincipal =
-                new sistema.presentation.principal.Controller(modelPrincipal,viewPrincipal);
-        PRINCIPAL = controllerPrincipal;
 
 
         window = new JFrame();
@@ -47,9 +48,10 @@ public class Application {
 
     }
 
+    public static ControllerPrincipal PRINCIPAL;
     public static sistema.presentation.empleado.Controller EMPLEADOS;
     public static sistema.presentation.sucursal.Controller SUCURSALES;
-    public static sistema.presentation.principal.Controller PRINCIPAL;
+
 
     public static JFrame window;
 }

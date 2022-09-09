@@ -10,6 +10,7 @@ import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Sucursal;
 import sistema.presentation.principal.EmpleadoTableModel;
+import sistema.presentation.principal.SucursalTableModel;
 
 import javax.swing.*;
 
@@ -149,7 +150,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
 
-        //Application.PRINCIPAL.getView().getEmpleados().setModel(new EmpleadoTableModel(model.getEmpleados()));
+        //controller.getControllerPrincipal().getView().getEmpleados().setModel(new EmpleadoTableModel(model.getEmpleados()));
 
 
     }

@@ -142,7 +142,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         direccionSucursalTxt.setText(sucursalO.getDireccion());
 
 
-        //Application.PRINCIPAL.getView().getSucursales().setModel(new SucursalTableModel(model.getSucursales()));
+        //controller.getControllerPrincipal().getView().getSucursales().setModel(new SucursalTableModel(model.getSucursales()));
 
 
 

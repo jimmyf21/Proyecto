@@ -7,11 +7,15 @@ import sistema.application.Application;
 import sistema.logic.Sucursal;
 import sistema.logic.Service;
 
+import sistema.presentation.principal.ControllerPrincipal;
+
 public class Controller {
     Model model;
     View view;
 
-    public Controller(Model modelSucursal, View viewSucursal) {
+    ControllerPrincipal controllerPrincipal;
+
+    public Controller(Model modelSucursal, View viewSucursal, ControllerPrincipal controllerPrincipal) {
         this.model = modelSucursal;
         this.view = viewSucursal;
 
@@ -19,6 +23,8 @@ public class Controller {
         modelSucursal.setSucursales(new ArrayList<>());
         modelSucursal.setSucursales(Service.instance().sucursalAll());
 
+
+        this.controllerPrincipal = controllerPrincipal;
 
         view.setModel(modelSucursal);
         view.setController(this);
@@ -73,5 +79,9 @@ public class Controller {
 
         }
 
+    }
+
+    public ControllerPrincipal getControllerPrincipal() {
+        return controllerPrincipal;
     }
 }

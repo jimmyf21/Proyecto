@@ -7,20 +7,26 @@ import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
+import sistema.presentation.principal.ControllerPrincipal;
 
 
 public class Controller {
     Model model;
     View view;
 
-    public Controller(Model modelEmpleado, View viewEmpleado) {
+    ControllerPrincipal controllerPrincipal;
+
+    public Controller(Model modelEmpleado, View viewEmpleado, ControllerPrincipal controllerPrincipal) {
         this.model = modelEmpleado;
         this.view = viewEmpleado;
+        this.controllerPrincipal = controllerPrincipal;
 
         modelEmpleado.setEmpleado(new Empleado());
         modelEmpleado.setEmpleados(new ArrayList<>());
         modelEmpleado.setEmpleados(Service.instance().empleadoAll());
         modelEmpleado.setSucursales(Service.instance().sucursalAll());
+
+
 
         view.setModel(modelEmpleado);
         view.setController(this);
@@ -75,5 +81,9 @@ public class Controller {
 
         }
 
+    }
+
+    public ControllerPrincipal getControllerPrincipal() {
+        return controllerPrincipal;
     }
 }

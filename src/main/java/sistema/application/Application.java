@@ -3,9 +3,10 @@ package sistema.application;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         try { UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");}
         catch (Exception ex) {};

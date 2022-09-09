@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
+
+import com.sun.jdi.Value;
 import sistema.logic.Sucursal;
 
 
@@ -27,6 +29,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         cancelarSucursalBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                codigoSucursalTxt.setText("");
+                referenciaSucursalTxt.setText("");
+                direccionSucursalTxt.setText("");
+                zonajeSucursalTxt.setText("");
                 controller.hide();
             }
         });
@@ -36,14 +42,16 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 String campoCodigo = codigoSucursalTxt.getText();
                 String campoReferencia = referenciaSucursalTxt.getText();
                 String campoDireccion = direccionSucursalTxt.getText();
-                float campoZonaje = Float.valueOf(zonajeSucursalTxt.getText());
+                String campoZonaje = zonajeSucursalTxt.getText();
                 campoCodigo = campoCodigo.replaceAll(" ", "");
                 campoReferencia = campoReferencia.replaceAll(" ", "");
                 campoDireccion = campoDireccion.replaceAll(" ", "");
+                campoZonaje = campoZonaje.replaceAll(" ", "");
                 if (campoCodigo.length() != 0 && campoReferencia.length() != 0 && campoDireccion.length() != 0) {
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar los cambios?");
                     if (JOptionPane.OK_OPTION == value) {
-                        controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, campoZonaje));
+                        float zonaje = Float.valueOf(campoZonaje);
+                        controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonaje));
                         JOptionPane.showMessageDialog(null, "Guardado con exito");
                         codigoSucursalTxt.setText("");
                         referenciaSucursalTxt.setText("");

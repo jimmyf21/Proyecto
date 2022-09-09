@@ -1,13 +1,16 @@
 package sistema.presentation.principal;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 import java.util.Observable;
 
-public class View extends javax.swing.JFrame implements java.util.Observer  {
+public class View extends javax.swing.JFrame implements java.util.Observer   {
 
     private JTabbedPane tabbedPane;
     private JPanel panel1;
@@ -22,14 +25,17 @@ public class View extends javax.swing.JFrame implements java.util.Observer  {
     private JButton agregarSucursalBtn;
     private JButton borrarSucursalBtn;
     private JButton reporteSucursalBtn;
+    private JTable table1;
+    private JPanel jPanelAcercaDe;
+    private JPanel PanelAcerca;
+
+    private JPanel JPanelAcercaDe;
 
     public JPanel getJPanel(){
         return panel1;
     }
 
     public View() {
-//        setIconImage(new ImageIcon(getClass().getResource("/imagenes/icono-empleados.png")).getImage());
-
 
         buscarReferenciaButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -99,7 +105,6 @@ public class View extends javax.swing.JFrame implements java.util.Observer  {
             }
         });
     }
-
     Controller controller;
     Model model;
 

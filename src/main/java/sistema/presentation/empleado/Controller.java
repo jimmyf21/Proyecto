@@ -6,6 +6,7 @@ import java.util.List;
 import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
+import sistema.logic.Sucursal;
 
 
 public class Controller {
@@ -53,7 +54,7 @@ public class Controller {
 
     public void  EmpleadoSearch(String cedula){
         List<Empleado> Empleados= Service.instance().empleadoSearch(cedula);
-        model.setEmpleado(new Empleado(cedula,"", "", 0,""));
+        model.setEmpleado(new Empleado(cedula,"", "", 0, new Sucursal()));
         model.setEmpleados(Empleados);
         model.commit();
     }
@@ -67,7 +68,7 @@ public class Controller {
     public void EmpleadoAdd(Empleado Empleado){
         try {
             Service.instance().empleadoAdd(Empleado);
-            model.setEmpleado(new Empleado("","", "", 0, ""));
+            model.setEmpleado(new Empleado("","", "", 0, new Sucursal()));
             model.setEmpleados(Arrays.asList(Empleado));
             model.commit();
         } catch (Exception ex) {

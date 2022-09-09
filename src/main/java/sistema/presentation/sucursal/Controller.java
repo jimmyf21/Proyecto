@@ -58,7 +58,7 @@ public class Controller {
     }
 
     public void SucursalEdit(int row){
-        Sucursal Sucursal = model.getSucursals().get(row);
+        Sucursal Sucursal = model.getSucursales().get(row);
         model.setSucursal(Sucursal);
         model.commit();
     }

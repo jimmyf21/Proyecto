@@ -8,7 +8,9 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 
 import com.sun.jdi.Value;
+import sistema.application.Application;
 import sistema.logic.Sucursal;
+import sistema.presentation.principal.SucursalTableModel;
 
 
 import javax.swing.*;
@@ -133,7 +135,14 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Sucursal sucursal = model.getSucursal();
+        Sucursal sucursalO = model.getSucursal();
+        codigoSucursalTxt.setText(sucursalO.getCodigo());
+        referenciaSucursalTxt.setText(sucursalO.getReferencia());
+        direccionSucursalTxt.setText(sucursalO.getDireccion());
+
+
+        //Application.PRINCIPAL.getView().getSucursales().setModel(new SucursalTableModel(model.getSucursales()));
+
 
 
     }

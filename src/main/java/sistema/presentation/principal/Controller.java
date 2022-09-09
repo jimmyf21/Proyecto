@@ -38,5 +38,7 @@ public class Controller {
         Application.SUCURSALES.show();
     }
 
-
+    public View getView() {
+        return view;
+    }
 }

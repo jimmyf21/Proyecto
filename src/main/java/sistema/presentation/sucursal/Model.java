@@ -21,7 +21,7 @@ public class Model extends Observable{
     }
 
 
-    public List<Sucursal> getSucursals() {
+    public List<Sucursal> getSucursales() {
         return sucursales;
     }
 

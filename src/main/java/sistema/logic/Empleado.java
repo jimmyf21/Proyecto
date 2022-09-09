@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 
 
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Empleado {
     @XmlID
@@ -12,10 +13,10 @@ public class Empleado {
     private String nombre;
     private String telefono;
     private double salario;
-    private String sucursal;
+    private Sucursal sucursal;
 
 
-    public Empleado(String cedula, String nombre, String telefono, double salario, String sucursal) {
+    public Empleado(String cedula, String nombre, String telefono, double salario, Sucursal sucursal) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -29,7 +30,7 @@ public class Empleado {
         this.nombre = "";
         this.telefono = "";
         this.salario = 0;
-        this.sucursal = "";
+        this.sucursal = new Sucursal();
 
     }
 
@@ -65,14 +66,17 @@ public class Empleado {
         this.salario = salario;
     }
 
-    public String getSucursal() {
+    public Sucursal getSucursal() {
         return sucursal;
     }
 
-    public void setSucursal(String sucursal) {
+    public void setSucursal(Sucursal sucursal) {
         this.sucursal = sucursal;
     }
 
+    public int calSalTotal() {
+        return (int) (this.salario + (salario*this.sucursal.getZonaje() / 100));
+    }
 
 
     @Override
@@ -81,8 +85,10 @@ public class Empleado {
                 "cedula='" + cedula + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", telefono='" + telefono + '\'' +
-                ", salario=" + salario +
-                ", sucursal='" + sucursal + '\'' +
+                ", salario=" + salario + '\'' +
+                ", sucursal='" + sucursal.getReferencia() + '\'' +
+                ", sucursal='" + sucursal.getZonaje() + '\'' +
+                ", salTotal='" + calSalTotal() + '\'' +
                 '}';
     }
 }

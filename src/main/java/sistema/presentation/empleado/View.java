@@ -6,8 +6,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Observable;
 
+import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Sucursal;
+import sistema.presentation.principal.EmpleadoTableModel;
 
 import javax.swing.*;
 
@@ -53,7 +55,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 if (campoCedula.length() != 0 && campoNombre.length() != 0 && campoTelefono.length() != 0 && campoSucursal.length() != 0) {
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar los cambios?");
                     if (JOptionPane.OK_OPTION == value) {
-                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, campoSalario, campoSucursal));
+                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, campoSalario, new Sucursal()));
                         JOptionPane.showMessageDialog(null, "Guardado con exito");
                         cedulaEmpleadoTxt.setText("");
                         nombreEmpleadoTxt.setText("");
@@ -131,6 +133,15 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     @Override
     public void update(Observable o, Object arg) {
         Empleado empleado = model.getEmpleado();
+
+        cedulaEmpleadoTxt.setText(empleado.getCedula());
+        nombreEmpleadoTxt.setText(empleado.getNombre());
+        telefonoEmpleadoTxt.setText(empleado.getTelefono());
+        salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
+        sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
+
+        // Application.PRINCIPAL.getView().getEmpleados().setModel(new EmpleadoTableModel(model.getEmpleados()));
+
 
     }
 

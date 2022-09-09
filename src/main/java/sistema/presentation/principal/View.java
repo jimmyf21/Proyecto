@@ -1,16 +1,16 @@
 package sistema.presentation.principal;
 
-import javax.imageio.ImageIO;
+import sistema.logic.Empleado;
+import sistema.logic.Sucursal;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Objects;
 import java.util.Observable;
 
-public class View extends javax.swing.JFrame implements java.util.Observer   {
+public class  View extends javax.swing.JFrame implements java.util.Observer   {
 
     private JTabbedPane tabbedPane;
     private JPanel panel1;
@@ -25,9 +25,11 @@ public class View extends javax.swing.JFrame implements java.util.Observer   {
     private JButton agregarSucursalBtn;
     private JButton borrarSucursalBtn;
     private JButton reporteSucursalBtn;
-    private JTable table1;
     private JPanel jPanelAcercaDe;
     private JPanel PanelAcerca;
+    private JTable table1;
+    private JTable sucursales;
+    private JTable empleados;
 
     private JPanel JPanelAcercaDe;
 
@@ -128,6 +130,24 @@ public class View extends javax.swing.JFrame implements java.util.Observer   {
     @Override
     public void update(Observable o, Object arg) {
 
+
+
+    }
+
+    public JTable getSucursales() {
+        return sucursales;
+    }
+
+    public JTable getEmpleados() {
+        return empleados;
+    }
+
+    public void setSucursales(JTable sucursales) {
+        this.sucursales = sucursales;
+    }
+
+    public void setEmpleados(JTable empleados) {
+        this.empleados = empleados;
     }
 
     public JPanel getPanel1() {

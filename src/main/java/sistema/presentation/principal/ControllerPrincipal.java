@@ -1,44 +1,31 @@
 package sistema.presentation.principal;
 
 import sistema.application.Application;
-import sistema.logic.Service;
 
-public class ControllerPrincipal {
-    private Model model;
-    private View view;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-    public ControllerPrincipal(Model model, View view) {
+public class ControllerPrincipal implements ActionListener {
+    Model model;
+    View view;
+
+    public ControllerPrincipal(View view, Model model) {
         this.model = model;
         this.view = view;
+
 
         view.setModel(model);
         view.setController(this);
     }
 
+
+    // ActionListener Interface
+    public void actionPerformed(ActionEvent e) {
+        model.commit();
+    }
+
     public void show(){
-        Application.window.setContentPane(view.getPanel1());
+        Application.window.setContentPane(view.getPanel());
     }
 
-    public void hide(){
-
-        this.view.setVisible(false);
-    }
-
-    public void exit(){
-        Service.instance().store();
-    }
-
-    public void empleadosAgregar(){
-        this.hide();
-        Application.EMPLEADOS.show();
-    }
-
-    public void sucursalesAgregar(){
-        this.hide();
-        Application.SUCURSALES.show();
-    }
-
-    public View getView() {
-        return view;
-    }
 }

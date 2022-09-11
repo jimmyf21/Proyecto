@@ -19,6 +19,10 @@ public class Service {
     // Service data
     private Data data;
 
+    private Service(){
+        data = new Data();
+    }
+
 
     // ***************  Empleado  *******************
     public Empleado empleadoGet(String cedula) throws Exception{
@@ -31,7 +35,7 @@ public class Service {
         }
     }
 
-    public List<Empleado> empleadoSearch(String cedula){
+    public List<Empleado> empleadosSearch(String cedula){
         List<Empleado> result=data.getEmpleados().stream().filter(c->c.getCedula().startsWith(cedula)).collect(Collectors.toList());
         return result;
     }
@@ -63,7 +67,7 @@ public class Service {
         }
     }
 
-    public List<Sucursal> sucursalSearch(String numero){
+    public List<Sucursal> sucursalesSearch(String numero){
         List<Sucursal> result=data.getSucursales().stream().filter(f->f.getCodigo().startsWith(numero)).collect(Collectors.toList());
         return result;
     }
@@ -95,14 +99,14 @@ public class Service {
         }
     }
 
-    public Service() {
-        try{
-            data=XmlPersister.instance().load();
-        }
-        catch(Exception e){
-            data =  new Data();
-        }
-
-    }
+//    public Service() {
+//        try{
+//            data=XmlPersister.instance().load();
+//        }
+//        catch(Exception e){
+//            data =  new Data();
+//        }
+//
+//    }
 
 }

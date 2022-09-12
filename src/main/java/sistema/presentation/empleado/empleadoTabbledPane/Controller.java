@@ -1,9 +1,12 @@
 package sistema.presentation.empleado.empleadoTabbledPane;
 
 import sistema.application.Application;
+import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.presentation.empleado.empleadoTabbledPane.Controller;
 import sistema.presentation.empleado.empleadoTabbledPane.Model;
+
+import java.util.List;
 
 public class Controller {
     private Model model;
@@ -29,6 +32,12 @@ public class Controller {
 
     public void exit(){
         Service.instance().store();
+    }
+
+    public void searchEmpleado(String filtro){
+        List<Empleado> rows = Service.instance().empleadosSearch(filtro);
+        model.setEmpleados(Service.instance().empleadosSearch(filtro));
+        model.commit();
     }
 
     public void empleadosAgregar(){

@@ -36,7 +36,7 @@ public class Service {
     }
 
     public List<Empleado> empleadosSearch(String cedula){
-        List<Empleado> result=data.getEmpleados().stream().filter(c->c.getCedula().startsWith(cedula)).collect(Collectors.toList());
+        List<Empleado> result=data.getEmpleados().stream().filter(c->c.getNombre().startsWith(cedula)).collect(Collectors.toList());
         return result;
     }
 
@@ -68,7 +68,7 @@ public class Service {
     }
 
     public List<Sucursal> sucursalesSearch(String numero){
-        List<Sucursal> result=data.getSucursales().stream().filter(f->f.getCodigo().startsWith(numero)).collect(Collectors.toList());
+        List<Sucursal> result=data.getSucursales().stream().filter(f->f.getReferencia().startsWith(numero)).collect(Collectors.toList());
         return result;
     }
 

@@ -2,6 +2,9 @@ package sistema.presentation.sucursal.sucursalTabbedPane;
 
 import sistema.application.Application;
 import sistema.logic.Service;
+import sistema.logic.Sucursal;
+
+import java.util.List;
 
 public class Controller {
     private Model model;
@@ -26,6 +29,12 @@ public class Controller {
 
     public void exit(){
         Service.instance().store();
+    }
+
+    public void searchSucursal(String filtro){
+        List<Sucursal> rows = Service.instance().sucursalesSearch(filtro);
+        model.setSucursales(rows);
+        model.commit();
     }
 
 

@@ -3,10 +3,7 @@ package sistema.presentation.empleado.empleadoTabbledPane;
 import javax.swing.*;
 
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.Observable;
 
 public class  View extends javax.swing.JFrame implements java.util.Observer   {
@@ -45,9 +42,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
             public void mouseClicked(MouseEvent e) {
                 String texto = nombreEmpleado.getText();
                 texto=texto.replaceAll(" ", "");
-                if (texto.length() != 0) {
-                    JOptionPane.showMessageDialog(null, "Buscando...");
-                }else{
+                if (texto.length() == 0) {
                     JOptionPane.showMessageDialog(null, "¡El campo no puede estar vacio!", "Aviso",
                             JOptionPane.WARNING_MESSAGE);
                 }
@@ -60,6 +55,12 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
             }
         });
 
+        nombreEmpleado.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                controller.searchEmpleado(nombreEmpleado.getText());
+            }
+        });
     }
     Controller controller;
     Model model;

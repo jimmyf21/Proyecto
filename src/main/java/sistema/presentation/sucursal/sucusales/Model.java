@@ -1,4 +1,4 @@
-package sistema.presentation.sucursal.sucursalTabbedPane;
+package sistema.presentation.sucursal.sucusales;
 
 import java.util.Observable;
 import java.util.Observer;

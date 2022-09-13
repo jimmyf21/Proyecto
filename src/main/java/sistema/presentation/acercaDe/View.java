@@ -14,7 +14,6 @@ public class View implements Observer {
 
     }
 
-
     Controller controller;
     Model model;
 

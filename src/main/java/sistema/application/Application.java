@@ -5,6 +5,8 @@ import sistema.presentation.principal.ControllerPrincipal;
 
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 
 public class Application {
     public static void main(String[] args){
@@ -12,17 +14,28 @@ public class Application {
         try { UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");}
         catch (Exception ex) {};
 
-        sistema.presentation.empleado.empleadoTabbledPane.Model modelEmpleados = new sistema.presentation.empleado.empleadoTabbledPane.Model() ;
-        sistema.presentation.empleado.empleadoTabbledPane.View viewEmpleados = new sistema.presentation.empleado.empleadoTabbledPane.View();
-        sistema.presentation.empleado.empleadoTabbledPane.Controller controllerEmpleados =
-                new sistema.presentation.empleado.empleadoTabbledPane.Controller(viewEmpleados, modelEmpleados);
-        EMPLEADOS = controllerEmpleados;
+        sistema.presentation.empleado.empleadoAgregar.Model modelEmpleado= new sistema.presentation.empleado.empleadoAgregar.Model();
+        sistema.presentation.empleado.empleadoAgregar.View viewEmpleado = new sistema.presentation.empleado.empleadoAgregar.View();
+        sistema.presentation.empleado.empleadoAgregar.Controller controllerEmpleado =
+                new sistema.presentation.empleado.empleadoAgregar.Controller(viewEmpleado,modelEmpleado);
+        EMPLEADO_AGREGAR = controllerEmpleado;
 
-        sistema.presentation.sucursal.sucursalTabbedPane.Model modelSucursal = new sistema.presentation.sucursal.sucursalTabbedPane.Model() ;
-        sistema.presentation.sucursal.sucursalTabbedPane.View viewSucursal = new sistema.presentation.sucursal.sucursalTabbedPane.View();
-        sistema.presentation.sucursal.sucursalTabbedPane.Controller controllerSucursal =
-                new sistema.presentation.sucursal.sucursalTabbedPane.Controller(viewSucursal, modelSucursal);
-        SUCURSALES = controllerSucursal;
+        sistema.presentation.empleado.empleados.Model empleadosModel= new sistema.presentation.empleado.empleados.Model();
+        sistema.presentation.empleado.empleados.View empleadosView = new sistema.presentation.empleado.empleados.View();
+        sistema.presentation.empleado.empleados.Controller empleadosController =
+                new sistema.presentation.empleado.empleados.Controller(empleadosView,empleadosModel);
+        EMPLEADOS = empleadosController;
+
+        sistema.presentation.sucursal.sucursalAgregar.Model modelSucursal= new sistema.presentation.sucursal.sucursalAgregar.Model();
+        sistema.presentation.sucursal.sucursalAgregar.View viewSucuresal = new sistema.presentation.sucursal.sucursalAgregar.View();
+        sistema.presentation.sucursal.sucursalAgregar.Controller controllerSucursal =
+                new sistema.presentation.sucursal.sucursalAgregar.Controller(viewSucuresal,modelSucursal);
+        SUCURSAL_AGREGAR = controllerSucursal;
+        sistema.presentation.sucursal.sucusales.Model sucursalesModel= new sistema.presentation.sucursal.sucusales.Model();
+        sistema.presentation.sucursal.sucusales.View sucursalesView = new sistema.presentation.sucursal.sucusales.View();
+        sistema.presentation.sucursal.sucusales.Controller sucursalesController =
+                new sistema.presentation.sucursal.sucusales.Controller(sucursalesView,sucursalesModel);
+        SUCURSALES = sucursalesController;
 
         sistema.presentation.acercaDe.Model modelAcerca = new sistema.presentation.acercaDe.Model() ;
         sistema.presentation.acercaDe.View viewAcerca = new sistema.presentation.acercaDe.View();
@@ -37,22 +50,9 @@ public class Application {
                 new ControllerPrincipal(viewPrincipal,modelPrincipal);
         PRINCIPAL = controllerPrincipal;
 
-        viewPrincipal.getPanel().add("Empleados",viewEmpleados.getPanel());
-        viewPrincipal.getPanel().add("Sucursales",viewSucursal.getPanel());
+        viewPrincipal.getPanel().add("Empleados",empleadosView.getPanel());
+        viewPrincipal.getPanel().add("Sucursales",sucursalesView.getPanel());
         viewPrincipal.getPanel().add("Acerca de",viewAcerca.getPanel());
-
-        sistema.presentation.empleado.empleadoAgregar.View viewEmpleadoAgregar = new sistema.presentation.empleado.empleadoAgregar.View();
-        sistema.presentation.empleado.empleadoAgregar.Model modelEmpleadoAgregar = new sistema.presentation.empleado.empleadoAgregar.Model();
-
-        sistema.presentation.empleado.empleadoAgregar.Controller controllerEmpleadoAgregar =
-                new sistema.presentation.empleado.empleadoAgregar.Controller(viewEmpleadoAgregar, modelEmpleadoAgregar);
-        EMPLEADOS_AGREGAR = controllerEmpleadoAgregar;
-
-        sistema.presentation.sucursal.sucursalAgregar.View viewSucursalAgregar = new sistema.presentation.sucursal.sucursalAgregar.View();
-        sistema.presentation.sucursal.sucursalAgregar.Model modelSucursalAgregar = new sistema.presentation.sucursal.sucursalAgregar.Model();
-        sistema.presentation.sucursal.sucursalAgregar.Controller controllerSucursalAgregar =
-                new sistema.presentation.sucursal.sucursalAgregar.Controller(viewSucursalAgregar, modelSucursalAgregar);
-        SUCURSALES_AGREGAR = controllerSucursalAgregar;
 
 
         window = new JFrame();
@@ -71,13 +71,17 @@ public class Application {
     }
 
     public static ControllerPrincipal PRINCIPAL;
-    public static sistema.presentation.empleado.empleadoTabbledPane.Controller EMPLEADOS;
-    public static sistema.presentation.sucursal.sucursalTabbedPane.Controller SUCURSALES;
+    public static sistema.presentation.empleado.empleados.Controller EMPLEADOS;
+    public static sistema.presentation.empleado.empleadoAgregar.Controller EMPLEADO_AGREGAR;
+    public static sistema.presentation.sucursal.sucusales.Controller SUCURSALES;
+    public static sistema.presentation.sucursal.sucursalAgregar.Controller SUCURSAL_AGREGAR;
 
     public static sistema.presentation.acercaDe.Controller ACERCADE;
 
-    public static sistema.presentation.empleado.empleadoAgregar.Controller EMPLEADOS_AGREGAR;
-    public static sistema.presentation.sucursal.sucursalAgregar.Controller SUCURSALES_AGREGAR;
-
     public static JFrame window;
+    public static  final int  MODO_AGREGAR=0;
+    public static final int MODO_EDITAR=1;
+
+    public static Border BORDER_ERROR = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.RED);
+
 }

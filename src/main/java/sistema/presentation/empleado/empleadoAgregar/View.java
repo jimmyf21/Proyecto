@@ -15,7 +15,6 @@ import javax.swing.*;
 
 
 public class View extends javax.swing.JFrame implements java.util.Observer {
-
     Controller controller;
     Model model;
     private JPanel panel1;

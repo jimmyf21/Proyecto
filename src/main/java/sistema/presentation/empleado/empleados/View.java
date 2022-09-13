@@ -1,4 +1,4 @@
-package sistema.presentation.empleado.empleadoTabbledPane;
+package sistema.presentation.empleado.empleados;
 
 import javax.swing.*;
 
@@ -48,17 +48,25 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 }
             }
         });
-        agregarEmpleado.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                controller.empleadosAgregar();
-            }
-        });
-
         nombreEmpleado.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 controller.searchEmpleado(nombreEmpleado.getText());
+            }
+        });
+        agregarEmpleado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.preAgregar();
+            }
+        });
+        empleadosTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int row = empleadosTable.getSelectedRow();
+                    controller.editar(row);
+                }
             }
         });
     }

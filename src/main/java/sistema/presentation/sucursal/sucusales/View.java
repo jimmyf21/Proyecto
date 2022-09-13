@@ -1,6 +1,4 @@
-package sistema.presentation.sucursal.sucursalTabbedPane;
-
-import sistema.presentation.sucursal.sucursalTabbedPane.SucursalTableModel;
+package sistema.presentation.sucursal.sucusales;
 
 import javax.swing.*;
 import java.awt.event.*;

@@ -1,4 +1,4 @@
-package sistema.presentation.empleado.empleadoTabbledPane;
+package sistema.presentation.empleado.empleados;
 
 
 import java.util.Observable;

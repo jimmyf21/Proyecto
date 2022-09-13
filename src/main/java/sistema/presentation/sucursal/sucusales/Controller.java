@@ -1,4 +1,4 @@
-package sistema.presentation.sucursal.sucursalTabbedPane;
+package sistema.presentation.sucursal.sucusales;
 
 import sistema.application.Application;
 import sistema.logic.Service;
@@ -40,7 +40,7 @@ public class Controller {
 
     public void sucursalesAgregar(){
         this.hide();
-        Application.SUCURSALES_AGREGAR.show();
+        Application.SUCURSAL_AGREGAR.show();
     }
 
 }

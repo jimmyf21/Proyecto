@@ -55,6 +55,17 @@ public class Service {
 
     }
 
+    public void empleadoUpdate(Empleado empleado) throws Exception{
+        Empleado result;
+        try{
+            result = this.empleadoGet(empleado.getCedula());
+            data.getEmpleados().remove(result);
+            data.getEmpleados().add(empleado);
+        }catch (Exception e) {
+            throw new Exception("Empleado no existe");
+        }
+    }
+
     // ***************  Sucursal  *******************
 
     public Sucursal sucursalGet(String numero) throws Exception{

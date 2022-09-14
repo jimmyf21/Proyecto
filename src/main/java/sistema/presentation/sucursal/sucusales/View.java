@@ -54,16 +54,26 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         });
 
 
-        agregarSucursalBtn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                controller.sucursalesAgregar();
-            }
-        });
+
         referenciaTxtField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
                 controller.searchSucursal(referenciaTxtField.getText());
+            }
+        });
+        agregarSucursalBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                controller.sucursalesAgregar();
+            }
+        });
+        sucursalesTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int row = sucursalesTable.getSelectedRow();
+                    controller.editar(row);
+                }
             }
         });
     }

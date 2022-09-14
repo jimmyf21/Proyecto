@@ -1,5 +1,6 @@
 package sistema.presentation.sucursal.sucursalAgregar;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,9 +10,13 @@ import sistema.logic.Service;
 
 import sistema.presentation.principal.ControllerPrincipal;
 
+import javax.swing.*;
+
 public class Controller {
     Model model;
     View view;
+
+    JDialog dialog;
 
     ControllerPrincipal controllerPrincipal;
 
@@ -23,9 +28,6 @@ public class Controller {
         modelSucursal.setSucursales(new ArrayList<>());
         modelSucursal.setSucursales(Service.instance().sucursalAll());
 
-
-
-
         view.setModel(modelSucursal);
         view.setController(this);
     }
@@ -33,13 +35,17 @@ public class Controller {
 
 
     public void show(){
-        Application.window.setContentPane(view.getPanel1());
-        Application.window.setVisible(true);
+        dialog = new JDialog(Application.window,"Sucursal", true);
+        dialog.setSize(350,250);
+        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialog.setContentPane(view.getPanel1());
+        Point location = Application.window.getLocation();
+        dialog.setLocation( location.x+500,location.y+180);
+        dialog.setVisible(true);
     }
 
     public void hide(){
-        this.view.setVisible(false);
-        Application.PRINCIPAL.show();
+        dialog.dispose();
     }
 
     public void SucursalGet(String codigo){
@@ -63,20 +69,28 @@ public class Controller {
         model.commit();
     }
 
-    public void SucursalEdit(int row){
-        Sucursal Sucursal = model.getSucursales().get(row);
-        model.setSucursal(Sucursal);
+    public void SucursalEdit(Sucursal e){
+        model.setModo(Application.MODO_EDITAR);
+        model.setSucursal(e);
         model.commit();
+        this.show();
     }
 
     public void SucursalAdd(Sucursal sucursal){
         try {
-            Service.instance().sucursalAdd(sucursal);
-            model.setSucursal(new Sucursal("","", "", 0));
-            model.setSucursales(Arrays.asList(sucursal));
+            switch (model.getModo()) {
+                case Application.MODO_AGREGAR:
+                    Service.instance().sucursalAdd(sucursal);
+                    break;
+                case Application.MODO_EDITAR:
+                    Service.instance().sucursalUpdate(sucursal);
+                    model.setSucursal(sucursal);
+                    break;
+            }
+            Application.SUCURSALES.searchSucursal("");
             model.commit();
         } catch (Exception ex) {
-
+            JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }

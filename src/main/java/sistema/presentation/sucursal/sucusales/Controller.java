@@ -1,6 +1,7 @@
 package sistema.presentation.sucursal.sucusales;
 
 import sistema.application.Application;
+import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
 
@@ -37,9 +38,17 @@ public class Controller {
         model.commit();
     }
 
+    public void editar(int row){
+        String referencia = model.getSucursales().get(row).getReferencia();
+        Sucursal sucursal=null;
+        try {
+            sucursal= Service.instance().sucursalGet(referencia);
+            Application.SUCURSAL_AGREGAR.SucursalEdit(sucursal);
+        } catch (Exception ex) {}
+    }
+
 
     public void sucursalesAgregar(){
-        this.hide();
         Application.SUCURSAL_AGREGAR.show();
     }
 

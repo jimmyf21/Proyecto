@@ -69,11 +69,22 @@ public class Service {
     // ***************  Sucursal  *******************
 
     public Sucursal sucursalGet(String numero) throws Exception{
-        Sucursal result= data.getSucursales().stream().filter(f->f.getCodigo().equals(numero)).findFirst().orElse(null);
+        Sucursal result= data.getSucursales().stream().filter(f->f.getReferencia().equals(numero)).findFirst().orElse(null);
         if (result!=null) {
             return result;
         }
         else {
+            throw new Exception("Sucursal no existe");
+        }
+    }
+
+    public void sucursalUpdate(Sucursal sucursal) throws Exception{
+        Sucursal result;
+        try{
+            result = this.sucursalGet(sucursal.getReferencia());
+            data.getSucursales().remove(result);
+            data.getSucursales().add(sucursal);
+        }catch (Exception e) {
             throw new Exception("Sucursal no existe");
         }
     }

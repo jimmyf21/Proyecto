@@ -9,6 +9,16 @@ import sistema.logic.Sucursal;
 
 public class Model extends Observable{
     Sucursal sucursal;
+
+    public int getModo() {
+        return modo;
+    }
+
+    public void setModo(int modo) {
+        this.modo = modo;
+    }
+
+    int modo;
     List<Sucursal> sucursales;
     
 

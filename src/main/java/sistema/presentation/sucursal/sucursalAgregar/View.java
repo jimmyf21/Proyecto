@@ -51,7 +51,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 if (campoCodigo.length() != 0 && campoReferencia.length() != 0 && campoDireccion.length() != 0) {
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar los cambios?");
                     if (JOptionPane.OK_OPTION == value) {
-                        float zonaje = Float.valueOf(campoZonaje);
+                        double zonaje = Double.valueOf(campoZonaje);
                         controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonaje));
                         JOptionPane.showMessageDialog(null, "Guardado con exito");
                         codigoSucursalTxt.setText("");

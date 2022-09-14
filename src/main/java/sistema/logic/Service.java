@@ -96,9 +96,8 @@ public class Service {
 
 
     public void sucursalAdd(Sucursal prestamo) throws Exception{
-        Sucursal old= data.getSucursales().stream().filter
-                (f->f.getCodigo().equals(prestamo.getCodigo())).findFirst().orElse(null);
-        if (old==null) {
+        Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(prestamo.getCodigo())).findFirst().orElse(null);
+        if (old==null){
             data.getSucursales().add(prestamo);
         }
         else{

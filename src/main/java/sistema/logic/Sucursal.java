@@ -11,9 +11,9 @@ public class Sucursal {
     private String codigo;
     private String referencia;
     private String direccion;
-    private float zonaje;
+    private double zonaje;
 
-    public Sucursal(String codigo, String referencia, String direccion, float zonaje) {
+    public Sucursal(String codigo, String referencia, String direccion, double zonaje) {
         this.codigo = codigo;
         this.referencia = referencia;
         this.direccion = direccion;
@@ -51,7 +51,7 @@ public class Sucursal {
         this.direccion = direccion;
     }
 
-    public float getZonaje() {
+    public double getZonaje() {
         return zonaje;
     }
 

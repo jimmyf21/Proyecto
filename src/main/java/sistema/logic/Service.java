@@ -19,9 +19,9 @@ public class Service {
     // Service data
     private Data data;
 
-    private Service(){
+   /* private Service(){
         data = new Data();
-    }
+    }*/
 
 
     // ***************  Empleado  *******************
@@ -66,10 +66,21 @@ public class Service {
         }
     }
 
+    public void empleadoDelete(Empleado empleado) throws Exception{
+        Empleado result;
+        try{
+            result = data.getEmpleados().stream().filter(e->e.getCedula().equals(empleado.getCedula())).findFirst().orElse(null);
+            if (result!=null) data.getEmpleados().remove(result);
+
+        }catch (Exception e) {
+            throw new Exception("Empleado no existe");
+        }
+    }
+
     // ***************  Sucursal  *******************
 
-    public Sucursal sucursalGet(String numero) throws Exception{
-        Sucursal result= data.getSucursales().stream().filter(f->f.getReferencia().equals(numero)).findFirst().orElse(null);
+    public Sucursal sucursalGet(String referencia) throws Exception{
+        Sucursal result= data.getSucursales().stream().filter(f->f.getReferencia().equals(referencia)).findFirst().orElse(null);
         if (result!=null) {
             return result;
         }
@@ -89,16 +100,16 @@ public class Service {
         }
     }
 
-    public List<Sucursal> sucursalesSearch(String numero){
-        List<Sucursal> result=data.getSucursales().stream().filter(f->f.getReferencia().startsWith(numero)).collect(Collectors.toList());
+    public List<Sucursal> sucursalesSearch(String referencia){
+        List<Sucursal> result=data.getSucursales().stream().filter(f->f.getReferencia().startsWith(referencia)).collect(Collectors.toList());
         return result;
     }
 
 
-    public void sucursalAdd(Sucursal prestamo) throws Exception{
-        Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(prestamo.getCodigo())).findFirst().orElse(null);
+    public void sucursalAdd(Sucursal sucursal) throws Exception{
+        Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         if (old==null){
-            data.getSucursales().add(prestamo);
+            data.getSucursales().add(sucursal);
         }
         else{
             throw new Exception("Sucursal ya existe");
@@ -119,15 +130,16 @@ public class Service {
         } catch (Exception ex) {
         }
     }
+    public Service() {
+        try{
+            data=XmlPersister.instance().load();
+        }
+        catch(Exception e){
+            data =  new Data();
+        }
 
-//    public Service() {
-//        try{
-//            data=XmlPersister.instance().load();
-//        }
-//        catch(Exception e){
-//            data =  new Data();
-//        }
-//
-//    }
+    }
+
+
 
 }

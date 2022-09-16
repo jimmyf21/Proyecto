@@ -1,6 +1,7 @@
 package sistema.presentation.principal;
 
 import sistema.application.Application;
+import sistema.logic.Service;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,10 @@ public class ControllerPrincipal implements ActionListener {
 
         view.setModel(model);
         view.setController(this);
+    }
+
+    public void exit(){
+        Service.instance().store();
     }
 
 

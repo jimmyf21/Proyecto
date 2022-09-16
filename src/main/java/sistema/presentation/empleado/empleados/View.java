@@ -69,6 +69,15 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 }
             }
         });
+        borrarEmpleado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = empleadosTable.getSelectedRow();
+                if(row != -1){
+                    controller.borrarEmpleado(row);
+                }
+            }
+        });
     }
     Controller controller;
     Model model;

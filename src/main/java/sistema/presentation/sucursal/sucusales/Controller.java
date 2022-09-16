@@ -1,9 +1,11 @@
 package sistema.presentation.sucursal.sucusales;
 
 import sistema.application.Application;
-import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.List;
 
@@ -11,10 +13,13 @@ public class Controller {
     private Model model;
     private View view;
 
-    public Controller( View view, Model model) {
-        model.setSucursales(Service.instance().sucursalesSearch(""));
+    public Controller(View view, Model model) {
+
         this.model = model;
         this.view = view;
+
+        model.setSucursales(new ArrayList<>());
+        model.setSucursales(Service.instance().sucursalAll());
 
         view.setModel(model);
         view.setController(this);
@@ -28,9 +33,6 @@ public class Controller {
         this.view.setVisible(false);
     }
 
-    public void exit(){
-        Service.instance().store();
-    }
 
     public void searchSucursal(String filtro){
         List<Sucursal> rows = Service.instance().sucursalesSearch(filtro);

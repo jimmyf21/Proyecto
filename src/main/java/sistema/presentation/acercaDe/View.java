@@ -9,6 +9,7 @@ public class View implements Observer {
 
     private JPanel panel;
     private JTextPane SISESistemaDeSucursalesTextPane;
+    private JTextPane totalSoftIncTotalsoftTextPane;
 
     public View() {
 

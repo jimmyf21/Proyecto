@@ -4,6 +4,7 @@ import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -11,9 +12,12 @@ public class Controller {
     private View view;
 
     public Controller(View view, Model model) {
-        model.setEmpleados(Service.instance().empleadosSearch(""));
+
         this.model = model;
         this.view = view;
+
+        model.setEmpleados(new ArrayList<>());
+        model.setEmpleados(Service.instance().empleadoAll());
 
         view.setModel(model);
         view.setController(this);
@@ -28,9 +32,8 @@ public class Controller {
         this.view.setVisible(false);
     }
 
-    public void exit(){
-        Service.instance().store();
-    }
+
+
 
     public void searchEmpleado(String filtro){
         List<Empleado> rows = Service.instance().empleadosSearch(filtro);
@@ -38,10 +41,6 @@ public class Controller {
         model.commit();
     }
 
-    public void empleadosAgregar(){
-        this.hide();
-        Application.EMPLEADOS.show();
-    }
 
     public void preAgregar(){
         Application.EMPLEADO_AGREGAR.preAgregar();
@@ -57,8 +56,13 @@ public class Controller {
         } catch (Exception ex) {}
     }
 
-
-    public View getView() {
-        return view;
+    public void borrarEmpleado(int row){
+        Empleado e = model.getEmpleados().get(row);
+        try {
+            Service.instance().empleadoDelete(e);
+            this.searchEmpleado("");
+        } catch (Exception ex) {}
     }
+
+
 }

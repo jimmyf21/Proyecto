@@ -1,9 +1,9 @@
 package sistema.logic;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlID;
-
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -13,6 +13,7 @@ public class Empleado {
     private String nombre;
     private String telefono;
     private double salario;
+    @XmlIDREF
     private Sucursal sucursal;
 
 

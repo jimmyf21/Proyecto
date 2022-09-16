@@ -2,16 +2,16 @@ package sistema.data;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 public class XmlPersister {
     private String path;
     private static XmlPersister theInstance;
     public static XmlPersister instance(){
         if (theInstance==null){
-            theInstance=new XmlPersister("Sucursales.xml");
+            theInstance=new XmlPersister("sucursales.xml");
         }
         return theInstance;
     }

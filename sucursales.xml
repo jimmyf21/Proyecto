@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><data><empleados><cedula>123</cedula><nombre>fds</nombre><telefono>123</telefono><salario>123.0</salario><sucursal></sucursal></empleados></data>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><data><empleados><cedula>123</cedula><nombre>fds</nombre><telefono>123</telefono><salario>123.0</salario><sucursal></sucursal></empleados><sucursales><codigo>123</codigo><referencia>sdfdsf</referencia><direccion>123</direccion><zonaje>123.0</zonaje></sucursales></data>

@@ -1,7 +1,9 @@
 package sistema.presentation.sucursal.sucusales;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.Observable;
 
 public class  View extends javax.swing.JFrame implements java.util.Observer   {
@@ -74,6 +76,18 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                     int row = sucursalesTable.getSelectedRow();
                     controller.editar(row);
                 }
+            }
+        });
+        reporteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.imprimir();
+                    if (Desktop.isDesktopSupported()) {
+                        File myFile = new File("sucursales.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    }
+                } catch (Exception ex) { }
             }
         });
     }

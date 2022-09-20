@@ -3,7 +3,9 @@ package sistema.presentation.empleado.empleados;
 import javax.swing.*;
 
 
+import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.Observable;
 
 public class  View extends javax.swing.JFrame implements java.util.Observer   {
@@ -76,6 +78,18 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 if(row != -1){
                     controller.borrarEmpleado(row);
                 }
+            }
+        });
+        reporteEmpleado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.imprimir();
+                    if (Desktop.isDesktopSupported()) {
+                        File myFile = new File("empleados.pdf");
+                        Desktop.getDesktop().open(myFile);
+                    }
+                } catch (Exception ex) { }
             }
         });
     }

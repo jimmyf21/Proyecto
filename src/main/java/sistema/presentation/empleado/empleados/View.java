@@ -78,6 +78,12 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 }
             }
         });
+        reporteEmpleado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                controller.imprimir();
+            }
+        });
     }
     Controller controller;
     Model model;

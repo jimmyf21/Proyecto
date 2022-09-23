@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.Observable;
 
 import sistema.logic.Empleado;
+import sistema.logic.Service;
 import sistema.logic.Sucursal;
 import sistema.presentation.empleado.empleadoAgregar.Controller;
 import sistema.presentation.empleado.empleadoAgregar.Model;
@@ -63,7 +64,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
-                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, new Sucursal()));
+                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, Service.instance().sucursaleSearch(campoSucursal)));
                         JOptionPane.showMessageDialog(null, "Guardado con exito");
                         cedulaEmpleadoTxt.setText("");
                         nombreEmpleadoTxt.setText("");

@@ -105,6 +105,11 @@ public class Service {
         return result;
     }
 
+    public Sucursal sucursaleSearch(String codigo){
+        Sucursal result = data.getSucursales().stream().filter(c->c.getCodigo().equals(codigo)).findFirst().orElse(null);
+        return result;
+    }
+
 
     public void sucursalAdd(Sucursal sucursal) throws Exception{
         Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);

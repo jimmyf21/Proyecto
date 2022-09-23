@@ -139,6 +139,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         codigoSucursalTxt.setText(sucursalO.getCodigo());
         referenciaSucursalTxt.setText(sucursalO.getReferencia());
         direccionSucursalTxt.setText(sucursalO.getDireccion());
+        zonajeSucursalTxt.setText(String.valueOf(sucursalO.getZonaje()));
 
 
         //controller.getControllerPrincipal().getView().getSucursales().setModel(new SucursalTableModel(model.getSucursales()));

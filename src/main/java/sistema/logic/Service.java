@@ -117,6 +117,17 @@ public class Service {
 
     }
 
+    public void sucursalDelete(Sucursal sucursal) throws Exception{
+        Sucursal result;
+        try{
+            result = data.getSucursales().stream().filter(e->e.getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
+            if (result!=null) data.getSucursales().remove(result);
+
+        }catch (Exception e) {
+            throw new Exception("Sucursal no existe");
+        }
+    }
+
     public List<Sucursal> sucursalAll(){
         return data.getSucursales();
     }

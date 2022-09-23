@@ -1,6 +1,7 @@
 package sistema.presentation.sucursal.sucusales;
 
 import sistema.application.Application;
+import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
 
@@ -63,6 +64,14 @@ public class Controller {
         try {
             sucursal= Service.instance().sucursalGet(referencia);
             Application.SUCURSAL_AGREGAR.SucursalEdit(sucursal);
+        } catch (Exception ex) {}
+    }
+
+    public void borrarSucursal(int row){
+        Sucursal s = model.getSucursales().get(row);
+        try {
+            Service.instance().sucursalDelete(s);
+            this.searchSucursal("");
         } catch (Exception ex) {}
     }
 

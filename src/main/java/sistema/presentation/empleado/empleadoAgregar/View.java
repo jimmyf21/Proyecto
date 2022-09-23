@@ -60,7 +60,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
 
                 if (campoCedula.length() != 0 && campoNombre.length() != 0 && campoTelefono.length() != 0 && campoSalario.length() != 0 && campoSucursal.length() != 0) {
-                    int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar los cambios?");
+                    int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
                         controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, new Sucursal()));
@@ -96,7 +96,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     campoSalario = campoSalario.replaceAll(" ", "");
                     campoSucursal = campoSucursal.replaceAll(" ", "");
                     if (campoCedula.length() != 0 && campoNombre.length() != 0 && campoTelefono.length() != 0 && campoSalario.length() != 0 && campoSucursal.length() != 0) {
-                        int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar los cambios?");
+                        int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
                         if (JOptionPane.OK_OPTION == value) {
                             JOptionPane.showMessageDialog(null, "Guardado con exito");
                             controller.hide();

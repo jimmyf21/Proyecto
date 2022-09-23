@@ -90,6 +90,15 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 } catch (Exception ex) { }
             }
         });
+        borrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int row = sucursalesTable.getSelectedRow();
+                if(row != -1){
+                    controller.borrarSucursal(row);
+                }
+            }
+        });
     }
     Controller controller;
     Model model;

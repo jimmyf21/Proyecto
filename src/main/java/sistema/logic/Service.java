@@ -105,8 +105,8 @@ public class Service {
         return result;
     }
 
-    public Sucursal sucursaleSearch(String codigo){
-        Sucursal result = data.getSucursales().stream().filter(c->c.getCodigo().equals(codigo)).findFirst().orElse(null);
+    public Sucursal sucursaleSearch(String referencia){
+        Sucursal result = data.getSucursales().stream().filter(c->c.getReferencia().equals(referencia)).findFirst().orElse(null);
         return result;
     }
 

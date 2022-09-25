@@ -67,12 +67,14 @@ public class Controller {
         } catch (Exception ex) {}
     }
 
-    public void borrarSucursal(int row){
+    public void borrarSucursal(int row) throws Exception {
         Sucursal s = model.getSucursales().get(row);
         try {
             Service.instance().sucursalDelete(s);
             this.searchSucursal("");
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private Cell getCell( Paragraph paragraph,TextAlignment alignment,boolean hasBorder) {

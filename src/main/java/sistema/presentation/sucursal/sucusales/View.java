@@ -94,8 +94,12 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int row = sucursalesTable.getSelectedRow();
-                if(row != -1){
-                    controller.borrarSucursal(row);
+                if (row != -1) {
+                    try {
+                        controller.borrarSucursal(row);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });

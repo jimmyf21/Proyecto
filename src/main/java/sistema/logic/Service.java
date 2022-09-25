@@ -117,17 +117,16 @@ public class Service {
 
     }
 
-    public void sucursalDelete(Sucursal sucursal) throws Exception{
+    public void sucursalDelete(Sucursal sucursal) throws Exception {
         Sucursal result;
-        try{
-            result = data.getSucursales().stream().filter(e->e.getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
-            if (result!=null) data.getSucursales().remove(result);
-
-        }catch (Exception e) {
-            throw new Exception("Sucursal no existe");
-        }
+        result = data.getSucursales().stream().filter(e -> e.getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
+        Empleado e = data.getEmpleados().stream().filter(em -> em.getSucursal().getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
+            if (e == null) {
+                data.getSucursales().remove(result);
+            }else{
+                JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);
+            }
     }
-
     public List<Sucursal> sucursalAll(){
         return data.getSucursales();
     }

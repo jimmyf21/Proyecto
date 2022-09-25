@@ -1,18 +1,16 @@
 package sistema.presentation.sucursal.sucursalAgregar;
 
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.Observable;
 
+import sistema.application.Application;
+import sistema.logic.Service;
 import sistema.logic.Sucursal;
-import sistema.presentation.sucursal.sucursalAgregar.Controller;
-import sistema.presentation.sucursal.sucursalAgregar.Model;
 
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class View extends javax.swing.JFrame implements java.util.Observer {
     private JPanel panel1;
@@ -30,11 +28,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         cancelarSucursalBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                codigoSucursalTxt.setText("");
-                referenciaSucursalTxt.setText("");
-                direccionSucursalTxt.setText("");
-                zonajeSucursalTxt.setText("");
+                resetLabelsTxt();
                 controller.hide();
+                clearBordersFields();
             }
         });
         guardarSucursalBtn.addMouseListener(new MouseAdapter() {
@@ -44,21 +40,30 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 String campoReferencia = referenciaSucursalTxt.getText();
                 String campoDireccion = direccionSucursalTxt.getText();
                 String campoZonaje = zonajeSucursalTxt.getText();
+
                 campoCodigo = campoCodigo.replaceAll(" ", "");
                 campoReferencia = campoReferencia.replaceAll(" ", "");
                 campoDireccion = campoDireccion.replaceAll(" ", "");
                 campoZonaje = campoZonaje.replaceAll(" ", "");
-                if (campoCodigo.length() != 0 && campoReferencia.length() != 0 && campoDireccion.length() != 0) {
+
+                if(validateFields()){
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
+                    double zonajeParseado = Double.valueOf(campoZonaje);
                     if (JOptionPane.OK_OPTION == value) {
-                        double zonaje = Double.valueOf(campoZonaje);
-                        controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonaje));
-                        JOptionPane.showMessageDialog(null, "Guardado con exito");
-                        codigoSucursalTxt.setText("");
-                        referenciaSucursalTxt.setText("");
-                        direccionSucursalTxt.setText("");
-                        zonajeSucursalTxt.setText("");
-                        controller.hide();
+                        try {
+                            Sucursal s = Service.instance().sucursaleSearchForCode(codigoSucursalTxt.getText());
+                            if(s == null){
+                                controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado));
+                                JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                resetLabelsTxt();
+                                clearBordersFields();
+                                controller.hide();
+                            }else{
+                                JOptionPane.showMessageDialog (null, "Sucursal existente con el mismo codigo", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
@@ -88,17 +93,32 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     String campoReferencia = referenciaSucursalTxt.getText();
                     String campoDireccion = direccionSucursalTxt.getText();
                     String campoZonaje = zonajeSucursalTxt.getText();
+
                     campoCodigo = campoCodigo.replaceAll(" ", "");
                     campoReferencia = campoReferencia.replaceAll(" ", "");
                     campoDireccion = campoDireccion.replaceAll(" ", "");
                     campoZonaje = campoZonaje.replaceAll(" ", "");
-                    if (campoCodigo.length() != 0 && campoReferencia.length() != 0 && campoDireccion.length() != 0 && campoZonaje.length() != 0) {
+
+                    if (validateFields()) {
                         int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
+                        double zonajeParseado = Double.valueOf(campoZonaje);
                         if (JOptionPane.OK_OPTION == value) {
-                            JOptionPane.showMessageDialog(null, "Guardado con exito");
-                            controller.hide();
+                            try {
+                                Sucursal s = Service.instance().sucursaleSearchForCode(codigoSucursalTxt.getText());
+                                if (s == null) {
+                                    controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado));
+                                    JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                    resetLabelsTxt();
+                                    clearBordersFields();
+                                    controller.hide();
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Sucursal existente con el mismo codigo", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } catch (Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
                                 JOptionPane.WARNING_MESSAGE);
                     }
@@ -109,10 +129,99 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    resetLabelsTxt();
                     controller.hide();
+                    clearBordersFields();
                 }
             }
         });
+        codigoSucursalTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(codigoSucursalTxt.getText().isEmpty()){
+                    codigoSucursalTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+
+        referenciaSucursalTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(referenciaSucursalTxt.getText().isEmpty()){
+                    referenciaSucursalTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+
+        direccionSucursalTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(direccionSucursalTxt.getText().isEmpty()){
+                    direccionSucursalTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+
+        zonajeSucursalTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(zonajeSucursalTxt.getText().isEmpty()){
+                    zonajeSucursalTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+    }
+
+    Border b = codigoSucursalTxt.getBorder();
+
+    private boolean validateFields(){
+        boolean valid = true;
+        if (codigoSucursalTxt.getText().isEmpty()) {
+            valid = false;
+            codigoSucursalTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            codigoSucursalTxt.setToolTipText(null);
+            codigoSucursalTxt.setBorder(b);
+        }
+        b = referenciaSucursalTxt.getBorder();
+        if (referenciaSucursalTxt.getText().length() == 0) {
+            valid = false;
+            referenciaSucursalTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            referenciaSucursalTxt.setBorder(b);
+            referenciaSucursalTxt.setToolTipText(null);
+        }
+        b = direccionSucursalTxt.getBorder();
+        if (direccionSucursalTxt.getText().length() == 0) {
+            valid = false;
+            direccionSucursalTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            direccionSucursalTxt.setBorder(b);
+            direccionSucursalTxt.setToolTipText(null);
+        }
+        b = zonajeSucursalTxt.getBorder();
+        if (zonajeSucursalTxt.getText().length() == 0) {
+            valid = false;
+            zonajeSucursalTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            zonajeSucursalTxt.setBorder(b);
+            zonajeSucursalTxt.setToolTipText(null);
+        }
+        return valid;
+    }
+
+    private void resetLabelsTxt(){
+        codigoSucursalTxt.setText("");
+        referenciaSucursalTxt.setText("");
+        direccionSucursalTxt.setText("");
+        zonajeSucursalTxt.setText("");
+    }
+
+    private void clearBordersFields(){
+        codigoSucursalTxt.setBorder(b);
+        referenciaSucursalTxt.setBorder(b);
+        direccionSucursalTxt.setBorder(b);
+        zonajeSucursalTxt.setBorder(b);
     }
 
     public void setController(Controller controller){
@@ -140,12 +249,6 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         referenciaSucursalTxt.setText(sucursalO.getReferencia());
         direccionSucursalTxt.setText(sucursalO.getDireccion());
         zonajeSucursalTxt.setText(String.valueOf(sucursalO.getZonaje()));
-
-
-        //controller.getControllerPrincipal().getView().getSucursales().setModel(new SucursalTableModel(model.getSucursales()));
-
-
-
     }
 
     public JPanel getPanel1() {

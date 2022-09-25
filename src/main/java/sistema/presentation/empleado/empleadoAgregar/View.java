@@ -6,6 +6,7 @@ import java.util.Observable;
 import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
+import sistema.logic.Sucursal;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -28,7 +29,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
        cancelarEmpleadoBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setLabelsTxt();
+                resetLabelsTxt();
                 controller.hide();
                 clearBordersFields();
             }
@@ -51,36 +52,23 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 campoSalario = campoSalario.replaceAll(" ", "");
                 campoSucursal = campoSucursal.replaceAll(" ", "");
 
-
-
-                if (campoNombre.isEmpty()) {
-                    nombreEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
-                }
-
-                if (campoTelefono.isEmpty()) {
-                    telefonoEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
-                }
-
-                if (campoSalario.isEmpty()) {
-                    salarioEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
-                }
-
-                if (campoSucursal.isEmpty()) {
-                    sucursalEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
-                }
-
                 if(validateFields()){
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                            Empleado a = Service.instance().empleadoGet(campoCedula);
-                            if(!a.getCedula().equals(campoCedula)){
-                                controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, Service.instance().sucursaleSearch(campoSucursal)));
-                                JOptionPane.showMessageDialog(null, "Guardado con exito");
-                                setLabelsTxt();
-                                controller.hide();
-                                clearBordersFields();
+                            Empleado a = Service.instance().empleadoGet(cedulaEmpleadoTxt.getText());
+                            if(a == null){
+                                Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
+                                if(s != null) {
+                                    controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
+                                    JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                    resetLabelsTxt();
+                                    clearBordersFields();
+                                    controller.hide();
+                                }else{
+                                    JOptionPane.showMessageDialog (null, "Sucursal no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
                             }else{
                                 JOptionPane.showMessageDialog (null, "Empleado ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -111,22 +99,32 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     campoTelefono = campoTelefono.replaceAll(" ", "");
                     campoSalario = campoSalario.replaceAll(" ", "");
                     campoSucursal = campoSucursal.replaceAll(" ", "");
-                    if(validateFields()){
+
+                    if (validateFields()) {
                         int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
                         double salarioParsiado = Double.valueOf(campoSalario);
                         if (JOptionPane.OK_OPTION == value) {
                             try {
-                                if(Service.instance().empleadoGet(campoCedula) == null)
-                                controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, Service.instance().sucursaleSearch(campoSucursal)));
-                                JOptionPane.showMessageDialog(null, "Guardado con exito");
-                                setLabelsTxt();
-                                controller.hide();
-                                clearBordersFields();
+                                Empleado a = Service.instance().empleadoGet(cedulaEmpleadoTxt.getText());
+                                if (a == null) {
+                                    Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
+                                    if (s != null) {
+                                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
+                                        JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                        resetLabelsTxt();
+                                        clearBordersFields();
+                                        controller.hide();
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Sucursal inexistente", "Error", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Empleado existente", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
                             } catch (Exception ex) {
                                 throw new RuntimeException(ex);
                             }
                         }
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
                                 JOptionPane.WARNING_MESSAGE);
                     }
@@ -252,7 +250,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         return valid;
     }
 
-    private void setLabelsTxt(){
+    private void resetLabelsTxt(){
         cedulaEmpleadoTxt.setText("");
         nombreEmpleadoTxt.setText("");
         telefonoEmpleadoTxt.setText("");
@@ -271,16 +269,11 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     @Override
     public void update(Observable o, Object arg) {
         Empleado empleado = model.getEmpleado();
-
         cedulaEmpleadoTxt.setText(empleado.getCedula());
         nombreEmpleadoTxt.setText(empleado.getNombre());
         telefonoEmpleadoTxt.setText(empleado.getTelefono());
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
-
-        //controller.getControllerPrincipal().getView().getEmpleados().setModel(new EmpleadoTableModel(model.getEmpleados()));
-
-
     }
 
     public JPanel getPanel1() {

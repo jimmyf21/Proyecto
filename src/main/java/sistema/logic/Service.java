@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import sistema.data.Data;
 import sistema.data.XmlPersister;
 
+import javax.swing.*;
+
 public class Service {
 
     // Singleton implementation
@@ -26,13 +28,7 @@ public class Service {
 
     // ***************  Empleado  *******************
     public Empleado empleadoGet(String cedula) throws Exception{
-        Empleado result = data.getEmpleados().stream().filter(c->c.getCedula().equals(cedula)).findFirst().orElse(null);
-        if (result!=null){
-            return result;
-        }
-        else {
-            throw new Exception("Empleado no existe");
-        }
+        return data.getEmpleados().stream().filter(c->c.getCedula().equals(cedula)).findFirst().orElse(null);
     }
 
     public List<Empleado> empleadosSearch(String cedula){
@@ -80,13 +76,7 @@ public class Service {
     // ***************  Sucursal  *******************
 
     public Sucursal sucursalGet(String referencia) throws Exception{
-        Sucursal result= data.getSucursales().stream().filter(f->f.getReferencia().equals(referencia)).findFirst().orElse(null);
-        if (result!=null) {
-            return result;
-        }
-        else {
-            throw new Exception("Sucursal no existe");
-        }
+        return data.getSucursales().stream().filter(f->f.getReferencia().equals(referencia)).findFirst().orElse(null);
     }
 
     public void sucursalUpdate(Sucursal sucursal) throws Exception{
@@ -107,6 +97,11 @@ public class Service {
 
     public Sucursal sucursaleSearch(String referencia){
         Sucursal result = data.getSucursales().stream().filter(c->c.getReferencia().equals(referencia)).findFirst().orElse(null);
+        return result;
+    }
+
+    public Sucursal sucursaleSearchForCode(String codigo){
+        Sucursal result = data.getSucursales().stream().filter(c->c.getCodigo().equals(codigo)).findFirst().orElse(null);
         return result;
     }
 

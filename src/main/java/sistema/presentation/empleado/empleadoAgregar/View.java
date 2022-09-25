@@ -1,18 +1,14 @@
 package sistema.presentation.empleado.empleadoAgregar;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.Observable;
 
+import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
-import sistema.logic.Sucursal;
-import sistema.presentation.empleado.empleadoAgregar.Controller;
-import sistema.presentation.empleado.empleadoAgregar.Model;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 
 public class View extends javax.swing.JFrame implements java.util.Observer {
@@ -29,16 +25,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     public View() {
 
-        cancelarEmpleadoBtn.addMouseListener(new MouseAdapter() {
+       cancelarEmpleadoBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                cedulaEmpleadoTxt.setText("");
-                nombreEmpleadoTxt.setText("");
-                telefonoEmpleadoTxt.setText("");
-                salarioEmpleadoTxt.setText("");
-                sucursalEmpleadoTxt.setText("");
-
+                setLabelsTxt();
                 controller.hide();
+                clearBordersFields();
             }
         });
 
@@ -60,19 +52,41 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 campoSucursal = campoSucursal.replaceAll(" ", "");
 
 
-                if (campoCedula.length() != 0 && campoNombre.length() != 0 && campoTelefono.length() != 0 && campoSalario.length() != 0 && campoSucursal.length() != 0) {
+
+                if (campoNombre.isEmpty()) {
+                    nombreEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+
+                if (campoTelefono.isEmpty()) {
+                    telefonoEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+
+                if (campoSalario.isEmpty()) {
+                    salarioEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+
+                if (campoSucursal.isEmpty()) {
+                    sucursalEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+
+                if(validateFields()){
                     int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
-                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, Service.instance().sucursaleSearch(campoSucursal)));
-                        JOptionPane.showMessageDialog(null, "Guardado con exito");
-                        cedulaEmpleadoTxt.setText("");
-                        nombreEmpleadoTxt.setText("");
-                        telefonoEmpleadoTxt.setText("");
-                        salarioEmpleadoTxt.setText("");
-                        sucursalEmpleadoTxt.setText("");
-
-                        controller.hide();
+                        try {
+                            Empleado a = Service.instance().empleadoGet(campoCedula);
+                            if(!a.getCedula().equals(campoCedula)){
+                                controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, Service.instance().sucursaleSearch(campoSucursal)));
+                                JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                setLabelsTxt();
+                                controller.hide();
+                                clearBordersFields();
+                            }else{
+                                JOptionPane.showMessageDialog (null, "Empleado ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
@@ -80,7 +94,6 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 }
             }
         });
-
 
         guardarEmpleadoBtn.addKeyListener(new KeyAdapter() {
             @Override
@@ -91,16 +104,27 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     String campoTelefono = telefonoEmpleadoTxt.getText();
                     String campoSalario = salarioEmpleadoTxt.getText();
                     String campoSucursal = sucursalEmpleadoTxt.getText();
+
+
                     campoCedula = campoCedula.replaceAll(" ", "");
                     campoNombre = campoNombre.replaceAll(" ", "");
                     campoTelefono = campoTelefono.replaceAll(" ", "");
                     campoSalario = campoSalario.replaceAll(" ", "");
                     campoSucursal = campoSucursal.replaceAll(" ", "");
-                    if (campoCedula.length() != 0 && campoNombre.length() != 0 && campoTelefono.length() != 0 && campoSalario.length() != 0 && campoSucursal.length() != 0) {
+                    if(validateFields()){
                         int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
+                        double salarioParsiado = Double.valueOf(campoSalario);
                         if (JOptionPane.OK_OPTION == value) {
-                            JOptionPane.showMessageDialog(null, "Guardado con exito");
-                            controller.hide();
+                            try {
+                                if(Service.instance().empleadoGet(campoCedula) == null)
+                                controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, Service.instance().sucursaleSearch(campoSucursal)));
+                                JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                setLabelsTxt();
+                                controller.hide();
+                                clearBordersFields();
+                            } catch (Exception ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
                     }else{
                         JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
@@ -115,12 +139,58 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     controller.hide();
+                    clearBordersFields();
+                }
+            }
+        });
+        cedulaEmpleadoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(cedulaEmpleadoTxt.getText().isEmpty()){
+                    cedulaEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+        nombreEmpleadoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(nombreEmpleadoTxt.getText().isEmpty()){
+                    nombreEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+
+        telefonoEmpleadoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(telefonoEmpleadoTxt.getText().isEmpty()){
+                    telefonoEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+
+        salarioEmpleadoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(salarioEmpleadoTxt.getText().isEmpty()){
+                    salarioEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
+                }
+            }
+        });
+
+        sucursalEmpleadoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if(sucursalEmpleadoTxt.getText().isEmpty()){
+                    sucursalEmpleadoTxt.setBorder(Application.BORDER_NOBORDER);
                 }
             }
         });
 
 
     }
+
+    Border b = cedulaEmpleadoTxt.getBorder();
 
     public void setController(Controller controller){
         this.controller=controller;
@@ -137,6 +207,65 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     public Model getModel() {
         return model;
+    }
+
+    private boolean validateFields() {
+        boolean valid = true;
+        Border b = cedulaEmpleadoTxt.getBorder();
+        if (cedulaEmpleadoTxt.getText().isEmpty()) {
+            valid = false;
+            cedulaEmpleadoTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            cedulaEmpleadoTxt.setToolTipText(null);
+            cedulaEmpleadoTxt.setBorder(b);
+        }
+        b = nombreEmpleadoTxt.getBorder();
+        if (nombreEmpleadoTxt.getText().length() == 0) {
+            valid = false;
+            nombreEmpleadoTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            nombreEmpleadoTxt.setBorder(b);
+            nombreEmpleadoTxt.setToolTipText(null);
+        }
+        b = telefonoEmpleadoTxt.getBorder();
+        if (telefonoEmpleadoTxt.getText().length() == 0) {
+            valid = false;
+            telefonoEmpleadoTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            telefonoEmpleadoTxt.setBorder(b);
+            telefonoEmpleadoTxt.setToolTipText(null);
+        }
+        b = salarioEmpleadoTxt.getBorder();
+        if (salarioEmpleadoTxt.getText().length() == 0) {
+            valid = false;
+            salarioEmpleadoTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            salarioEmpleadoTxt.setBorder(b);
+        }
+        b = sucursalEmpleadoTxt.getBorder();
+        if (sucursalEmpleadoTxt.getText().length() == 0) {
+            valid = false;
+            sucursalEmpleadoTxt.setBorder(Application.BORDER_ERROR);
+        } else {
+            sucursalEmpleadoTxt.setBorder(null);
+        }
+        return valid;
+    }
+
+    private void setLabelsTxt(){
+        cedulaEmpleadoTxt.setText("");
+        nombreEmpleadoTxt.setText("");
+        telefonoEmpleadoTxt.setText("");
+        salarioEmpleadoTxt.setText("");
+        sucursalEmpleadoTxt.setText("");
+    }
+
+    private void clearBordersFields() {
+        cedulaEmpleadoTxt.setBorder(b);
+        nombreEmpleadoTxt.setBorder(b);
+        telefonoEmpleadoTxt.setBorder(b);
+        salarioEmpleadoTxt.setBorder(b);
+        sucursalEmpleadoTxt.setBorder(b);
     }
 
     @Override

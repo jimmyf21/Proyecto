@@ -82,7 +82,7 @@ public class Service {
     public void sucursalUpdate(Sucursal sucursal) throws Exception{
         Sucursal result;
         try{
-            result = this.sucursalGet(sucursal.getReferencia());
+            result = sucursaleSearchForCode(sucursal.getCodigo());
             data.getSucursales().remove(result);
             data.getSucursales().add(sucursal);
         }catch (Exception e) {

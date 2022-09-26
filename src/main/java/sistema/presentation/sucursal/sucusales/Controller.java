@@ -20,7 +20,6 @@ import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.VerticalAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,10 +58,10 @@ public class Controller {
     }
 
     public void editar(int row){
-        String referencia = model.getSucursales().get(row).getReferencia();
+        String codigo = model.getSucursales().get(row).getCodigo();
         Sucursal sucursal=null;
         try {
-            sucursal= Service.instance().sucursalGet(referencia);
+            sucursal= Service.instance().sucursaleSearchForCode(codigo);
             Application.SUCURSAL_AGREGAR.SucursalEdit(sucursal);
         } catch (Exception ex) {}
     }

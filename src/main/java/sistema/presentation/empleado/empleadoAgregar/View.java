@@ -65,8 +65,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                            Empleado a = Service.instance().empleadoGet(cedulaEmpleadoTxt.getText());
-                            if(a == null){
+                            /*Empleado a = Service.instance().empleadoGet(cedulaEmpleadoTxt.getText());
+                            if(a == null){*/
                                 Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
                                 if(s != null) {
                                     controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
@@ -77,9 +77,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                                 }else{
                                     JOptionPane.showMessageDialog (null, "Sucursal no existe", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
-                            }else{
+                           /* }else{
                                 JOptionPane.showMessageDialog (null, "Empleado ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
+                            }*/
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }

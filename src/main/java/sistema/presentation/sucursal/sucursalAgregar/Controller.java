@@ -35,12 +35,11 @@ public class Controller {
 
 
     public void show(){
-        dialog = new JDialog(Application.window,"Sucursal", true);
-        dialog.setSize(650,360);
-        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialog = new JDialog((Frame) null, "Sucursal", true);
         dialog.setContentPane(view.getPanel1());
-        Point location = Application.window.getLocation();
-        dialog.setLocation( location.x+500,location.y+180);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 

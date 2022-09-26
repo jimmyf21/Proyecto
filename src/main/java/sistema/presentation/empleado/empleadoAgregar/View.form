@@ -188,7 +188,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a7d02" class="javax.swing.JLabel">
+          <component id="2d104" class="javax.swing.JLabel" binding="jLabelMapa">
             <constraints/>
             <properties>
               <icon value="imagenes/mapa-pequeno.png"/>

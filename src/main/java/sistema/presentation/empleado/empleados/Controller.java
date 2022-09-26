@@ -51,9 +51,6 @@ public class Controller {
         this.view.setVisible(false);
     }
 
-
-
-
     public void searchEmpleado(String filtro){
         List<Empleado> rows = Service.instance().empleadosSearch(filtro);
         model.setEmpleados(Service.instance().empleadosSearch(filtro));

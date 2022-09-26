@@ -1,6 +1,11 @@
 package sistema.presentation.empleado.empleadoAgregar;
 
+import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Observable;
 
 import sistema.application.Application;
@@ -8,6 +13,7 @@ import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -23,6 +29,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private JTextField cedulaEmpleadoTxt;
     private JButton guardarEmpleadoBtn;
     private JButton cancelarEmpleadoBtn;
+    private JLabel jLabelMapa;
+    private JButton button1;
 
     public View() {
 
@@ -184,8 +192,16 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 }
             }
         });
-
-
+        jLabelMapa.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    addIconWithClick();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 
     Border b = cedulaEmpleadoTxt.getBorder();
@@ -264,6 +280,21 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         telefonoEmpleadoTxt.setBorder(b);
         salarioEmpleadoTxt.setBorder(b);
         sucursalEmpleadoTxt.setBorder(b);
+    }
+
+    private void addIconWithClick() throws IOException {
+        /*../../main/resources/imagenes/Sucursal.png"*/
+       /* Image mapa;
+        mapa = ImageIO.read(new File("../../main/resources/imagenes/Sucursal.png"));
+        mapa = mapa.getScaledInstance(jLabelMapa.getWidth(), jLabelMapa.getHeight(), Image.SCALE_SMOOTH);
+
+        BufferedImage result= new BufferedImage(mapa.getWidth(null), mapa.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics g= result.getGraphics();
+        g.drawImage(mapa,jLabelMapa.getWidth()/2, jLabelMapa.getHeight()/2, null);
+        g.dispose();
+
+        jLabelMapa.setIcon(new ImageIcon(result));*/
+
     }
 
     @Override

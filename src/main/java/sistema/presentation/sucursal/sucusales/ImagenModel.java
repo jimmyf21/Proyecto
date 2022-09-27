@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class ImagenModel extends JLabel {
 
-    private BufferedImage mapa;
+    private BufferedImage mapa = null;
     private List<Point> ubicSucursales;
 
     public ImagenModel(List<Point> ubicaciones) {
@@ -20,7 +20,7 @@ public class ImagenModel extends JLabel {
 
     public void mostrarImagen() {
         try {
-            mapa = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("mapa.png")));
+            mapa = ImageIO.read(new File("src/main/resources/imagenes/mapa.png"));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al cargar la imagen");
@@ -29,15 +29,16 @@ public class ImagenModel extends JLabel {
 
     public JLabel mostrarUbicaciones() {
         try {
-            BufferedImage overlay = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("Sucursal.png")));
+            BufferedImage icono = ImageIO.read(new File("Sucursal.png"));
 
             for (int i = 0; i < ubicSucursales.size(); i++) {
                 Graphics graphics = mapa.getGraphics();
                 graphics.drawImage(mapa, 0, 0, null);
-                graphics.drawImage(overlay, ubicSucursales.get(i).x - 16, ubicSucursales.get(i).y - 30, null);
+                graphics.drawImage(icono, ubicSucursales.get(i).x , ubicSucursales.get(i).y, null);
             }
-            ImageIO.write(mapa, "PNG", new File("temporal.png"));
-            this.setIcon(new ImageIcon(mapa));
+            ImageIO.write(mapa, "png", new File("mapaCargar.png"));
+            this.setIcon(new ImageIcon("mapaCargar.png"));
+            return this;
 
         } catch (Exception e) {
         }

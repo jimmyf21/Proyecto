@@ -1,11 +1,11 @@
 package sistema.presentation.sucursal.sucursalAgregar;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.List;
 import java.util.Objects;
 
 public class ImagenModel extends JLabel {
@@ -36,7 +36,7 @@ public class ImagenModel extends JLabel {
                 graphics.drawImage(mapa, 0, 0, null);
                 graphics.drawImage(bufferedImage, ubicSucursales.get(i).x - 16, ubicSucursales.get(i).y - 30, null);
             }
-            ImageIO.write(mapa, "PNG", new File("temporal.png"));
+            ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
             this.setIcon(new ImageIcon(mapa));
 
         } catch (Exception e) {

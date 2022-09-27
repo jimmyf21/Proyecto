@@ -21,6 +21,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
     private JButton agregarEmpleadoBtn;
     private JButton agregarSucursalBtn;
     private JLabel mapaLabel;
+    private JPanel mapaConteiner;
 
 
     private JTable sucursales;
@@ -131,12 +132,14 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         sucursalesTable.setModel(new SucursalTableModel(cols, model.getSucursales()));
         sucursalesTable.setRowHeight(30);
 
+        mapaConteiner.setBorder(BorderFactory.createEmptyBorder(0,0,130,0));
+        mapaConteiner.setLayout(new FlowLayout(FlowLayout.CENTER));
         ImagenModel mapa = new ImagenModel(model.getUbicSucursales());
-        JLabel s = mapa.mostrarUbicaciones();
-        mapaLabel.setIcon(s.getIcon());
-        this.panel.revalidate();
+        JLabel imagen = mapa.mostrarUbicaciones();
+        mapaConteiner.add(imagen);
 
-
+        mapaConteiner.revalidate();
+        mapaConteiner.setVisible(true);
         this.panel.revalidate();
 
 

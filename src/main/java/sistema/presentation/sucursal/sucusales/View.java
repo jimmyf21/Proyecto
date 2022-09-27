@@ -20,6 +20,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
     private JButton buscarButton;
     private JButton agregarEmpleadoBtn;
     private JButton agregarSucursalBtn;
+    private JLabel mapaLabel;
 
 
     private JTable sucursales;
@@ -129,6 +130,13 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         int[] cols = {SucursalTableModel.CODIGO, SucursalTableModel.REFERENCIA, SucursalTableModel.DIRECCION, SucursalTableModel.ZONAJE};
         sucursalesTable.setModel(new SucursalTableModel(cols, model.getSucursales()));
         sucursalesTable.setRowHeight(30);
+
+        ImagenModel mapa = new ImagenModel(model.getUbicSucursales());
+        JLabel s = mapa.mostrarUbicaciones();
+        mapaLabel.setIcon(s.getIcon());
+        this.panel.revalidate();
+
+
         this.panel.revalidate();
 
 

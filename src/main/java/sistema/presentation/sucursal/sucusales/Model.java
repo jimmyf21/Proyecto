@@ -1,5 +1,7 @@
 package sistema.presentation.sucursal.sucusales;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.List;
@@ -7,15 +9,14 @@ import java.util.List;
 import sistema.logic.Sucursal;
 
 public class Model extends Observable {
-    Sucursal sucursal;
     List<Sucursal> sucursales;
 
-    public Sucursal getSucursal() {
-        return sucursal;
-    }
+    List<Point> ubicSucursales;
 
-    public void setSucursal(Sucursal sucursal) {
-        this.sucursal = sucursal;
+
+    public Model() {
+        this.sucursales = new ArrayList<>();
+        this.ubicSucursales = new ArrayList<>();
     }
 
     public List<Sucursal> getSucursales() {
@@ -24,6 +25,14 @@ public class Model extends Observable {
 
     public void setSucursales(List<Sucursal> sucursales) {
         this.sucursales = sucursales;
+    }
+
+    public List<Point> getUbicSucursales() {
+        return ubicSucursales;
+    }
+
+    public void setUbicSucursales(List<Point> ubicSucursales) {
+        this.ubicSucursales = ubicSucursales;
     }
 
     @Override

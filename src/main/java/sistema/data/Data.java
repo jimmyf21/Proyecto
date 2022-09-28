@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import sistema.logic.Punto;
 import sistema.logic.Sucursal;
 import sistema.logic.Empleado;
 
@@ -16,7 +17,7 @@ public class Data {
     private List<Empleado> empleados;
     private List<Sucursal> sucursales;
 
-    private List<Point> ubicSucursales;
+    private List<Punto> ubicSucursales;
 
     public Data() {
         empleados = new ArrayList<>();
@@ -40,8 +41,8 @@ public class Data {
         this.sucursales = sucursales;
     }
 
-    public void setUbicSucursales(List<Point> ubicaciones) { this.ubicSucursales = ubicaciones; }
+    public void setUbicSucursales(List<Punto> ubicaciones) { this.ubicSucursales = ubicaciones; }
 
-    public List<Point> getUbicSucursales() { return ubicSucursales; }
+    public List<Punto> getUbicSucursales() { return ubicSucursales; }
 }
 

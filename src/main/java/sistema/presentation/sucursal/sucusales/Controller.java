@@ -32,11 +32,9 @@ public class Controller {
 
     public Controller(View view, Model model) {
 
-
-
         this.model = model;
         this.view = view;
-        model.setUbicSucursales(Service.instance().getUbicSucursales());
+        model.setUbicSucursales(Service.instance().getPointSucursales());
         model.setSucursales(new ArrayList<>());
         model.setSucursales(Service.instance().sucursalAll());
 

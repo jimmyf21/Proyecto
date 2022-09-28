@@ -296,6 +296,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     public void update(Observable o, Object arg) {
         Empleado empleado = model.getEmpleado();
         cedulaEmpleadoTxt.setText(empleado.getCedula());
+        cedulaEmpleadoTxt.setEnabled(model.getModo() == Application.MODO_AGREGAR);
         nombreEmpleadoTxt.setText(empleado.getNombre());
         telefonoEmpleadoTxt.setText(empleado.getTelefono());
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));

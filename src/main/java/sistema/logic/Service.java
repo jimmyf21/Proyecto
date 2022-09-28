@@ -1,6 +1,7 @@
 package sistema.logic;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import sistema.data.Data;
@@ -21,10 +22,6 @@ public class Service {
 
     // Service data
     private Data data;
-
-   /* private Service(){
-        data = new Data();
-    }*/
 
 
     // ***************  Empleado  *******************
@@ -108,10 +105,11 @@ public class Service {
     }
 
 
-    public void sucursalAdd(Sucursal sucursal) throws Exception{
+    public void sucursalAdd(Sucursal sucursal, Point p) throws Exception{
         Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         if (old==null){
             data.getSucursales().add(sucursal);
+            addUbicSucursales(p, sucursal);
             JOptionPane.showMessageDialog(null, "Guardado con exito");
         }
         else{
@@ -121,11 +119,12 @@ public class Service {
     }
 
     public void sucursalDelete(Sucursal sucursal) throws Exception {
-        Sucursal result;
-        result = data.getSucursales().stream().filter(e -> e.getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
+        Sucursal result = data.getSucursales().stream().filter(e -> e.getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
         Empleado e = data.getEmpleados().stream().filter(em -> em.getSucursal().getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
+        Punto p = data.getUbicSucursales().stream().filter(em -> em.getSucursalCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
             if (e == null) {
                 data.getSucursales().remove(result);
+                /*data.getUbicSucursales().remove(p);*/
             }else{
                 JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -136,17 +135,30 @@ public class Service {
 
     // *****************  Pointers  *****************
 
-    public void setUbicSucursales(List<Point> list) {
+    public void setUbicSucursales(List<Punto> list) {
         data.setUbicSucursales(list);
     }
-    public List<Point> getUbicSucursales() {
+    public List<Punto> getUbicSucursales() {
         return data.getUbicSucursales();
     }
 
-    public void addUbicSucursales(Point p) throws Exception
+    public void addUbicSucursales(Point p, Sucursal s) throws Exception
     {
-        if (p!=null) data.getUbicSucursales().add(p);
-        else throw new Exception("Sucursal ya existe");
+        Punto punto = new Punto(p.getX(), p.getY(), s.getCodigo());
+        if (p!=null)
+            data.getUbicSucursales().add(punto);
+        else
+            throw new Exception("Punto no existe");
+    }
+
+    public List<Point> getPointSucursales() {
+        List<Point> p = new ArrayList<>();
+        Point point = new Point();
+        for (Punto punto : data.getUbicSucursales()) {
+            point.setLocation(punto.getX(), punto.getY());
+            p.add(point);
+        }
+        return p;
     }
 
     // *****************  Persistence  *****************

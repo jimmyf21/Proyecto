@@ -45,10 +45,6 @@ public class Controller {
         dialog.dispose();
     }
 
-
-
-
-
     public void SucursalEdit(Sucursal e){
         model.setModo(Application.MODO_EDITAR);
         model.setSucursal(e);
@@ -60,8 +56,7 @@ public class Controller {
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
-                    Service.instance().sucursalAdd(sucursal);
-                    Service.instance().addUbicSucursales(p);
+                    Service.instance().sucursalAdd(sucursal, p);
                     model.setUbicacionActual(new Point(p));
                     break;
                 case Application.MODO_EDITAR:

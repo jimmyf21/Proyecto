@@ -50,7 +50,4 @@ public class Model extends Observable{
         this.notifyObservers();
     }
 
-
-
-
 }

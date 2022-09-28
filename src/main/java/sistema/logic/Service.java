@@ -44,6 +44,7 @@ public class Service {
         Empleado old= data.getEmpleados().stream().filter(c->c.getCedula().equals(empleado.getCedula())).findFirst().orElse(null);
         if (old==null){
             data.getEmpleados().add(empleado);
+            JOptionPane.showMessageDialog(null, "Guardado con exito");
         }
         else{
             throw new Exception("Empleado ya existe");
@@ -110,6 +111,7 @@ public class Service {
         Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         if (old==null){
             data.getSucursales().add(sucursal);
+            JOptionPane.showMessageDialog(null, "Guardado con exito");
         }
         else{
             throw new Exception("Sucursal ya existe");

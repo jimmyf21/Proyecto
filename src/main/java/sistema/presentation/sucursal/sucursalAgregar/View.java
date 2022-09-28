@@ -51,16 +51,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double zonajeParseado = Double.valueOf(campoZonaje);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                            /*Sucursal s = Service.instance().sucursaleSearchForCode(codigoSucursalTxt.getText());
-                            if(s == null){*/
                                 controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado));
-                                JOptionPane.showMessageDialog(null, "Guardado con exito");
                                 resetLabelsTxt();
                                 clearBordersFields();
                                 controller.hide();
-                           /* }else{
-                                JOptionPane.showMessageDialog (null, "Sucursal existente con el mismo codigo", "Error", JOptionPane.ERROR_MESSAGE);
-                            }*/
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }

@@ -166,11 +166,9 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="f89ab" class="javax.swing.JLabel">
+          <component id="d8ba9" class="javax.swing.JLabel" binding="mapaLabel">
             <constraints/>
             <properties>
-              <alignmentX value="0.0"/>
-              <icon value="imagenes/mapa-pequeno.png"/>
               <text value=""/>
             </properties>
           </component>

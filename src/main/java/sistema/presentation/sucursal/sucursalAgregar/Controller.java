@@ -25,8 +25,6 @@ public class Controller {
         this.view = viewSucursal;
 
         modelSucursal.setSucursal(new Sucursal());
-        modelSucursal.setSucursales(new ArrayList<>());
-        modelSucursal.setSucursales(Service.instance().sucursalAll());
 
         view.setModel(modelSucursal);
         view.setController(this);
@@ -47,26 +45,9 @@ public class Controller {
         dialog.dispose();
     }
 
-    public void SucursalGet(String codigo){
-        try {
-            Sucursal Sucursal = Service.instance().sucursalGet(codigo);
-            model.setSucursal(Sucursal);
-            model.setSucursales(Arrays.asList(Sucursal));
-            model.commit();
-        } catch (Exception ex) {
-            model.setSucursal(new Sucursal());
-            model.setSucursales(new ArrayList<>());
-            model.commit();
-        }
-    }
 
 
-    public void  SucursalSearch(String codigo){
-        List<Sucursal> Sucursals= Service.instance().sucursalesSearch(codigo);
-        model.setSucursal(new Sucursal(codigo,"", "", 0));
-        model.setSucursales(Sucursals);
-        model.commit();
-    }
+
 
     public void SucursalEdit(Sucursal e){
         model.setModo(Application.MODO_EDITAR);

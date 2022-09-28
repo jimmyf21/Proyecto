@@ -3,11 +3,11 @@ package sistema.presentation.sucursal.sucursalAgregar;
 
 import java.awt.event.*;
 import java.util.Observable;
-
+import java.awt.*;
 import sistema.application.Application;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
-
+import sistema.presentation.sucursal.sucursalAgregar.ImagenModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -20,9 +20,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private JTextField zonajeSucursalTxt;
     private JButton guardarSucursalBtn;
     private JButton cancelarSucursalBtn;
+    private JLabel mapaLabel;
 
     Controller controller;
     Model model;
+
+    Point ubicacion;
     public View() {
 
         cancelarSucursalBtn.addMouseListener(new MouseAdapter() {
@@ -117,6 +120,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                                 JOptionPane.WARNING_MESSAGE);
                     }
                 }
+
+                ubicacion = null;
             }
         });
         cancelarSucursalBtn.addKeyListener(new KeyAdapter() {
@@ -162,6 +167,17 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 if(zonajeSucursalTxt.getText().isEmpty()){
                     zonajeSucursalTxt.setBorder(Application.BORDER_NOBORDER);
                 }
+            }
+        });
+        mapaLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JLabel sucurs = new JLabel();
+                ubicacion = e.getPoint();
+                model.setUbicacionActual(ubicacion);
+                ImagenModel imagen = new ImagenModel(ubicacion);
+                sucurs = imagen.mostrarUbicaciones();
+                mapaLabel.setIcon(sucurs.getIcon());
             }
         });
     }
@@ -243,6 +259,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         referenciaSucursalTxt.setText(sucursalO.getReferencia());
         direccionSucursalTxt.setText(sucursalO.getDireccion());
         zonajeSucursalTxt.setText(String.valueOf(sucursalO.getZonaje()));
+
+        ImagenModel mapa = new ImagenModel(model.getUbicacionActual());
+        mapaLabel.setIcon(new ImageIcon(mapa.getMapa()));
+
     }
 
     public JPanel getPanel1() {

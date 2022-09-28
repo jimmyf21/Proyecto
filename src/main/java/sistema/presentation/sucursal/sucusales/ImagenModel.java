@@ -20,7 +20,7 @@ public class ImagenModel extends JLabel {
 
     public void mostrarImagen() {
         try {
-            mapa = ImageIO.read(new File("src/main/resources/imagenes/mapa.png"));
+            mapa = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/mapa.png")));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al cargar la imagen");
@@ -29,7 +29,7 @@ public class ImagenModel extends JLabel {
 
     public JLabel mostrarUbicaciones() {
         try {
-            BufferedImage icono = ImageIO.read(new File("Sucursal.png"));
+            BufferedImage icono = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/Sucursal.png")));
 
             for (int i = 0; i < ubicSucursales.size(); i++) {
                 Graphics graphics = mapa.getGraphics();

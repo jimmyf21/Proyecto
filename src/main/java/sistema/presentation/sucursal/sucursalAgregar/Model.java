@@ -1,6 +1,7 @@
 package sistema.presentation.sucursal.sucursalAgregar;
 
 
+import java.awt.*;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -9,6 +10,9 @@ import sistema.logic.Sucursal;
 
 public class Model extends Observable{
     Sucursal sucursal;
+    int modo;
+
+    Point ubicacionActual;
 
     public int getModo() {
         return modo;
@@ -17,10 +21,6 @@ public class Model extends Observable{
     public void setModo(int modo) {
         this.modo = modo;
     }
-
-    int modo;
-    List<Sucursal> sucursales;
-    
 
     public Sucursal getSucursal() {
         return sucursal;
@@ -31,14 +31,13 @@ public class Model extends Observable{
     }
 
 
-    public List<Sucursal> getSucursales() {
-        return sucursales;
+    public Point getUbicacionActual() {
+        return ubicacionActual;
     }
 
-    public void setSucursales(List<Sucursal> sucursals) {
-        sucursales = sucursals;
+    public void setUbicacionActual(Point ubicacionActual) {
+        this.ubicacionActual = ubicacionActual;
     }
-
 
     @Override
     public synchronized void addObserver(Observer o) {

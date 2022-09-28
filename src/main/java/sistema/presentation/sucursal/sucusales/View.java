@@ -23,7 +23,6 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
     private JLabel mapaLabel;
     private JPanel mapaConteiner;
 
-
     private JTable sucursales;
 
 
@@ -132,14 +131,15 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         sucursalesTable.setModel(new SucursalTableModel(cols, model.getSucursales()));
         sucursalesTable.setRowHeight(30);
 
-        mapaConteiner.setBorder(BorderFactory.createEmptyBorder(0,0,130,0));
-        mapaConteiner.setLayout(new FlowLayout(FlowLayout.CENTER));
+       /* mapaConteiner.setBorder(BorderFactory.createEmptyBorder(0,0,130,0));
+        mapaConteiner.setLayout(new FlowLayout(FlowLayout.CENTER));*/
         ImagenModel mapa = new ImagenModel(model.getUbicSucursales());
         JLabel imagen = mapa.mostrarUbicaciones();
-        mapaConteiner.add(imagen);
+        /*mapaConteiner.add(imagen);*/
+        mapaLabel.setIcon(imagen.getIcon());
 
-        mapaConteiner.revalidate();
-        mapaConteiner.setVisible(true);
+       /* mapaConteiner.revalidate();
+        mapaConteiner.setVisible(true);*/
         this.panel.revalidate();
 
 

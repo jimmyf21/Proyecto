@@ -1,5 +1,6 @@
 package sistema.data;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -15,9 +16,12 @@ public class Data {
     private List<Empleado> empleados;
     private List<Sucursal> sucursales;
 
+    private List<Point> ubicSucursales;
+
     public Data() {
         empleados = new ArrayList<>();
         sucursales = new ArrayList<>();
+        ubicSucursales = new ArrayList<>();
     }
 
     public List<Empleado> getEmpleados() {
@@ -35,5 +39,9 @@ public class Data {
     public void setSucursales(List<Sucursal> sucursales) {
         this.sucursales = sucursales;
     }
+
+    public void setUbicSucursales(List<Point> ubicaciones) { this.ubicSucursales = ubicaciones; }
+
+    public List<Point> getUbicSucursales() { return ubicSucursales; }
 }
 

@@ -54,7 +54,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double zonajeParseado = Double.valueOf(campoZonaje);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                                controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado));
+                                controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
                                 resetLabelsTxt();
                                 clearBordersFields();
                                 controller.hide();
@@ -66,6 +66,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
                             JOptionPane.WARNING_MESSAGE);
                 }
+                ubicacion = null;
             }
         });
         referenciaSucursalTxt.addKeyListener(new KeyAdapter(){
@@ -103,7 +104,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                             try {
                                 Sucursal s = Service.instance().sucursaleSearchForCode(codigoSucursalTxt.getText());
                                 if (s == null) {
-                                    controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado));
+                                    controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
                                     JOptionPane.showMessageDialog(null, "Guardado con exito");
                                     resetLabelsTxt();
                                     clearBordersFields();
@@ -256,6 +257,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
         Sucursal sucursalO = model.getSucursal();
         codigoSucursalTxt.setText(sucursalO.getCodigo());
+        this.codigoSucursalTxt.setEnabled(model.getModo() == Application.MODO_AGREGAR);
         referenciaSucursalTxt.setText(sucursalO.getReferencia());
         direccionSucursalTxt.setText(sucursalO.getDireccion());
         zonajeSucursalTxt.setText(String.valueOf(sucursalO.getZonaje()));
@@ -263,6 +265,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         ImagenModel mapa = new ImagenModel(model.getUbicacionActual());
         mapaLabel.setIcon(new ImageIcon(mapa.getMapa()));
 
+        this.panel1.revalidate();
     }
 
     public JPanel getPanel1() {

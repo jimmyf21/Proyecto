@@ -56,11 +56,13 @@ public class Controller {
         this.show();
     }
 
-    public void SucursalAdd(Sucursal sucursal){
+    public void SucursalAdd(Sucursal sucursal, Point p){
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
                     Service.instance().sucursalAdd(sucursal);
+                    Service.instance().addUbicSucursales(p);
+                    model.setUbicacionActual(new Point(p));
                     break;
                 case Application.MODO_EDITAR:
                     Service.instance().sucursalUpdate(sucursal);

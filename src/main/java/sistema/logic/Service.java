@@ -1,5 +1,6 @@
 package sistema.logic;
 
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import sistema.data.Data;
@@ -133,7 +134,20 @@ public class Service {
         return data.getSucursales();
     }
 
+    // *****************  Pointers  *****************
 
+    public void setUbicSucursales(List<Point> list) {
+        data.setUbicSucursales(list);
+    }
+    public List<Point> getUbicSucursales() {
+        return data.getUbicSucursales();
+    }
+
+    public void addUbicSucursales(Point p) throws Exception
+    {
+        if (p!=null) data.getUbicSucursales().add(p);
+        else throw new Exception("Sucursal ya existe");
+    }
 
     // *****************  Persistence  *****************
     public void store(){

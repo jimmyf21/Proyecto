@@ -14,14 +14,14 @@ import sistema.logic.Empleado;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Data {
-    private List<Empleado> empleados;
     private List<Sucursal> sucursales;
+    private List<Empleado> empleados;
 
     private List<Punto> ubicSucursales;
 
     public Data() {
-        empleados = new ArrayList<>();
         sucursales = new ArrayList<>();
+        empleados = new ArrayList<>();
         ubicSucursales = new ArrayList<>();
     }
 

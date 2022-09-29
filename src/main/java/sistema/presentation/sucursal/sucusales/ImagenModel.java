@@ -34,7 +34,7 @@ public class ImagenModel extends JLabel {
             for (int i = 0; i < ubicSucursales.size(); i++) {
                 Graphics graphics = mapa.getGraphics();
                 graphics.drawImage(mapa, 0, 0, null);
-                graphics.drawImage(icono, ubicSucursales.get(i).x+78, ubicSucursales.get(i).y+20, null);
+                graphics.drawImage(icono, ubicSucursales.get(i).x-16, ubicSucursales.get(i).y-30, null);
             }
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
             this.setIcon(new ImageIcon(mapa));

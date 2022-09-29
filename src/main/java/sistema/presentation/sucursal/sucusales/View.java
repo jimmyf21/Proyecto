@@ -135,14 +135,12 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         mapaConteiner.setLayout(new FlowLayout(FlowLayout.CENTER));*/
         ImagenModel mapa = new ImagenModel(model.getUbicSucursales());
         JLabel imagen = mapa.mostrarUbicaciones();
-        mapaConteiner.add(imagen);
+       /* mapaConteiner.add(imagen);*/
         mapaLabel.setIcon(imagen.getIcon());
 
        /* mapaConteiner.revalidate();
         mapaConteiner.setVisible(true);*/
         this.panel.revalidate();
-
-
     }
 
     public JTable getSucursales() {

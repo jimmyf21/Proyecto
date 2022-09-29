@@ -70,6 +70,7 @@ public class Controller {
         Sucursal s = model.getSucursales().get(row);
         try {
             Service.instance().sucursalDelete(s);
+            Service.instance().store();
             this.searchSucursal("");
         } catch (Exception ex) {
             throw new RuntimeException(ex);

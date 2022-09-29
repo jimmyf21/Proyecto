@@ -191,7 +191,7 @@
           <component id="2d104" class="javax.swing.JLabel" binding="jLabelMapa">
             <constraints/>
             <properties>
-              <icon value="imagenes/mapa-pequeno.png"/>
+              <icon value="imagenes/mapa.png"/>
               <text value=""/>
             </properties>
           </component>

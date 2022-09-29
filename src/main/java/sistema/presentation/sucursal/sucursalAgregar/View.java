@@ -121,8 +121,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                                 JOptionPane.WARNING_MESSAGE);
                     }
                 }
-
                 ubicacion = null;
+                mapaLabel.setBorder(Application.BORDER_NOBORDER);
             }
         });
         cancelarSucursalBtn.addKeyListener(new KeyAdapter() {
@@ -187,6 +187,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     private boolean validateFields(){
         boolean valid = true;
+        Border b = codigoSucursalTxt.getBorder();
         if (codigoSucursalTxt.getText().isEmpty()) {
             valid = false;
             codigoSucursalTxt.setBorder(Application.BORDER_ERROR);
@@ -217,6 +218,11 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         } else {
             zonajeSucursalTxt.setBorder(b);
             zonajeSucursalTxt.setToolTipText(null);
+        }
+
+        if(ubicacion == null) {
+            valid = false;
+            mapaLabel.setBorder(Application.BORDER_ERROR);
         }
         return valid;
     }

@@ -21,7 +21,7 @@ public class ImagenModel extends JLabel {
 
     public void mostrarImagen()  {
         try {
-            mapa = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/mapa-pequeno.png")));
+            mapa = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/mapa.png")));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al cargar la imagen");
@@ -29,6 +29,7 @@ public class ImagenModel extends JLabel {
     }
 
     public JLabel mostrarUbicaciones() {
+        JLabel sucursalmap = new JLabel();
         try {
             BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/Sucursal.png")));
 
@@ -38,12 +39,12 @@ public class ImagenModel extends JLabel {
             graphics.drawImage(bufferedImage, ubicSucursal.x - 16, ubicSucursal.y - 30, null);
 
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
-            this.setIcon(new ImageIcon(mapa));
+            sucursalmap.setIcon(new ImageIcon(mapa));
 
         } catch (Exception e) {
 
         }
-        return this;
+        return sucursalmap;
     }
 
 

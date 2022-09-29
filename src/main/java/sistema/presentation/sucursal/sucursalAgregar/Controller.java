@@ -58,6 +58,7 @@ public class Controller {
                 case Application.MODO_AGREGAR:
                     Service.instance().sucursalAdd(sucursal, p);
                     model.setUbicacionActual(new Point(p));
+                    Service.instance().store();
                     break;
                 case Application.MODO_EDITAR:
                     Service.instance().sucursalUpdate(sucursal);

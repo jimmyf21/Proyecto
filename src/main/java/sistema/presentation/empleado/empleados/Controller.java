@@ -69,6 +69,7 @@ public class Controller {
         try {
             empleado= Service.instance().empleadoGet(cedula);
             Application.EMPLEADO_AGREGAR.editar(empleado);
+            Service.instance().store();
         } catch (Exception ex) {}
     }
 
@@ -76,6 +77,7 @@ public class Controller {
         Empleado e = model.getEmpleados().get(row);
         try {
             Service.instance().empleadoDelete(e);
+            Service.instance().store();
             this.searchEmpleado("");
         } catch (Exception ex) {}
     }

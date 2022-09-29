@@ -65,7 +65,8 @@ public class Controller {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
                     Service.instance().empleadoAdd(e);
-                    model.setEmpleado(new Empleado());
+                    Service.instance().store();
+                    model.setEmpleado(e);
                     break;
                 case Application.MODO_EDITAR:
                     Service.instance().empleadoUpdate(e);

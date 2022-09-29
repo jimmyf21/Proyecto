@@ -23,7 +23,6 @@ public class Empleado {
         this.telefono = telefono;
         this.salario = salario;
         this.sucursal = sucursal;
-
     }
 
     public Empleado() {

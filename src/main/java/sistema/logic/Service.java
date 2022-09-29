@@ -56,6 +56,7 @@ public class Service {
             result = this.empleadoGet(empleado.getCedula());
             data.getEmpleados().remove(result);
             data.getEmpleados().add(empleado);
+            JOptionPane.showMessageDialog(null, "Empleado editado con exito");
         }catch (Exception e) {
             throw new Exception("Empleado no existe");
         }
@@ -84,6 +85,7 @@ public class Service {
             result = sucursaleSearchForCode(sucursal.getCodigo());
             data.getSucursales().remove(result);
             data.getSucursales().add(sucursal);
+            JOptionPane.showMessageDialog(null, "Sucursal editado con exito");
         }catch (Exception e) {
             throw new Exception("Sucursal no existe");
         }
@@ -119,11 +121,10 @@ public class Service {
     }
 
     public void sucursalDelete(Sucursal sucursal) throws Exception {
-        Sucursal result = data.getSucursales().stream().filter(e -> e.getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
-        Empleado e = data.getEmpleados().stream().filter(em -> em.getSucursal().getReferencia().equals(sucursal.getReferencia())).findFirst().orElse(null);
+        Empleado e = data.getEmpleados().stream().filter(em -> em.getSucursal().getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         Punto p = data.getUbicSucursales().stream().filter(em -> em.getSucursalCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
             if (e == null) {
-                data.getSucursales().remove(result);
+                data.getSucursales().remove(sucursal);
                 data.getUbicSucursales().remove(p);
             }else{
                 JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);

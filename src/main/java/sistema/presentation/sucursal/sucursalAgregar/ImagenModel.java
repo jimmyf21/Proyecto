@@ -41,6 +41,7 @@ public class ImagenModel extends JLabel {
             this.setIcon(new ImageIcon(mapa));
 
         } catch (Exception e) {
+
         }
         return this;
     }

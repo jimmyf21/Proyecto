@@ -124,7 +124,7 @@ public class Service {
         Punto p = data.getUbicSucursales().stream().filter(em -> em.getSucursalCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
             if (e == null) {
                 data.getSucursales().remove(result);
-                /*data.getUbicSucursales().remove(p);*/
+                data.getUbicSucursales().remove(p);
             }else{
                 JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -155,8 +155,7 @@ public class Service {
         List<Point> p = new ArrayList<>();
         Point point = new Point();
         for (Punto punto : data.getUbicSucursales()) {
-            point.setLocation(punto.getX(), punto.getY());
-            p.add(point);
+            p.add(point = new Point((int) punto.getX(), (int) punto.getY()));
         }
         return p;
     }

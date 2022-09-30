@@ -197,13 +197,17 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 Point point = new Point((int) e.getPoint().getX(), (int) e.getPoint().getY());
                 Sucursal sucursal = controller.getSucursalFromPoint(point);
                  if(sucursal != null) {
+//                     if(e.getPoint().getX() != point.getX() && e.getPoint().getY() != point.getY() || e.getPoint().getX() == point.getX() && e.getPoint().getY() == point.getY())
                      ubicacion = controller.getPoint(sucursal);
                      mapa.setUbicSucursal(ubicacion);
                      JLabel imagen = mapa.mostrarUbicaciones();
                      jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText(sucursal.getReferencia());
-                 }else
+                 }else {
+                     JLabel imagen = mapa.mostrarUbicaciones();
+                     jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText("");
+                 }
             }
         });
     }

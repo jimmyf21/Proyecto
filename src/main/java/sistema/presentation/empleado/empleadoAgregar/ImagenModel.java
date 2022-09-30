@@ -45,9 +45,11 @@ public class ImagenModel extends JLabel {
                 graphics.drawImage(icono, ubicSucursales.get(i).x-16, ubicSucursales.get(i).y-30, null);
             }
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
-            mostrarPuntoRojo();
+            if(ubicSucursal !=null) {
+                mostrarPuntoRojo();
+            }
             this.setIcon(new ImageIcon(mapa));
-
+            ubicSucursal = null;
         } catch (Exception e) {
         }
         return this;

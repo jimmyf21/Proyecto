@@ -79,6 +79,8 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 if (e.getClickCount() == 2) {
                     int row = sucursalesTable.getSelectedRow();
                     controller.editar(row);
+                }else if(e.getClickCount() == 1){
+
                 }
             }
         });

@@ -108,16 +108,16 @@ public class Service {
 
 
     public void sucursalAdd(Sucursal sucursal, Point p) throws Exception{
+        Punto punto = addUbicSucursales(p, sucursal);
         Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         if (old==null){
+            sucursal.setPunto(punto);
             data.getSucursales().add(sucursal);
-            addUbicSucursales(p, sucursal);
             JOptionPane.showMessageDialog(null, "Guardado con exito");
         }
         else{
             throw new Exception("Sucursal ya existe");
         }
-
     }
 
     public void sucursalDelete(Sucursal sucursal) throws Exception {
@@ -136,29 +136,39 @@ public class Service {
 
     // *****************  Pointers  *****************
 
-    public void setUbicSucursales(List<Punto> list) {
-        data.setUbicSucursales(list);
-    }
-    public List<Punto> getUbicSucursales() {
-        return data.getUbicSucursales();
-    }
 
-    public void addUbicSucursales(Point p, Sucursal s) throws Exception
+    public Punto addUbicSucursales(Point p, Sucursal s) throws Exception
     {
         Punto punto = new Punto(p.getX(), p.getY(), s.getCodigo());
-        if (p!=null)
+        if (p!=null) {
             data.getUbicSucursales().add(punto);
-        else
+            return punto;
+        }else
             throw new Exception("Punto no existe");
     }
 
     public List<Point> getPointSucursales() {
         List<Point> p = new ArrayList<>();
-        Point point = new Point();
         for (Punto punto : data.getUbicSucursales()) {
-            p.add(point = new Point((int) punto.getX(), (int) punto.getY()));
+            p.add(new Point((int) punto.getX(), (int) punto.getY()));
         }
         return p;
+    }
+
+    public Sucursal getPoint(Point p) {
+        Punto punto = new Punto(p.getX(), p.getY());
+        double x = punto.getX(), y = punto.getY();
+        for (Sucursal sucursal : data.getSucursales()) {
+            for (Punto punto1 : data.getUbicSucursales()) {
+                if(punto1.getSucursalCodigo().equals(sucursal.getCodigo())){
+                    sucursal.setPunto(punto1);
+                    if (x <= sucursal.getPunto().getX() && x >= sucursal.getPunto().getX()-10 || x >= sucursal.getPunto().getX() && x <= sucursal.getPunto().getX()+10 && y <= sucursal.getPunto().getY() && y >= sucursal.getPunto().getY()-10 || y >= sucursal.getPunto().getY() && y <= sucursal.getPunto().getY()+10) {
+                        return sucursal;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     // *****************  Persistence  *****************

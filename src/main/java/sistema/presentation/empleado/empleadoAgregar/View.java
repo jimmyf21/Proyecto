@@ -22,6 +22,7 @@ import javax.swing.border.Border;
 public class View extends javax.swing.JFrame implements java.util.Observer {
     Controller controller;
     Model model;
+
     private JPanel panel1;
     private JTextField sucursalEmpleadoTxt;
     private JTextField salarioEmpleadoTxt;
@@ -187,6 +188,15 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 }
             }
         });
+        jLabelMapa.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Point point = new Point((int) e.getPoint().getX(), (int) e.getPoint().getY());
+                Sucursal sucursal = controller.getSucursalFromPoint(point);
+                 if(sucursal != null)
+                     sucursalEmpleadoTxt.setText(sucursal.getReferencia());
+            }
+        });
     }
 
     Border b = cedulaEmpleadoTxt.getBorder();
@@ -198,6 +208,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     public Controller getController() {
         return controller;
     }
+
 
     public void setModel(Model model){
         this.model=model;

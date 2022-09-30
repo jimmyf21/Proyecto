@@ -3,6 +3,7 @@ package sistema.logic;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlID;
+import jakarta.xml.bind.annotation.XmlIDREF;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Sucursal {
@@ -11,6 +12,17 @@ public class Sucursal {
     private String referencia;
     private String direccion;
     private double zonaje;
+
+    @XmlIDREF
+    private Punto punto;
+
+    public Punto getPunto() {
+        return punto;
+    }
+
+    public void setPunto(Punto punto) {
+        this.punto = punto;
+    }
 
     public Sucursal(String codigo, String referencia, String direccion, double zonaje) {
         this.codigo = codigo;

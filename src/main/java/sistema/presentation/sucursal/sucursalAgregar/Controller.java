@@ -18,8 +18,6 @@ public class Controller {
 
     JDialog dialog;
 
-    ControllerPrincipal controllerPrincipal;
-
     public Controller(View viewSucursal, Model modelSucursal) {
         this.model = modelSucursal;
         this.view = viewSucursal;
@@ -73,7 +71,4 @@ public class Controller {
 
     }
 
-    public ControllerPrincipal getControllerPrincipal() {
-        return controllerPrincipal;
-    }
 }

@@ -14,6 +14,11 @@ public class Punto {
     public Punto() {
     }
 
+    public Punto( double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
     public Punto( double x, double y, String sucursalCodigo){
         this.sucursalCodigo = sucursalCodigo;
         this.x = x;

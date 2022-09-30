@@ -10,17 +10,8 @@ import sistema.logic.Empleado;
 
 public class Model extends Observable {
 
-    Empleado empleado;
     List<Empleado> empleados;
 
-
-    public Empleado getEmpleado() {
-        return empleado;
-    }
-
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
-    }
 
     public List<Empleado> getEmpleados() {
         return empleados;

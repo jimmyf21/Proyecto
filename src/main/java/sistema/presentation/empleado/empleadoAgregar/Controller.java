@@ -4,6 +4,7 @@ import java.awt.*;
 import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
+import sistema.logic.Sucursal;
 
 import javax.swing.*;
 
@@ -78,8 +79,11 @@ public class Controller {
         }catch (Exception ex){
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
-
+    public Sucursal getSucursalFromPoint(Point p){
+       Sucursal s = Service.instance().getPoint(p);
+       return s;
     }
 
 

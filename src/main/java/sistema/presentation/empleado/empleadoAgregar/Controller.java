@@ -60,6 +60,9 @@ public class Controller {
         this.show();
     }
 
+    public Point getPoint(Sucursal sucursal){
+        return Service.instance().getPointSucursal(sucursal);
+    }
 
     public Boolean EmpleadoAdd(Empleado e){
         Boolean result = false;

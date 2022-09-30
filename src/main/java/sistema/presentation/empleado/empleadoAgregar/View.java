@@ -12,7 +12,7 @@ import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
-import sistema.presentation.sucursal.sucusales.ImagenModel;
+import sistema.presentation.empleado.empleadoAgregar.ImagenModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,6 +22,8 @@ import javax.swing.border.Border;
 public class View extends javax.swing.JFrame implements java.util.Observer {
     Controller controller;
     Model model;
+    ImagenModel mapa;
+    Point ubicacion;
 
     private JPanel panel1;
     private JTextField sucursalEmpleadoTxt;
@@ -194,9 +196,13 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             public void mouseClicked(MouseEvent e) {
                 Point point = new Point((int) e.getPoint().getX(), (int) e.getPoint().getY());
                 Sucursal sucursal = controller.getSucursalFromPoint(point);
-                 if(sucursal != null)
+                 if(sucursal != null) {
+                     ubicacion = controller.getPoint(sucursal);
+                     mapa.setUbicSucursal(ubicacion);
+                     JLabel imagen = mapa.mostrarUbicaciones();
+                     jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText(sucursal.getReferencia());
-                 else
+                 }else
                      sucursalEmpleadoTxt.setText("");
             }
         });
@@ -291,7 +297,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
 
-        sistema.presentation.sucursal.sucusales.ImagenModel mapa = new ImagenModel(Service.instance().getPointSucursales());
+        mapa = new ImagenModel(Service.instance().getPointSucursales());
         JLabel imagen = mapa.mostrarUbicaciones();
         jLabelMapa.setIcon(imagen.getIcon());
         this.panel1.revalidate();

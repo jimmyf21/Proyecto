@@ -83,8 +83,10 @@ public class Controller {
         }
     }
 
-    public List<Point> getPoint(){
-        return Service.instance().getPointSucursales();
+    public Point getPoint(int row){
+        String codigo = model.getSucursales().get(row).getCodigo();
+        Sucursal sucursal=Service.instance().sucursaleSearchForCode(codigo);
+        return Service.instance().getPointSucursal(sucursal);
     }
 
     private Cell getCell( Paragraph paragraph,TextAlignment alignment,boolean hasBorder) {

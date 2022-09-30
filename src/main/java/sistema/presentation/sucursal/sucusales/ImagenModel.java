@@ -13,6 +13,20 @@ public class ImagenModel extends JLabel {
     private BufferedImage mapa = null;
     private List<Point> ubicSucursales;
 
+    private Point point;
+
+    public ImagenModel() {
+
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
     public ImagenModel(List<Point> ubicaciones) {
         this.ubicSucursales = ubicaciones;
         mostrarImagen();
@@ -36,6 +50,22 @@ public class ImagenModel extends JLabel {
                 graphics.drawImage(mapa, 0, 0, null);
                 graphics.drawImage(icono, ubicSucursales.get(i).x-16, ubicSucursales.get(i).y-30, null);
             }
+            ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
+            mostrarPuntoRojo();
+            this.setIcon(new ImageIcon(mapa));
+
+        } catch (Exception e) {
+        }
+        return this;
+    }
+
+    public JLabel mostrarPuntoRojo() {
+        try {
+            BufferedImage icono = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/SucursalSel.png")));
+
+            Graphics graphics = mapa.getGraphics();
+            graphics.drawImage(mapa, 0, 0, null);
+            graphics.drawImage(icono, point.x-16, point.y-30, null);
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
             this.setIcon(new ImageIcon(mapa));
 

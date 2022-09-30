@@ -28,6 +28,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
 
     private JTable sucursales;
 
+    Point ubicacion;
 
 
     public View() {
@@ -59,8 +60,6 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
             }
         });
 
-
-
         referenciaTxtField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -77,11 +76,14 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         sucursalesTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int row = sucursalesTable.getSelectedRow();
                 if (e.getClickCount() == 2) {
-                    int row = sucursalesTable.getSelectedRow();
                     controller.editar(row);
                 }else if(e.getClickCount() == 1){
-
+                    ubicacion = controller.getPoint(row);
+                    mapa.setPoint(ubicacion);
+                    JLabel imagen = mapa.mostrarUbicaciones();
+                    mapaLabel.setIcon(imagen.getIcon());
                 }
             }
         });
@@ -113,6 +115,8 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
     }
     Controller controller;
     Model model;
+
+    ImagenModel mapa = new ImagenModel();
     public void setController(Controller controllerPrincipal){
         this.controller = controllerPrincipal;
     }
@@ -136,7 +140,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         sucursalesTable.setModel(new SucursalTableModel(cols, model.getSucursales()));
         sucursalesTable.setRowHeight(30);
 
-        ImagenModel mapa = new ImagenModel(Service.instance().getPointSucursales());
+        mapa = new ImagenModel(Service.instance().getPointSucursales());
         JLabel imagen = mapa.mostrarUbicaciones();
         mapaLabel.setIcon(imagen.getIcon());
         this.panel.revalidate();

@@ -13,10 +13,16 @@ public class ImagenModel extends JLabel {
 
     private BufferedImage mapa;
 
+    private List<Point> ubicSucursales;
     private Point ubicSucursal;
 
     public ImagenModel(Point ubicaciones) {
         this.ubicSucursal= ubicaciones;
+        mostrarImagen();
+    }
+
+    public ImagenModel(List<Point> ubicaciones) {
+        this.ubicSucursales= ubicaciones;
         mostrarImagen();
     }
 
@@ -30,22 +36,36 @@ public class ImagenModel extends JLabel {
     }
 
     public JLabel mostrarUbicaciones() {
-        JLabel sucursalmap = new JLabel();
         try {
-            BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/Sucursal.png")));
+            BufferedImage icono = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/Sucursal.png")));
 
+            for (int i = 0; i < ubicSucursales.size(); i++) {
+                Graphics graphics = mapa.getGraphics();
+                graphics.drawImage(mapa, 0, 0, null);
+                graphics.drawImage(icono, ubicSucursales.get(i).x-16, ubicSucursales.get(i).y-30, null);
+            }
+            ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
+            mostrarPuntoRojo();
+            this.setIcon(new ImageIcon(mapa));
+
+        } catch (Exception e) {
+        }
+        return this;
+    }
+
+    public JLabel mostrarPuntoRojo() {
+        try {
+            BufferedImage icono = ImageIO.read(Objects.requireNonNull(getClass().getClassLoader().getResource("imagenes/SucursalSel.png")));
 
             Graphics graphics = mapa.getGraphics();
             graphics.drawImage(mapa, 0, 0, null);
-            graphics.drawImage(bufferedImage, ubicSucursal.x - 16, ubicSucursal.y - 30, null);
-
+            graphics.drawImage(icono, ubicSucursal.x-16, ubicSucursal.y-30, null);
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
-            sucursalmap.setIcon(new ImageIcon(mapa));
+            this.setIcon(new ImageIcon(mapa));
 
         } catch (Exception e) {
-
         }
-        return sucursalmap;
+        return this;
     }
 
 

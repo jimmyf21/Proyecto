@@ -1,9 +1,12 @@
 package sistema.presentation.sucursal.sucusales;
 
+import sistema.logic.Service;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.List;
 import java.util.Observable;
 
 public class  View extends javax.swing.JFrame implements java.util.Observer   {
@@ -107,7 +110,6 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
     }
     Controller controller;
     Model model;
-
     public void setController(Controller controllerPrincipal){
         this.controller = controllerPrincipal;
     }
@@ -131,15 +133,9 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         sucursalesTable.setModel(new SucursalTableModel(cols, model.getSucursales()));
         sucursalesTable.setRowHeight(30);
 
-       /* mapaConteiner.setBorder(BorderFactory.createEmptyBorder(0,0,130,0));
-        mapaConteiner.setLayout(new FlowLayout(FlowLayout.CENTER));*/
-        ImagenModel mapa = new ImagenModel(model.getUbicSucursales());
+        ImagenModel mapa = new ImagenModel(Service.instance().getPointSucursales());
         JLabel imagen = mapa.mostrarUbicaciones();
-       /* mapaConteiner.add(imagen);*/
         mapaLabel.setIcon(imagen.getIcon());
-
-       /* mapaConteiner.revalidate();
-        mapaConteiner.setVisible(true);*/
         this.panel.revalidate();
     }
 

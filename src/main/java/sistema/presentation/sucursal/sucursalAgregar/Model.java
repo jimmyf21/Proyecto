@@ -47,7 +47,7 @@ public class Model extends Observable{
 
     public void commit() {
         this.setChanged();
-        this.notifyObservers();
+        this.notifyObservers(null);
     }
 
 }

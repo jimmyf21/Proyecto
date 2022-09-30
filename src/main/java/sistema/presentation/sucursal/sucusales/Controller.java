@@ -1,5 +1,6 @@
 package sistema.presentation.sucursal.sucusales;
 
+import com.itextpdf.layout.element.Image;
 import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
@@ -21,6 +22,7 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +33,9 @@ public class Controller {
     private View view;
 
     public Controller(View view, Model model) {
-
+        model.setUbicSucursales(Service.instance().getPointSucursales());
         this.model = model;
         this.view = view;
-        model.setUbicSucursales(Service.instance().getPointSucursales());
         model.setSucursales(new ArrayList<>());
         model.setSucursales(Service.instance().sucursalAll());
 
@@ -75,6 +76,10 @@ public class Controller {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public List<Point> getPoint(){
+        return Service.instance().getPointSucursales();
     }
 
     private Cell getCell( Paragraph paragraph,TextAlignment alignment,boolean hasBorder) {

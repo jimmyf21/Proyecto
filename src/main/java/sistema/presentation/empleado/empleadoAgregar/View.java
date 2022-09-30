@@ -12,6 +12,7 @@ import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
+import sistema.presentation.sucursal.sucusales.ImagenModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -275,6 +276,11 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         telefonoEmpleadoTxt.setText(empleado.getTelefono());
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
+
+        sistema.presentation.sucursal.sucusales.ImagenModel mapa = new ImagenModel(Service.instance().getPointSucursales());
+        JLabel imagen = mapa.mostrarUbicaciones();
+        jLabelMapa.setIcon(imagen.getIcon());
+        this.panel1.revalidate();
     }
 
     public JPanel getPanel1() {

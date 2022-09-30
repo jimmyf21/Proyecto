@@ -54,10 +54,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double zonajeParseado = Double.valueOf(campoZonaje);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                                controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
-                                resetLabelsTxt();
-                                clearBordersFields();
-                                controller.hide();
+                               Boolean b = controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
+                               if(b){
+                                   resetLabelsTxt();
+                                   clearBordersFields();
+                                   controller.hide();
+                               }
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -102,15 +104,10 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         double zonajeParseado = Double.valueOf(campoZonaje);
                         if (JOptionPane.OK_OPTION == value) {
                             try {
-                                Sucursal s = Service.instance().sucursaleSearchForCode(codigoSucursalTxt.getText());
-                                if (s == null) {
-                                    controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
-                                    JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                Boolean b = controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
+                                if (b) {
                                     resetLabelsTxt();
                                     clearBordersFields();
-                                    controller.hide();
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Sucursal existente con el mismo codigo", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
                             } catch (Exception ex) {
                                 throw new RuntimeException(ex);
@@ -120,9 +117,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
                                 JOptionPane.WARNING_MESSAGE);
                     }
+                    ubicacion = null;
                 }
-                ubicacion = null;
-                mapaLabel.setBorder(Application.BORDER_NOBORDER);
             }
         });
         cancelarSucursalBtn.addKeyListener(new KeyAdapter() {
@@ -181,6 +177,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 mapaLabel.setIcon(sucurs.getIcon());
             }
         });
+
     }
 
     Border b = codigoSucursalTxt.getBorder();
@@ -268,10 +265,17 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         direccionSucursalTxt.setText(sucursalO.getDireccion());
         zonajeSucursalTxt.setText(String.valueOf(sucursalO.getZonaje()));
 
-        ImagenModel mapa = new ImagenModel(model.getUbicacionActual());
-        mapaLabel.setIcon(new ImageIcon(mapa.getMapa()));
-
-        this.panel1.revalidate();
+        if(model.getModo() == Application.MODO_AGREGAR){
+            ImagenModel mapa = new ImagenModel(model.getUbicacionActual());
+            mapaLabel.setIcon(new ImageIcon(mapa.getMapa()));
+            this.panel1.revalidate();
+        }else {
+            ImagenModel mapa = new ImagenModel(model.getUbicacionActual());
+            JLabel s = mapa.mostrarUbicaciones();
+            mapaLabel.setIcon(s.getIcon());
+            model.setUbicacionActual(null);
+            this.panel1.revalidate();
+        }
     }
 
     public JPanel getPanel1() {

@@ -69,10 +69,13 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         try {
                                 Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
                                 if(s != null) {
-                                    controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
-                                    resetLabelsTxt();
-                                    clearBordersFields();
-                                    controller.hide();
+
+                                    Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
+                                    if(b){
+                                        resetLabelsTxt();
+                                        clearBordersFields();
+                                        controller.hide();
+                                    }
                                 }else{
                                     JOptionPane.showMessageDialog (null, "Sucursal no existe", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
@@ -104,31 +107,29 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     campoSalario = campoSalario.replaceAll(" ", "");
                     campoSucursal = campoSucursal.replaceAll(" ", "");
 
-                    if (validateFields()) {
+                    if(validateFields()){
                         int value = JOptionPane.showConfirmDialog(null, "¿Desea guardar?");
                         double salarioParsiado = Double.valueOf(campoSalario);
                         if (JOptionPane.OK_OPTION == value) {
                             try {
-                                Empleado a = Service.instance().empleadoGet(cedulaEmpleadoTxt.getText());
-                                if (a == null) {
-                                    Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
-                                    if (s != null) {
-                                        controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
-                                        JOptionPane.showMessageDialog(null, "Guardado con exito");
+                                Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
+                                if(s != null) {
+
+                                    Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
+                                    if(b){
                                         resetLabelsTxt();
                                         clearBordersFields();
-                                        controller.hide();
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Sucursal inexistente", "Error", JOptionPane.ERROR_MESSAGE);
                                     }
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Empleado existente", "Error", JOptionPane.ERROR_MESSAGE);
+                                    resetLabelsTxt();
+                                    clearBordersFields();
+                                }else{
+                                    JOptionPane.showMessageDialog (null, "Sucursal no existe", "Error", JOptionPane.ERROR_MESSAGE);
                                 }
                             } catch (Exception ex) {
                                 throw new RuntimeException(ex);
                             }
                         }
-                    } else {
+                    }else{
                         JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
                                 JOptionPane.WARNING_MESSAGE);
                     }

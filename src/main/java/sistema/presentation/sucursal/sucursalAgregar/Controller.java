@@ -57,13 +57,19 @@ public class Controller {
         this.show();
     }
 
-    public void SucursalAdd(Sucursal sucursal, Point p){
+    public Boolean SucursalAdd(Sucursal sucursal, Point p){
+        boolean result = false;
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
                     Service.instance().sucursalAdd(sucursal, p);
-                    model.setUbicacionActual(new Point(p));
                     Service.instance().store();
+                    Sucursal s = Service.instance().sucursalGet(sucursal.getCodigo());
+                    if(s == null){
+                        hide();
+                    }else{
+                        result = true;
+                    }
                     break;
                 case Application.MODO_EDITAR:
                     Service.instance().sucursalUpdate(sucursal);
@@ -72,10 +78,15 @@ public class Controller {
             }
             Application.SUCURSALES.searchSucursal("");
             model.commit();
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        return result;
+    }
 
+    public void getUbicacionActual(Sucursal s){
+        model.setUbicacionActual(new Point(Service.instance().getPointSucursal(s)));
     }
 
 }

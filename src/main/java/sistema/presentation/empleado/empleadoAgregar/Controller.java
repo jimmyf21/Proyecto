@@ -61,13 +61,22 @@ public class Controller {
     }
 
 
-    public void EmpleadoAdd(Empleado e){
+    public Boolean EmpleadoAdd(Empleado e){
+        Boolean result = false;
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
                     Service.instance().empleadoAdd(e);
                     Service.instance().store();
                     model.setEmpleado(e);
+
+                    Empleado empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
+                    if(empleadoBuscar == null){
+                        hide();
+                    }else{
+                        result = true;
+                    }
+
                     break;
                 case Application.MODO_EDITAR:
                     Service.instance().empleadoUpdate(e);
@@ -79,6 +88,8 @@ public class Controller {
         }catch (Exception ex){
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        return result;
     }
 
     public Sucursal getSucursalFromPoint(Point p){

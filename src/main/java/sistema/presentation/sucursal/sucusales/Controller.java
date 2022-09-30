@@ -67,6 +67,7 @@ public class Controller {
         Sucursal sucursal=null;
         try {
             sucursal= Service.instance().sucursaleSearchForCode(codigo);
+            Application.SUCURSAL_AGREGAR.getUbicacionActual(sucursal);
             Application.SUCURSAL_AGREGAR.SucursalEdit(sucursal);
         } catch (Exception ex) {}
     }

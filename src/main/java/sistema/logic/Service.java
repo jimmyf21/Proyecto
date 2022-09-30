@@ -75,8 +75,8 @@ public class Service {
 
     // ***************  Sucursal  *******************
 
-    public Sucursal sucursalGet(String referencia) throws Exception{
-        return data.getSucursales().stream().filter(f->f.getReferencia().equals(referencia)).findFirst().orElse(null);
+    public Sucursal sucursalGet(String codigo) throws Exception{
+        return data.getSucursales().stream().filter(f->f.getCodigo().equals(codigo)).findFirst().orElse(null);
     }
 
     public void sucursalUpdate(Sucursal sucursal) throws Exception{
@@ -108,9 +108,9 @@ public class Service {
 
 
     public void sucursalAdd(Sucursal sucursal, Point p) throws Exception{
-        Punto punto = addUbicSucursales(p, sucursal);
         Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
         if (old==null){
+            Punto punto = addUbicSucursales(p, sucursal);
             sucursal.setPunto(punto);
             data.getSucursales().add(sucursal);
             JOptionPane.showMessageDialog(null, "Guardado con exito");
@@ -162,10 +162,19 @@ public class Service {
             for (Punto punto : data.getUbicSucursales()) {
                 if(punto.getSucursalCodigo().equals(sucursal.getCodigo())){
                     sucursal.setPunto(punto);
-                    if (x <= sucursal.getPunto().getX() && x >= sucursal.getPunto().getX()-5 && y <= sucursal.getPunto().getY() && y >= sucursal.getPunto().getY()-5 || x >= sucursal.getPunto().getX() && x <= sucursal.getPunto().getX()+5 && y >= sucursal.getPunto().getY() && y <= sucursal.getPunto().getY()+5) {
+                    if (x <= sucursal.getPunto().getX() && x >= sucursal.getPunto().getX()-10 && y <= sucursal.getPunto().getY() && y >= sucursal.getPunto().getY()-10 || x >= sucursal.getPunto().getX() && x <= sucursal.getPunto().getX()+10 && y >= sucursal.getPunto().getY() && y <= sucursal.getPunto().getY()+10) {
                         return sucursal;
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    public Point getPointSucursal(Sucursal sucursal) {
+        for (Punto punto : data.getUbicSucursales()) {
+            if(punto.getSucursalCodigo().equals(sucursal.getCodigo())){
+                return new Point((int) punto.getX(), (int) punto.getY());
             }
         }
         return null;

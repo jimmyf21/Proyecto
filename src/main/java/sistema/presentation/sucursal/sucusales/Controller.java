@@ -43,6 +43,10 @@ public class Controller {
         view.setController(this);
     }
 
+    public void preAgregar(){
+        Application.SUCURSAL_AGREGAR.preAgregar();
+    }
+
     public void show(){
         Application.window.setContentPane(view.getPanel());
     }

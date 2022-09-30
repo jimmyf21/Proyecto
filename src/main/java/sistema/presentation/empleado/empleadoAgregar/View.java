@@ -195,6 +195,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 Sucursal sucursal = controller.getSucursalFromPoint(point);
                  if(sucursal != null)
                      sucursalEmpleadoTxt.setText(sucursal.getReferencia());
+                 else
+                     sucursalEmpleadoTxt.setText("");
             }
         });
     }

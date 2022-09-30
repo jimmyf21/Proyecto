@@ -70,6 +70,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         agregarSucursalBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                controller.preAgregar();
                 controller.sucursalesAgregar();
             }
         });

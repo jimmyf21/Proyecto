@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import sistema.application.Application;
+import sistema.logic.Empleado;
 import sistema.logic.Sucursal;
 import sistema.logic.Service;
 
@@ -26,6 +27,12 @@ public class Controller {
 
         view.setModel(modelSucursal);
         view.setController(this);
+    }
+
+    public void preAgregar() {
+        model.setModo(Application.MODO_AGREGAR);
+        model.setSucursal(new Sucursal());
+        model.commit();
     }
 
 

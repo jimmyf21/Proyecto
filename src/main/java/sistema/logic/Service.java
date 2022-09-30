@@ -155,14 +155,14 @@ public class Service {
         return p;
     }
 
-    public Sucursal getPoint(Point p) {
-        Punto punto = new Punto(p.getX(), p.getY());
-        double x = punto.getX(), y = punto.getY();
+    public Sucursal getPoint(Point point) {
+        Punto p = new Punto(point.getX(), point.getY());
+        double x = p.getX(), y = p.getY();
         for (Sucursal sucursal : data.getSucursales()) {
-            for (Punto punto1 : data.getUbicSucursales()) {
-                if(punto1.getSucursalCodigo().equals(sucursal.getCodigo())){
-                    sucursal.setPunto(punto1);
-                    if (x <= sucursal.getPunto().getX() && x >= sucursal.getPunto().getX()-10 || x >= sucursal.getPunto().getX() && x <= sucursal.getPunto().getX()+10 && y <= sucursal.getPunto().getY() && y >= sucursal.getPunto().getY()-10 || y >= sucursal.getPunto().getY() && y <= sucursal.getPunto().getY()+10) {
+            for (Punto punto : data.getUbicSucursales()) {
+                if(punto.getSucursalCodigo().equals(sucursal.getCodigo())){
+                    sucursal.setPunto(punto);
+                    if (x <= sucursal.getPunto().getX() && x >= sucursal.getPunto().getX()-5 && y <= sucursal.getPunto().getY() && y >= sucursal.getPunto().getY()-5 || x >= sucursal.getPunto().getX() && x <= sucursal.getPunto().getX()+5 && y >= sucursal.getPunto().getY() && y <= sucursal.getPunto().getY()+5) {
                         return sucursal;
                     }
                 }

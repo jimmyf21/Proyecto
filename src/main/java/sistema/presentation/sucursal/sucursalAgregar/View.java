@@ -55,7 +55,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     if (JOptionPane.OK_OPTION == value) {
                         try {
                             Sucursal s = new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado);
-                            ubicacion = controller.getUbicacionActual(s);
+                            if(model.getModo() == Application.MODO_EDITAR) {
+                                ubicacion = controller.getUbicacionActual(s);
+                            }
                                Boolean b = controller.SucursalAdd(s, ubicacion);
                                if(b){
                                    resetLabelsTxt();

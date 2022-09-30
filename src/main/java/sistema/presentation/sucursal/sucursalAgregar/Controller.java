@@ -59,25 +59,28 @@ public class Controller {
 
     public Boolean SucursalAdd(Sucursal sucursal, Point p){
         boolean result = false;
+        Sucursal s = null;
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
                     Service.instance().sucursalAdd(sucursal, p);
                     Service.instance().store();
-                    Sucursal s = Service.instance().sucursalGet(sucursal.getCodigo());
-                    if(s == null){
-                        hide();
-                    }else{
-                        result = true;
-                    }
+                    s = Service.instance().sucursalGet(sucursal.getCodigo());
                     break;
                 case Application.MODO_EDITAR:
-                    Service.instance().sucursalUpdate(sucursal);
+                    Service.instance().sucursalUpdate(sucursal, p);
                     model.setSucursal(sucursal);
+                    s = Service.instance().sucursalGet(sucursal.getCodigo());
                     break;
+            }
+            if(s == null){
+                hide();
+            }else{
+                result = true;
             }
             Application.SUCURSALES.searchSucursal("");
             model.commit();
+
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

@@ -79,11 +79,18 @@ public class Service {
         return data.getSucursales().stream().filter(f->f.getCodigo().equals(codigo)).findFirst().orElse(null);
     }
 
-    public void sucursalUpdate(Sucursal sucursal) throws Exception{
+    public void sucursalUpdate(Sucursal sucursal, Point p) throws Exception{
         Sucursal result;
         try{
             result = sucursaleSearchForCode(sucursal.getCodigo());
             data.getSucursales().remove(result);
+            for (Punto punto: data.getUbicSucursales()) {
+                if (punto.getSucursalCodigo().equals(sucursal.getCodigo())){
+                    punto.setX(p.getX());
+                    punto.setY(p.getY());
+                    sucursal.setPunto(punto);
+                }
+            }
             data.getSucursales().add(sucursal);
             JOptionPane.showMessageDialog(null, "Sucursal editado con exito");
         }catch (Exception e) {

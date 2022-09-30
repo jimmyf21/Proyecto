@@ -63,32 +63,31 @@ public class Controller {
 
     public Boolean EmpleadoAdd(Empleado e){
         Boolean result = false;
+        Empleado empleadoBuscar = null;
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
                     Service.instance().empleadoAdd(e);
                     Service.instance().store();
                     model.setEmpleado(e);
-
-                    Empleado empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
-                    if(empleadoBuscar == null){
-                        hide();
-                    }else{
-                        result = true;
-                    }
-
+                     empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
                     break;
                 case Application.MODO_EDITAR:
                     Service.instance().empleadoUpdate(e);
                     model.setEmpleado(e);
+                    empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
                     break;
+            }
+            if(empleadoBuscar == null){
+                hide();
+            }else{
+                result = true;
             }
             Application.EMPLEADOS.searchEmpleado("");
             model.commit();
         }catch (Exception ex){
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
         return result;
     }
 

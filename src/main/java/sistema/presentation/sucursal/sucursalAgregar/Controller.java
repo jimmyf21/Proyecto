@@ -88,8 +88,10 @@ public class Controller {
         return result;
     }
 
-    public void getUbicacionActual(Sucursal s){
-        model.setUbicacionActual(new Point(Service.instance().getPointSucursal(s)));
+    public Point getUbicacionActual(Sucursal s){
+        Point p = new Point(Service.instance().getPointSucursal(s));
+        model.setUbicacionActual(p);
+        return p;
     }
 
 }

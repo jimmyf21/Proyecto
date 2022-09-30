@@ -54,7 +54,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double zonajeParseado = Double.valueOf(campoZonaje);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                               Boolean b = controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
+                            Sucursal s = new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado);
+                            ubicacion = controller.getUbicacionActual(s);
+                               Boolean b = controller.SucursalAdd(s, ubicacion);
                                if(b){
                                    resetLabelsTxt();
                                    clearBordersFields();
@@ -216,10 +218,11 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             zonajeSucursalTxt.setBorder(b);
             zonajeSucursalTxt.setToolTipText(null);
         }
-
-        if(ubicacion == null) {
-            valid = false;
-            mapaLabel.setBorder(Application.BORDER_ERROR);
+        if(model.getModo() == Application.MODO_AGREGAR){
+            if(ubicacion == null) {
+                valid = false;
+                mapaLabel.setBorder(Application.BORDER_ERROR);
+            }
         }
         return valid;
     }

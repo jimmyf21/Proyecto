@@ -20,8 +20,7 @@ import javax.swing.border.Border;
 
 
 public class View extends javax.swing.JFrame implements java.util.Observer {
-    Controller controller;
-    Model model;
+
 
     private JPanel panel1;
     private JTextField sucursalEmpleadoTxt;
@@ -33,6 +32,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     private JButton cancelarEmpleadoBtn;
     private JLabel jLabelMapa;
     private JButton button1;
+
+    Controller controller;
+    Model model;
 
     public View() {
 

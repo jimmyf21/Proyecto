@@ -15,6 +15,8 @@ public class Model extends Observable {
 
     Point ubicacion;
 
+    ImagenModel mapa;
+
 
     public Model() {
         this.sucursales = new ArrayList<>();
@@ -43,6 +45,14 @@ public class Model extends Observable {
 
     public void setUbicacion(Point ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public ImagenModel getMapa() {
+        return mapa;
+    }
+
+    public void setMapa(ImagenModel mapa) {
+        this.mapa = mapa;
     }
 
     @Override

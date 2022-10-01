@@ -9,6 +9,11 @@ import java.util.Observer;
 public class View implements Observer {
     private JTabbedPane tabbedPane;
 
+
+
+    ControllerPrincipal controller;
+    Model model;
+
     public View() {
 
     }
@@ -17,8 +22,6 @@ public class View implements Observer {
         return tabbedPane;
     }
 
-    ControllerPrincipal controller;
-    Model model;
 
     public void setController(ControllerPrincipal controller) {
         this.controller = controller;

@@ -112,7 +112,7 @@ public class Controller {
         Table header = new Table(1);
         header.setWidth(400);
         header.setHorizontalAlignment(HorizontalAlignment.CENTER);
-        header.addCell(getCell(new Paragraph("Sistema Integrado SISE: Sucursales y Empleados").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
+        header.addCell(getCell(new Paragraph("Sistema Integrado SISE: Sucursales y Empleados, PDF DE EMPLEADOS").setFont(font).setBold().setFontSize(20f), TextAlignment.CENTER,false));
         header.addCell(getCell(new Image(ImageDataFactory.create("logo.jpg")), HorizontalAlignment.CENTER,false));
         document.add(header);
 
@@ -120,15 +120,15 @@ public class Controller {
 
         Color bkg = ColorConstants.RED;
         Color frg= ColorConstants.WHITE;
-        Table body = new Table(5);
+        Table body = new Table(7);
         body.setWidth(400);
         body.setHorizontalAlignment(HorizontalAlignment.CENTER);
         body.addCell(getCell(new Paragraph("Cedula").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Nombre").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Telefono").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Salario").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
-        //body.addCell(getCell(new Paragraph("Sucursal").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
-        //body.addCell(getCell(new Paragraph("%Zonaje").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+        body.addCell(getCell(new Paragraph("Sucursal").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
+        body.addCell(getCell(new Paragraph("%Zonaje").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
         body.addCell(getCell(new Paragraph("Sal. Total").setBackgroundColor(bkg).setFontColor(frg),TextAlignment.CENTER,true));
 
         for(Empleado e: model.getEmpleados()){
@@ -136,8 +136,8 @@ public class Controller {
             body.addCell(getCell(new Paragraph(e.getNombre()),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(e.getTelefono()),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(e.getSalario()+""),TextAlignment.CENTER,true));
-            // body.addCell(getCell(new Paragraph(e.getSucursal().getReferencia()),TextAlignment.CENTER,true));
-            //body.addCell(getCell(new Paragraph(e.getSucursal().getZonaje()+""),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(e.getSucursal().getReferencia()),TextAlignment.CENTER,true));
+            body.addCell(getCell(new Paragraph(e.getSucursal().getZonaje()+""),TextAlignment.CENTER,true));
             body.addCell(getCell(new Paragraph(e.calSalTotal()+""),TextAlignment.CENTER,true));
 
         }

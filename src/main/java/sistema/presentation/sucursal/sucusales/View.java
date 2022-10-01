@@ -28,7 +28,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
 
     private JTable sucursales;
 
-    Point ubicacion;
+
 
 
     public View() {
@@ -80,8 +80,8 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 if (e.getClickCount() == 2) {
                     controller.editar(row);
                 }else if(e.getClickCount() == 1){
-                    ubicacion = controller.getPoint(row);
-                    mapa.setPoint(ubicacion);
+                    model.setUbicacion( controller.getPoint(row));
+                    mapa.setPoint(model.getUbicacion());
                     JLabel imagen = mapa.mostrarUbicaciones();
                     mapaLabel.setIcon(imagen.getIcon());
                 }

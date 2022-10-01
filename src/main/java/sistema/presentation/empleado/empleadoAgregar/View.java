@@ -22,8 +22,6 @@ import javax.swing.border.Border;
 public class View extends javax.swing.JFrame implements java.util.Observer {
     Controller controller;
     Model model;
-    ImagenModel mapa;
-    Point ubicacion;
 
     private JPanel panel1;
     private JTextField sucursalEmpleadoTxt;
@@ -221,13 +219,13 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                 Sucursal sucursal = controller.getSucursalFromPoint(point);
                  if(sucursal != null) {
 //                     if(e.getPoint().getX() != point.getX() && e.getPoint().getY() != point.getY() || e.getPoint().getX() == point.getX() && e.getPoint().getY() == point.getY())
-                     ubicacion = controller.getPoint(sucursal);
-                     mapa.setUbicSucursal(ubicacion);
-                     JLabel imagen = mapa.mostrarUbicaciones();
+                     model.setUbicacion(controller.getPoint(sucursal));
+                     model.getMapa().setUbicSucursal(model.getUbicacion());
+                     JLabel imagen = model.getMapa().mostrarUbicaciones();
                      jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText(sucursal.getReferencia());
                  }else {
-                     JLabel imagen = mapa.mostrarUbicaciones();
+                     JLabel imagen = model.getMapa().mostrarUbicaciones();
                      jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText("");
                  }
@@ -324,8 +322,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
 
-        mapa = new ImagenModel(Service.instance().getPointSucursales());
-        JLabel imagen = mapa.mostrarUbicaciones();
+        model.setMapa(new ImagenModel(Service.instance().getPointSucursales()));
+        JLabel imagen = model.getMapa().mostrarUbicaciones();
         jLabelMapa.setIcon(imagen.getIcon());
         this.panel1.revalidate();
     }

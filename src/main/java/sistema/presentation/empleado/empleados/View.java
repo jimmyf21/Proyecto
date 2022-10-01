@@ -22,6 +22,9 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
     private JButton reporteEmpleado;
     private JLabel nombreLbl;
 
+    Controller controller;
+    Model model;
+
 
     public View() {
 
@@ -93,8 +96,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
             }
         });
     }
-    Controller controller;
-    Model model;
+
 
     public void setController(Controller controllerPrincipal){
         this.controller = controllerPrincipal;

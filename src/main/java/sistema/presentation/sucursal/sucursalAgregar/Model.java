@@ -14,6 +14,8 @@ public class Model extends Observable{
 
     Point ubicacionActual;
 
+    Point ubicacion;
+
     public int getModo() {
         return modo;
     }
@@ -37,6 +39,14 @@ public class Model extends Observable{
 
     public void setUbicacionActual(Point ubicacionActual) {
         this.ubicacionActual = ubicacionActual;
+    }
+
+    public Point getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Point ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     @Override

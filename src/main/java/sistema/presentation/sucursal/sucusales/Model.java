@@ -13,6 +13,8 @@ public class Model extends Observable {
 
     List<Point> ubicSucursales;
 
+    Point ubicacion;
+
 
     public Model() {
         this.sucursales = new ArrayList<>();
@@ -33,6 +35,14 @@ public class Model extends Observable {
 
     public void setUbicSucursales(List<Point> ubicSucursales) {
         this.ubicSucursales = ubicSucursales;
+    }
+
+    public Point getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Point ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     @Override

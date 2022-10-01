@@ -25,7 +25,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
     Controller controller;
     Model model;
 
-    Point ubicacion;
+
     public View() {
 
         cancelarSucursalBtn.addMouseListener(new MouseAdapter() {
@@ -81,14 +81,15 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                             Sucursal s = new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado);
                             Point p = new Point();
                             if(model.getModo() == Application.MODO_EDITAR) {
-                                if (ubicacion == null) {
+                                if (model.getUbicacion() == null) {
                                     p = controller.getUbicacionActual(s);
-                                    if (!p.equals(ubicacion)) {
-                                        ubicacion = p;
+                                    if (!p.equals(model.getUbicacion())) {
+                                        model.setUbicacion( p);
+
                                     }
                                 }
                             }
-                               Boolean b = controller.SucursalAdd(s, ubicacion);
+                               Boolean b = controller.SucursalAdd(s, model.getUbicacion());
                                if(b){
                                    resetLabelsTxt();
                                    clearBordersFields();
@@ -102,7 +103,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
                             JOptionPane.WARNING_MESSAGE);
                 }
-                ubicacion = null;
+                model.setUbicacion(null);
             }
         });
         referenciaSucursalTxt.addKeyListener(new KeyAdapter(){
@@ -138,7 +139,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         double zonajeParseado = Double.valueOf(campoZonaje);
                         if (JOptionPane.OK_OPTION == value) {
                             try {
-                                Boolean b = controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), ubicacion);
+                                Boolean b = controller.SucursalAdd(new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado), model.getUbicacion());
                                 if (b) {
                                     resetLabelsTxt();
                                     clearBordersFields();
@@ -151,7 +152,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         JOptionPane.showMessageDialog(null, "¡Los campos no pueden estar vacios!", "Aviso",
                                 JOptionPane.WARNING_MESSAGE);
                     }
-                    ubicacion = null;
+                    model.setUbicacion(null);
                 }
             }
         });
@@ -204,9 +205,9 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel sucurs = new JLabel();
-                ubicacion = e.getPoint();
-                model.setUbicacionActual(ubicacion);
-                ImagenModel imagen = new ImagenModel(ubicacion);
+                model.setUbicacion(e.getPoint());;
+                model.setUbicacionActual(model.getUbicacion());
+                ImagenModel imagen = new ImagenModel(model.getUbicacion());
                 sucurs = imagen.mostrarUbicaciones();
                 mapaLabel.setIcon(sucurs.getIcon());
             }
@@ -251,7 +252,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             zonajeSucursalTxt.setToolTipText(null);
         }
         if(model.getModo() == Application.MODO_AGREGAR){
-            if(ubicacion == null) {
+            if(model.getUbicacion() == null) {
                 valid = false;
                 mapaLabel.setBorder(Application.BORDER_ERROR);
             }

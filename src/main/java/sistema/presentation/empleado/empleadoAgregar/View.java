@@ -232,10 +232,13 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                      JLabel imagen = model.getMapa().mostrarUbicaciones();
                      jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText(sucursal.getReferencia());
+                     sucursalEmpleadoTxt.setDisabledTextColor(Color.RED);
+
                  }else {
                      JLabel imagen = model.getMapa().mostrarUbicaciones();
                      jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText("");
+
                  }
             }
         });

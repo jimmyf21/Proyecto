@@ -55,8 +55,14 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     if (JOptionPane.OK_OPTION == value) {
                         try {
                             Sucursal s = new Sucursal(campoCodigo, campoReferencia, campoDireccion, zonajeParseado);
+                            Point p = new Point();
                             if(model.getModo() == Application.MODO_EDITAR) {
-                                ubicacion = controller.getUbicacionActual(s);
+                                if (ubicacion == null) {
+                                    p = controller.getUbicacionActual(s);
+                                    if (!p.equals(ubicacion)) {
+                                        ubicacion = p;
+                                    }
+                                }
                             }
                                Boolean b = controller.SucursalAdd(s, ubicacion);
                                if(b){

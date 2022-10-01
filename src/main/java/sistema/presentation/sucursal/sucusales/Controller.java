@@ -2,18 +2,15 @@ package sistema.presentation.sucursal.sucusales;
 
 import com.itextpdf.layout.element.Image;
 import sistema.application.Application;
-import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
 
 import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -24,8 +21,6 @@ import com.itextpdf.layout.properties.TextAlignment;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.List;
 
 public class Controller {
@@ -66,7 +61,7 @@ public class Controller {
         String codigo = model.getSucursales().get(row).getCodigo();
         Sucursal sucursal=null;
         try {
-            sucursal= Service.instance().sucursaleSearchForCode(codigo);
+            sucursal= Service.instance().sucursalSearchForCode(codigo);
             Application.SUCURSAL_AGREGAR.getUbicacionActual(sucursal);
             Application.SUCURSAL_AGREGAR.SucursalEdit(sucursal);
         } catch (Exception ex) {}
@@ -85,7 +80,7 @@ public class Controller {
 
     public Point getPoint(int row){
         String codigo = model.getSucursales().get(row).getCodigo();
-        Sucursal sucursal=Service.instance().sucursaleSearchForCode(codigo);
+        Sucursal sucursal=Service.instance().sucursalSearchForCode(codigo);
         return Service.instance().getPointSucursal(sucursal);
     }
 

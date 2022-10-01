@@ -2,19 +2,13 @@ package sistema.presentation.empleado.empleadoAgregar;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
 import java.util.Observable;
 
 import sistema.application.Application;
 import sistema.logic.Empleado;
 import sistema.logic.Service;
 import sistema.logic.Sucursal;
-import sistema.presentation.empleado.empleadoAgregar.ImagenModel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -92,7 +86,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                                Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
+                                Sucursal s = Service.instance().sucursalSearch(campoSucursal);
                                 if(s != null) {
 
                                     Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
@@ -137,7 +131,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         double salarioParsiado = Double.valueOf(campoSalario);
                         if (JOptionPane.OK_OPTION == value) {
                             try {
-                                Sucursal s = Service.instance().sucursaleSearch(campoSucursal);
+                                Sucursal s = Service.instance().sucursalSearch(campoSucursal);
                                 if(s != null) {
 
                                     Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));

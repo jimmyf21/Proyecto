@@ -10,6 +10,7 @@ import jakarta.xml.bind.annotation.XmlIDREF;
 public class Empleado {
     @XmlID
     private String cedula;
+
     private String nombre;
     private String telefono;
     private double salario;

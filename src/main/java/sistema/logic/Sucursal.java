@@ -9,6 +9,7 @@ import jakarta.xml.bind.annotation.XmlIDREF;
 public class Sucursal {
     @XmlID
     private String codigo;
+
     private String referencia;
     private String direccion;
     private double zonaje;

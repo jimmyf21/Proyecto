@@ -82,7 +82,7 @@ public class Service {
     public void sucursalUpdate(Sucursal sucursal, Point p) throws Exception{
         Sucursal result;
         try{
-            result = sucursaleSearchForCode(sucursal.getCodigo());
+            result = sucursalSearchForCode(sucursal.getCodigo());
             data.getSucursales().remove(result);
             for (Punto punto: data.getUbicSucursales()) {
                 if (punto.getSucursalCodigo().equals(sucursal.getCodigo())){
@@ -103,12 +103,12 @@ public class Service {
         return result;
     }
 
-    public Sucursal sucursaleSearch(String referencia){
+    public Sucursal sucursalSearch(String referencia){
         Sucursal result = data.getSucursales().stream().filter(c->c.getReferencia().equals(referencia)).findFirst().orElse(null);
         return result;
     }
 
-    public Sucursal sucursaleSearchForCode(String codigo){
+    public Sucursal sucursalSearchForCode(String codigo){
         Sucursal result = data.getSucursales().stream().filter(c->c.getCodigo().equals(codigo)).findFirst().orElse(null);
         return result;
     }

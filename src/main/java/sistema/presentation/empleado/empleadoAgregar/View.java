@@ -48,6 +48,29 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         });
 
 
+        salarioEmpleadoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                String key = String.valueOf(e.getKeyChar());
+                if (!key.matches("[0-9]")) {
+                    e.consume();
+                }
+
+            }
+        });
+
+        telefonoEmpleadoTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                String key = String.valueOf(e.getKeyChar());
+                if (!key.matches("[0-9]")) {
+                    e.consume();
+                }
+
+            }
+        });
+
+
         guardarEmpleadoBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

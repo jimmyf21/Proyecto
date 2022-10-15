@@ -25,6 +25,10 @@ public class Sucursal {
         this.punto = punto;
     }
 
+    public void setPuntoXY(int x, int y){
+        this.punto = new Punto(x, y);
+    }
+
     public Sucursal(String codigo, String referencia, String direccion, double zonaje) {
         this.codigo = codigo;
         this.referencia = referencia;

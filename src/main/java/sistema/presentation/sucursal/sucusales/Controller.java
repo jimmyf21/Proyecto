@@ -32,7 +32,11 @@ public class Controller {
         this.model = model;
         this.view = view;
         model.setSucursales(new ArrayList<>());
-        model.setSucursales(Service.instance().sucursalAll());
+        try {
+            model.setSucursales(Service.instance().sucursalAll());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         view.setModel(model);
         view.setController(this);
@@ -52,7 +56,12 @@ public class Controller {
 
 
     public void searchSucursal(String filtro){
-        List<Sucursal> rows = Service.instance().sucursalesSearch(filtro);
+        List<Sucursal> rows = null;
+        try {
+            rows = Service.instance().sucursalesSearch(filtro);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         model.setSucursales(rows);
         model.commit();
     }
@@ -80,7 +89,12 @@ public class Controller {
 
     public Point getPoint(int row){
         String codigo = model.getSucursales().get(row).getCodigo();
-        Sucursal sucursal=Service.instance().sucursalSearchForCode(codigo);
+        Sucursal sucursal= null;
+        try {
+            sucursal = Service.instance().sucursalSearchForCode(codigo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return Service.instance().getPointSucursal(sucursal);
     }
 

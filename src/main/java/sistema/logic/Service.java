@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import sistema.data.Data;
 import sistema.data.XmlPersister;
 
+import sistema.data.SucursalDao;
+
 import javax.swing.*;
 
 public class Service {
@@ -75,71 +77,123 @@ public class Service {
 
     // ***************  Sucursal  *******************
 
+    private SucursalDao sucursalDao;
+
     public Sucursal sucursalGet(String codigo) throws Exception{
-        return data.getSucursales().stream().filter(f->f.getCodigo().equals(codigo)).findFirst().orElse(null);
+        return sucursalDao.read(codigo);
+    }
+
+    public void sucursalAdd(Sucursal sucursal) throws Exception{
+        sucursalDao.create(sucursal);
     }
 
     public void sucursalUpdate(Sucursal sucursal, Point p) throws Exception{
         Sucursal result;
-        try{
-            result = sucursalSearchForCode(sucursal.getCodigo());
-            data.getSucursales().remove(result);
-            for (Punto punto: data.getUbicSucursales()) {
-                if (punto.getSucursalCodigo().equals(sucursal.getCodigo())){
+        result = sucursalSearchForCode(sucursal.getCodigo());
+        sucursalDao.delete(sucursal);
+           for (Punto punto: data.getUbicSucursales()) {
+               if (punto.getSucursalCodigo().equals(sucursal.getCodigo())){
                     punto.setX(p.getX());
-                    punto.setY(p.getY());
-                    sucursal.setPunto(punto);
-                }
-            }
-            data.getSucursales().add(sucursal);
-            JOptionPane.showMessageDialog(null, "Sucursal editado con exito");
-        }catch (Exception e) {
-            throw new Exception("Sucursal no existe");
-        }
+                   punto.setY(p.getY());
+                   sucursal.setPunto(punto);
+               }
+           }
+        sucursalDao.update(sucursal);
     }
 
-    public List<Sucursal> sucursalesSearch(String referencia){
-        List<Sucursal> result=data.getSucursales().stream().filter(f->f.getReferencia().startsWith(referencia)).collect(Collectors.toList());
-        return result;
+    public List<Sucursal> sucursalesSearch(String filtro) throws Exception {
+        return  sucursalDao.findByReferencia(filtro);
     }
 
-    public Sucursal sucursalSearch(String referencia){
-        Sucursal result = data.getSucursales().stream().filter(c->c.getReferencia().equals(referencia)).findFirst().orElse(null);
-        return result;
+    public Sucursal sucursalSearch(String referencia) throws Exception {
+        return  sucursalDao.findByReferencia(referencia).get(0);
     }
-
-    public Sucursal sucursalSearchForCode(String codigo){
-        Sucursal result = data.getSucursales().stream().filter(c->c.getCodigo().equals(codigo)).findFirst().orElse(null);
-        return result;
+    public Sucursal sucursalSearchForCode(String codigo) throws Exception {
+        return sucursalDao.findByCode(codigo);
     }
 
 
-    public void sucursalAdd(Sucursal sucursal, Point p) throws Exception{
-        Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
-        if (old==null){
-            Punto punto = addUbicSucursales(p, sucursal);
-            sucursal.setPunto(punto);
-            data.getSucursales().add(sucursal);
-            JOptionPane.showMessageDialog(null, "Guardado con exito");
-        }
-        else{
-            throw new Exception("Sucursal ya existe");
-        }
+
+    public List<Sucursal> sucursalAll() throws Exception{
+        return sucursalDao.findAll();
     }
 
     public void sucursalDelete(Sucursal sucursal) throws Exception {
-        Empleado e = data.getEmpleados().stream().filter(em -> em.getSucursal().getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
-        Punto p = data.getUbicSucursales().stream().filter(em -> em.getSucursalCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
-            if (e == null) {
-                data.getSucursales().remove(sucursal);
-                data.getUbicSucursales().remove(p);
-            }else{
-                JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+//        Empleado e = sucursalDao.getEmpleados().stream().filter(em -> em.getSucursal().getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
+//        Punto p = sucursalDao.getUbicSucursales().stream().filter(em -> em.getSucursalCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
+//            if (e == null) {
+//                sucursalDao.delete(sucursal);
+//                sucursalDao.getUbicSucursales().remove(p);
+//            }else{
+//                JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);
+//            }
     }
-    public List<Sucursal> sucursalAll(){
-        return data.getSucursales();
-    }
+
+//    public Sucursal sucursalGet(String codigo) throws Exception{
+//        return data.getSucursales().stream().filter(f->f.getCodigo().equals(codigo)).findFirst().orElse(null);
+//    }
+//
+//    public void sucursalUpdate(Sucursal sucursal, Point p) throws Exception{
+//        Sucursal result;
+//        try{
+//            result = sucursalSearchForCode(sucursal.getCodigo());
+//            data.getSucursales().remove(result);
+//            for (Punto punto: data.getUbicSucursales()) {
+//                if (punto.getSucursalCodigo().equals(sucursal.getCodigo())){
+//                    punto.setX(p.getX());
+//                    punto.setY(p.getY());
+//                    sucursal.setPunto(punto);
+//                }
+//            }
+//            data.getSucursales().add(sucursal);
+//            JOptionPane.showMessageDialog(null, "Sucursal editado con exito");
+//        }catch (Exception e) {
+//            throw new Exception("Sucursal no existe");
+//        }
+//    }
+//
+//    public List<Sucursal> sucursalesSearch(String referencia){
+//        List<Sucursal> result=data.getSucursales().stream().filter(f->f.getReferencia().startsWith(referencia)).collect(Collectors.toList());
+//        return result;
+//    }
+//
+//    public Sucursal sucursalSearch(String referencia){
+//        Sucursal result = data.getSucursales().stream().filter(c->c.getReferencia().equals(referencia)).findFirst().orElse(null);
+//        return result;
+//    }
+//
+//    public Sucursal sucursalSearchForCode(String codigo){
+//        Sucursal result = data.getSucursales().stream().filter(c->c.getCodigo().equals(codigo)).findFirst().orElse(null);
+//        return result;
+//    }
+//
+//
+//    public void sucursalAdd(Sucursal sucursal, Point p) throws Exception{
+//        Sucursal old= data.getSucursales().stream().filter(c->c.getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
+//        if (old==null){
+//            Punto punto = addUbicSucursales(p, sucursal);
+//            sucursal.setPunto(punto);
+//            data.getSucursales().add(sucursal);
+//            JOptionPane.showMessageDialog(null, "Guardado con exito");
+//        }
+//        else{
+//            throw new Exception("Sucursal ya existe");
+//        }
+//    }
+//
+//    public void sucursalDelete(Sucursal sucursal) throws Exception {
+//        Empleado e = data.getEmpleados().stream().filter(em -> em.getSucursal().getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
+//        Punto p = data.getUbicSucursales().stream().filter(em -> em.getSucursalCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
+//            if (e == null) {
+//                data.getSucursales().remove(sucursal);
+//                data.getUbicSucursales().remove(p);
+//            }else{
+//                JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//    }
+//    public List<Sucursal> sucursalAll(){
+//        return data.getSucursales();
+//    }
 
     // *****************  Pointers  *****************
 
@@ -195,6 +249,7 @@ public class Service {
         }
     }
     public Service() {
+        sucursalDao= new SucursalDao();
         try{
             data=XmlPersister.instance().load();
         }

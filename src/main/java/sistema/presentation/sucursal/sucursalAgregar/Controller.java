@@ -63,7 +63,10 @@ public class Controller {
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
-                    Service.instance().sucursalAdd(sucursal, p);
+                    int x = (int) p.getX();
+                    int y = (int) p.getY();
+                    sucursal.setPuntoXY(x,y);
+                    Service.instance().sucursalAdd(sucursal);
                     Service.instance().store();
                     s = Service.instance().sucursalGet(sucursal.getCodigo());
                     break;

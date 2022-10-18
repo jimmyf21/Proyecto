@@ -84,21 +84,29 @@ public class Service {
     }
 
     public void sucursalAdd(Sucursal sucursal) throws Exception{
-        sucursalDao.create(sucursal);
+        Sucursal old= sucursalDao.findByCode(sucursal.getCodigo());
+        if (old==null){
+            Point punto2 = new Point((int) sucursal.getPunto().getX(), (int) sucursal.getPunto().getY());
+            Punto punto = addUbicSucursales(punto2, sucursal);
+            sucursal.setPunto(punto);
+            sucursalDao.create(sucursal);
+            JOptionPane.showMessageDialog(null, "Guardado con exito");
+        }
+        else{
+            throw new Exception("Sucursal ya existe");
+        }
     }
 
     public void sucursalUpdate(Sucursal sucursal, Point p) throws Exception{
+
         Sucursal result;
-        result = sucursalSearchForCode(sucursal.getCodigo());
-        sucursalDao.delete(sucursal);
-           for (Punto punto: data.getUbicSucursales()) {
-               if (punto.getSucursalCodigo().equals(sucursal.getCodigo())){
-                    punto.setX(p.getX());
-                   punto.setY(p.getY());
-                   sucursal.setPunto(punto);
-               }
-           }
-        sucursalDao.update(sucursal);
+        try{
+            sucursal.setPunto(new Punto(p.x, p.y));
+            sucursalDao.update(sucursal);
+            JOptionPane.showMessageDialog(null, "Sucursal editada con exito");
+        }catch (Exception e) {
+            throw new Exception("Sucursal no existe");
+        }
     }
 
     public List<Sucursal> sucursalesSearch(String filtro) throws Exception {

@@ -78,14 +78,21 @@ public class SucursalDao {
     }
 
     public List<Sucursal> findAll() throws Exception {
-        String sql = "select * from Sucursal";
-        PreparedStatement stm = db.prepareStatement(sql);
-        ResultSet rs = db.executeQuery(stm);
-        List<Sucursal> sucursales = new ArrayList<>();
-        while (rs.next()) {
-            sucursales.add(from(rs, "s"));
+        List<Sucursal> resultado = new ArrayList<>();
+
+        try {
+            String sql = "select * from Sucursal s";
+            PreparedStatement stm = db.prepareStatement(sql);
+            ResultSet rs = db.executeQuery(stm);
+            Sucursal s;
+            while (rs.next()) {
+                s = from(rs, "s");
+                resultado.add(s);
+            }
+        } catch (SQLException ex) {
+
         }
-        return sucursales;
+        return resultado;
     }
 
     public List<Sucursal> findByReferencia(String referencia) throws Exception {
@@ -124,8 +131,7 @@ public class SucursalDao {
         e.setReferencia(rs.getString(alias + ".referencia"));
         e.setDireccion(rs.getString(alias + ".direccion"));
         e.setZonaje((float) rs.getDouble(alias + ".zonaje"));
-        e.getPunto().setX(rs.getInt(alias + ".ubicacionX"));
-        e.getPunto().setY(rs.getInt(alias + ".ubicacionY"));
+        e.setPuntoXY(rs.getInt(alias + ".ubicacionX"), rs.getInt(alias + ".ubicacionY"));
         return e;
     }
 

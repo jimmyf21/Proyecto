@@ -32,19 +32,16 @@ public class EmpleadoDao {
     }
 
     public Empleado read(String cedula) throws Exception {
-        Empleado e = new Empleado();
         String sql = "select " +
                 "* " +
-                "from Empleado e " +
+                "from  Empleado e " +
                 "where e.cedula=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, cedula);
         ResultSet rs = db.executeQuery(stm);
         if (rs.next()) {
-            e = from(rs, "e");
-            e.setSucursal(SucursalDao.from(rs, "s"));
-            return e;
-        }else{
+            return from(rs, "e");
+        } else {
             throw new Exception("EMPLEADO NO EXISTE");
         }
 
@@ -76,22 +73,15 @@ public class EmpleadoDao {
     }
 
     public List<Empleado> findAll() throws Exception {
-        List<Empleado> resultado = new ArrayList<>();
-
-        try {
-            String sql = "select * from Empleado e";
-            PreparedStatement stm = db.prepareStatement(sql);
-            ResultSet rs = db.executeQuery(stm);
-            Empleado e;
-            while (rs.next()) {
-                e = from(rs, "e");
-                e.setSucursal(SucursalDao.from(rs, "s"));
-                resultado.add(e);
-            }
-        } catch (SQLException ex) {
-            throw new Exception("Error al buscar todos los empleados", ex);
+        List<Empleado> r = new ArrayList<>();
+        String sql = "select * from Empleado e";
+        PreparedStatement stm = db.prepareStatement(sql);
+        ResultSet rs = db.executeQuery(stm);
+        while (rs.next()) {
+            Empleado e = from(rs, "e");
+            r.add(e);
         }
-        return resultado;
+        return r;
     }
 
     public List<Empleado> findByCedula(String cedula) throws Exception {
@@ -130,13 +120,30 @@ public class EmpleadoDao {
         }
     }
 
+    public Empleado findBySucursal(String codigo) throws Exception {
+        Empleado e = new Empleado();
+        String sql = "select * " +
+                "from empleado e " +
+                "where e.sucursal=?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, codigo);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) {
+            e = from(rs, "e");
+            e.setSucursal(SucursalDao.from(rs, "s"));
+            return e;
+        }else{
+            return null;
+        }
+    }
+
     public Empleado from(ResultSet rs, String alias) throws Exception {
         Empleado e = new Empleado();
         e.setCedula(rs.getString(alias + ".cedula"));
         e.setNombre(rs.getString(alias + ".nombre"));
         e.setTelefono(rs.getString(alias + ".telefono"));
         e.setSalario((float) rs.getDouble(alias + ".salario"));
-       /* e.setSucursal(new SucursalDao().read(rs.getString(alias + ".sucursal")));*/
+        e.setSucursal(new SucursalDao().read(rs.getString(alias + ".sucursal")));
         return e;
     }
 }

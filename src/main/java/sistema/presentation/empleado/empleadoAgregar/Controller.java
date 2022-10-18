@@ -60,7 +60,7 @@ public class Controller {
         this.show();
     }
 
-    public Point getPoint(Sucursal sucursal){
+    public Point getPoint(Sucursal sucursal) throws Exception {
         return Service.instance().getPointSucursal(sucursal);
     }
 
@@ -79,6 +79,7 @@ public class Controller {
                     Service.instance().empleadoUpdate(e);
                     model.setEmpleado(e);
                     empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
+
                     break;
             }
             if(empleadoBuscar == null){
@@ -86,7 +87,7 @@ public class Controller {
             }else{
                 result = true;
             }
-            Application.EMPLEADOS.searchEmpleado("");
+            Application.EMPLEADOS.findAll();
             model.commit();
         }catch (Exception ex){
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -94,7 +95,7 @@ public class Controller {
         return result;
     }
 
-    public Sucursal getSucursalFromPoint(Point p){
+    public Sucursal getSucursalFromPoint(Point p) throws Exception {
        Sucursal s = Service.instance().getPoint(p);
        return s;
     }

@@ -91,7 +91,7 @@ public class Controller {
         return result;
     }
 
-    public Point getUbicacionActual(Sucursal s) {
+    public Point getUbicacionActual(Sucursal s) throws Exception {
         Point p = new Point(Service.instance().getPointSucursal(s));
         model.setUbicacionActual(p);
         if (p != null) {

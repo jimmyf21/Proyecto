@@ -81,7 +81,11 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 if (e.getClickCount() == 2) {
                     controller.editar(row);
                 }else if(e.getClickCount() == 1){
-                    model.setUbicacion( controller.getPoint(row));
+                    try {
+                        model.setUbicacion( controller.getPoint(row));
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
                     model.getMapa().setPoint(model.getUbicacion());
                     JLabel imagen = model.getMapa().mostrarUbicaciones();
                     mapaLabel.setIcon(imagen.getIcon());
@@ -140,7 +144,11 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
         sucursalesTable.setModel(new SucursalTableModel(cols, model.getSucursales()));
         sucursalesTable.setRowHeight(30);
 
-        model.setMapa(new ImagenModel(Service.instance().getPointSucursales()));
+        try {
+            model.setMapa(new ImagenModel(Service.instance().getPointSucursales()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         JLabel imagen = model.getMapa().mostrarUbicaciones();
         mapaLabel.setIcon(imagen.getIcon());
         this.panel.revalidate();

@@ -98,7 +98,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                                Sucursal s = Service.instance().sucursalSearch(campoSucursal);
+                                Sucursal s = Service.instance().sucursalGet(campoSucursal);
                                 if(s != null) {
 
                                     Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
@@ -143,7 +143,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         double salarioParsiado = Double.valueOf(campoSalario);
                         if (JOptionPane.OK_OPTION == value) {
                             try {
-                                Sucursal s = Service.instance().sucursalSearch(campoSucursal);
+                                Sucursal s = Service.instance().sucursalGet(campoSucursal);
                                 if(s != null) {
 
                                     Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
@@ -224,11 +224,20 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Point point = new Point((int) e.getPoint().getX(), (int) e.getPoint().getY());
-                Sucursal sucursal = controller.getSucursalFromPoint(point);
-                 if(sucursal != null) {
+                Sucursal sucursal = null;
+                try {
+                    sucursal = controller.getSucursalFromPoint(point);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+                if(sucursal != null) {
 //                     if(e.getPoint().getX() != point.getX() && e.getPoint().getY() != point.getY() || e.getPoint().getX() == point.getX() && e.getPoint().getY() == point.getY())
-                     model.setUbicacion(controller.getPoint(sucursal));
-                     model.getMapa().setUbicSucursal(model.getUbicacion());
+                    try {
+                        model.setUbicacion(controller.getPoint(sucursal));
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    model.getMapa().setUbicSucursal(model.getUbicacion());
                      JLabel imagen = model.getMapa().mostrarUbicaciones();
                      jLabelMapa.setIcon(imagen.getIcon());
                      sucursalEmpleadoTxt.setText(sucursal.getReferencia());
@@ -333,7 +342,11 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
 
-        model.setMapa(new ImagenModel(Service.instance().getPointSucursales()));
+        try {
+            model.setMapa(new ImagenModel(Service.instance().getPointSucursales()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         JLabel imagen = model.getMapa().mostrarUbicaciones();
         jLabelMapa.setIcon(imagen.getIcon());
         this.panel1.revalidate();

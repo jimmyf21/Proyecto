@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import sistema.logic.Punto;
+
+import java.awt.Point;
 
 public class SucursalDao {
     Database db;
@@ -46,7 +49,7 @@ public class SucursalDao {
         }
     }
 
-    public void update(Sucursal e) throws Exception {
+    public void update(Sucursal e, Point p) throws Exception {
         String sql = "update " +
                 "Sucursal " +
                 "set referencia=?, direccion=?, zonaje=?, ubicacionX=?, ubicacionY=?  " +
@@ -99,7 +102,7 @@ public class SucursalDao {
         List<Sucursal> resultado = new ArrayList<Sucursal>();
         String sql = "select * " +
                 "from " +
-                "sucursal s " +
+                "Sucursal s " +
                 "where s.referencia like ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, "%" + referencia + "%");
@@ -110,10 +113,23 @@ public class SucursalDao {
         return resultado;
     }
 
+    public List<Punto> getUbicSucursales() throws Exception {
+        List<Punto> resultado = new ArrayList<Punto>();
+        String sql = "select s.codigo, s.ubicacionX, s.ubicacionY " +
+                "from " +
+                "Sucursal s ";
+        PreparedStatement stm = db.prepareStatement(sql);
+        ResultSet rs = db.executeQuery(stm);
+        while (rs.next()) {
+            resultado.add(new Punto(rs.getInt("ubicacionX"), rs.getInt("ubicacionY"), rs.getString("codigo")));
+        }
+        return resultado;
+    }
+
     public Sucursal findByCode(String codigo) throws Exception {
         String sql = "select * " +
                 "from " +
-                "sucursal s " +
+                "Sucursal s " +
                 "where s.codigo = ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, codigo);
@@ -122,21 +138,6 @@ public class SucursalDao {
             return from(rs, "s");
         } else {
             throw new Exception("SUCURSAL NO EXISTE");
-        }
-    }
-
-    public Sucursal getSucursalEnBD(String codigo) throws Exception {
-        String sql = "select * " +
-                "from " +
-                "sucursal s " +
-                "where s.codigo = ?";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, codigo);
-        ResultSet rs = db.executeQuery(stm);
-        if (rs.next()) {
-            return from(rs, "s");
-        } else {
-            return null;
         }
     }
 

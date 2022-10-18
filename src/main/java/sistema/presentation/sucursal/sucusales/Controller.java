@@ -27,7 +27,7 @@ public class Controller {
     private Model model;
     private View view;
 
-    public Controller(View view, Model model) {
+    public Controller(View view, Model model) throws Exception {
         model.setUbicSucursales(Service.instance().getPointSucursales());
         this.model = model;
         this.view = view;
@@ -66,6 +66,17 @@ public class Controller {
         model.commit();
     }
 
+    public void findSucursal(){
+        List<Sucursal> rows = null;
+        try {
+            rows = Service.instance().sucursalAll();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        model.setSucursales(rows);
+        model.commit();
+    }
+
     public void editar(int row){
         String codigo = model.getSucursales().get(row).getCodigo();
         Sucursal sucursal=null;
@@ -80,14 +91,13 @@ public class Controller {
         Sucursal s = model.getSucursales().get(row);
         try {
             Service.instance().sucursalDelete(s);
-            Service.instance().store();
-            this.searchSucursal("");
+            findSucursal();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    public Point getPoint(int row){
+    public Point getPoint(int row) throws Exception {
         String codigo = model.getSucursales().get(row).getCodigo();
         Sucursal sucursal= null;
         try {

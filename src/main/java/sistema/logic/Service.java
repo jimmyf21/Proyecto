@@ -84,6 +84,14 @@ public class Service {
         sucursalDao.delete(sucursal);
     }
 
+    public Sucursal sucursalSearch(String codigo) throws Exception {
+        return sucursalDao.findByCode(codigo);
+    }
+
+    public Sucursal findSucursalByPoint(Point p) throws Exception {
+        return sucursalDao.findByPoint(p);
+    }
+
     // *****************  Pointers  *****************
 
 

@@ -58,8 +58,8 @@ public class SucursalDao {
         stm.setString(1, e.getReferencia());
         stm.setString(2, e.getDireccion());
         stm.setDouble(3, e.getZonaje());
-        stm.setInt(4, (int) e.getPunto().getX());
-        stm.setInt(5, (int) e.getPunto().getY());
+        stm.setInt(4, (int) p.getX());
+        stm.setInt(5, (int) p.getY());
         stm.setString(6, e.getCodigo());
         int count = db.executeUpdate(stm);
         if (count == 0) {
@@ -139,6 +139,27 @@ public class SucursalDao {
         } else {
             throw new Exception("SUCURSAL NO EXISTE");
         }
+    }
+
+    public Sucursal findByPoint(Point p){
+        Sucursal s = null;
+        try {
+            String sql = "select * " +
+                    "from " +
+                    "Sucursal s " +
+                    "where s.ubicacionX = ? and s.ubicacionY = ?";
+            PreparedStatement stm = db.prepareStatement(sql);
+            stm.setInt(1, (int) p.getX());
+            stm.setInt(2, (int) p.getY());
+            ResultSet rs = db.executeQuery(stm);
+            if (rs.next()) {
+                s = from(rs, "s");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return s;
+
     }
 
 

@@ -81,11 +81,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 if (e.getClickCount() == 2) {
                     controller.editar(row);
                 }else if(e.getClickCount() == 1){
-                    try {
-                        model.setUbicacion( controller.getPoint(row));
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    model.setUbicacion( controller.getPoint(row));
                     model.getMapa().setPoint(model.getUbicacion());
                     JLabel imagen = model.getMapa().mostrarUbicaciones();
                     mapaLabel.setIcon(imagen.getIcon());

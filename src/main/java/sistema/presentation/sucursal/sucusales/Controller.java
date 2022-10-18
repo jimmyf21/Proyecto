@@ -27,8 +27,12 @@ public class Controller {
     private Model model;
     private View view;
 
-    public Controller(View view, Model model) throws Exception {
-        model.setUbicSucursales(Service.instance().getPointSucursales());
+    public Controller(View view, Model model) {
+        try {
+            model.setUbicSucursales(Service.instance().getPointSucursales());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         this.model = model;
         this.view = view;
         model.setSucursales(new ArrayList<>());
@@ -66,20 +70,9 @@ public class Controller {
         model.commit();
     }
 
-    public void findSucursal(){
-        List<Sucursal> rows = null;
-        try {
-            rows = Service.instance().sucursalAll();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        model.setSucursales(rows);
-        model.commit();
-    }
-
     public void editar(int row){
         String codigo = model.getSucursales().get(row).getCodigo();
-        Sucursal sucursal=null;
+        Sucursal sucursal;
         try {
             sucursal= Service.instance().sucursalSearchForCode(codigo);
             Application.SUCURSAL_AGREGAR.getUbicacionActual(sucursal);
@@ -91,13 +84,14 @@ public class Controller {
         Sucursal s = model.getSucursales().get(row);
         try {
             Service.instance().sucursalDelete(s);
-            findSucursal();
+            Service.instance().store();
+            this.searchSucursal("");
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    public Point getPoint(int row) throws Exception {
+    public Point getPoint(int row){
         String codigo = model.getSucursales().get(row).getCodigo();
         Sucursal sucursal= null;
         try {
@@ -105,7 +99,11 @@ public class Controller {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return Service.instance().getPointSucursal(sucursal);
+        try {
+            return Service.instance().getPointSucursal(sucursal);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Cell getCell( Paragraph paragraph,TextAlignment alignment,boolean hasBorder) {

@@ -28,7 +28,20 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
 
     public View() {
 
+        nombreEmpleado.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                int key = e.getKeyChar();
+                boolean mayusculas = key >= 65 && key <= 90;
+                boolean minusculas = key >= 97 && key <= 122;
+                boolean espacio = key == 32;
 
+                if (!(minusculas || mayusculas || espacio))
+                {
+                    e.consume();
+                }
+            }
+        });
         buscarEmpleado.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -40,7 +53,16 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                 }
             }
         });
-
+        nombreEmpleado.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                try {
+                    controller.searchEmpleado(nombreEmpleado.getText());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         agregarEmpleado.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,11 +74,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     int row = empleadosTable.getSelectedRow();
-                    try {
-                        controller.editar(row);
-                    } catch (Exception ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    controller.editar(row);
                 }
             }
         });
@@ -79,12 +97,6 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                         Desktop.getDesktop().open(myFile);
                     }
                 } catch (Exception ex) { }
-            }
-        });
-        nombreEmpleado.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                controller.searchEmpleado(nombreEmpleado.getText());
             }
         });
     }

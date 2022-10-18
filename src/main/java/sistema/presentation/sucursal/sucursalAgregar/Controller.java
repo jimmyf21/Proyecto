@@ -63,9 +63,7 @@ public class Controller {
         try {
             switch (model.getModo()) {
                 case Application.MODO_AGREGAR:
-                    int x = (int) p.getX();
-                    int y = (int) p.getY();
-                    sucursal.setPuntoXY(x,y);
+                    sucursal.setPuntoXY((int) p.getX(), (int) p.getY());
                     Service.instance().sucursalAdd(sucursal);
                     Service.instance().store();
                     s = Service.instance().sucursalGet(sucursal.getCodigo());
@@ -91,8 +89,13 @@ public class Controller {
         return result;
     }
 
-    public Point getUbicacionActual(Sucursal s) throws Exception {
-        Point p = new Point(Service.instance().getPointSucursal(s));
+    public Point getUbicacionActual(Sucursal s) {
+        Point p = null;
+        try {
+            p = new Point(Service.instance().getPointSucursal(s));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         model.setUbicacionActual(p);
         if (p != null) {
             return p;

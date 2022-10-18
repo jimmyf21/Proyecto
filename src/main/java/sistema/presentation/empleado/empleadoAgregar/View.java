@@ -32,7 +32,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
 
     public View() {
 
-       cancelarEmpleadoBtn.addMouseListener(new MouseAdapter() {
+        cancelarEmpleadoBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 resetLabelsTxt();
@@ -98,18 +98,18 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                                Sucursal s = Service.instance().sucursalGet(campoSucursal);
-                                if(s != null) {
+                            Sucursal s = Service.instance().sucursalSearch(campoSucursal);
+                            if(s != null) {
 
-                                    Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
-                                    if(b){
-                                        resetLabelsTxt();
-                                        clearBordersFields();
-                                        controller.hide();
-                                    }
-                                }else{
-                                    JOptionPane.showMessageDialog (null, "Sucursal no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                                Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
+                                if(b){
+                                    resetLabelsTxt();
+                                    clearBordersFields();
+                                    controller.hide();
                                 }
+                            }else{
+                                JOptionPane.showMessageDialog (null, "Sucursal no existe", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -143,7 +143,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         double salarioParsiado = Double.valueOf(campoSalario);
                         if (JOptionPane.OK_OPTION == value) {
                             try {
-                                Sucursal s = Service.instance().sucursalGet(campoSucursal);
+                                Sucursal s = Service.instance().sucursalSearch(campoSucursal);
                                 if(s != null) {
 
                                     Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
@@ -224,12 +224,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Point point = new Point((int) e.getPoint().getX(), (int) e.getPoint().getY());
-                Sucursal sucursal = null;
-                try {
-                    sucursal = controller.getSucursalFromPoint(point);
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
+                Sucursal sucursal = controller.getSucursalFromPoint(point);
                 if(sucursal != null) {
 //                     if(e.getPoint().getX() != point.getX() && e.getPoint().getY() != point.getY() || e.getPoint().getX() == point.getX() && e.getPoint().getY() == point.getY())
                     try {
@@ -238,17 +233,17 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                         throw new RuntimeException(ex);
                     }
                     model.getMapa().setUbicSucursal(model.getUbicacion());
-                     JLabel imagen = model.getMapa().mostrarUbicaciones();
-                     jLabelMapa.setIcon(imagen.getIcon());
-                     sucursalEmpleadoTxt.setText(sucursal.getReferencia());
-                     sucursalEmpleadoTxt.setDisabledTextColor(Color.RED);
+                    JLabel imagen = model.getMapa().mostrarUbicaciones();
+                    jLabelMapa.setIcon(imagen.getIcon());
+                    sucursalEmpleadoTxt.setText(sucursal.getReferencia());
+                    sucursalEmpleadoTxt.setDisabledTextColor(Color.RED);
 
-                 }else {
-                     JLabel imagen = model.getMapa().mostrarUbicaciones();
-                     jLabelMapa.setIcon(imagen.getIcon());
-                     sucursalEmpleadoTxt.setText("");
+                }else {
+                    JLabel imagen = model.getMapa().mostrarUbicaciones();
+                    jLabelMapa.setIcon(imagen.getIcon());
+                    sucursalEmpleadoTxt.setText("");
 
-                 }
+                }
             }
         });
     }

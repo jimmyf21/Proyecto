@@ -60,7 +60,7 @@ public class Controller {
         this.show();
     }
 
-    public Point getPoint(Sucursal sucursal) throws Exception {
+    public Point getPoint(Sucursal sucursal) throws Exception{
         return Service.instance().getPointSucursal(sucursal);
     }
 
@@ -73,13 +73,12 @@ public class Controller {
                     Service.instance().empleadoAdd(e);
                     Service.instance().store();
                     model.setEmpleado(e);
-                     empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
+                    empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
                     break;
                 case Application.MODO_EDITAR:
                     Service.instance().empleadoUpdate(e);
                     model.setEmpleado(e);
                     empleadoBuscar = Service.instance().empleadoGet(e.getCedula());
-
                     break;
             }
             if(empleadoBuscar == null){
@@ -87,7 +86,7 @@ public class Controller {
             }else{
                 result = true;
             }
-            Application.EMPLEADOS.findAll();
+            Application.EMPLEADOS.searchEmpleado("");
             model.commit();
         }catch (Exception ex){
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -95,9 +94,14 @@ public class Controller {
         return result;
     }
 
-    public Sucursal getSucursalFromPoint(Point p) throws Exception {
-       Sucursal s = Service.instance().getPoint(p);
-       return s;
+    public Sucursal getSucursalFromPoint(Point p){
+        Sucursal s = null;
+        try {
+            s = Service.instance().findSucursalByPoint(p);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return s;
     }
 
 

@@ -89,12 +89,12 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                                     }
                                 }
                             }
-                               Boolean b = controller.SucursalAdd(s, model.getUbicacion());
-                               if(b){
-                                   resetLabelsTxt();
-                                   clearBordersFields();
-                                   controller.hide();
-                               }
+                            Boolean b = controller.SucursalAdd(s, model.getUbicacion());
+                            if(b){
+                                resetLabelsTxt();
+                                clearBordersFields();
+                                controller.hide();
+                            }
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }

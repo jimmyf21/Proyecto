@@ -125,6 +125,23 @@ public class SucursalDao {
         }
     }
 
+    public Sucursal getSucursalEnBD(String codigo) throws Exception {
+        String sql = "select * " +
+                "from " +
+                "sucursal s " +
+                "where s.codigo = ?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, codigo);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) {
+            return from(rs, "s");
+        } else {
+            return null;
+        }
+    }
+
+
+
     public Sucursal from(ResultSet rs, String alias) throws Exception {
         Sucursal e = new Sucursal();
         e.setCodigo(rs.getString(alias + ".codigo"));

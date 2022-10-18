@@ -84,7 +84,7 @@ public class Service {
     }
 
     public void sucursalAdd(Sucursal sucursal) throws Exception{
-        Sucursal old= sucursalDao.findByCode(sucursal.getCodigo());
+        Sucursal old= sucursalDao.getSucursalEnBD(sucursal.getCodigo());
         if (old==null){
             Point punto2 = new Point((int) sucursal.getPunto().getX(), (int) sucursal.getPunto().getY());
             Punto punto = addUbicSucursales(punto2, sucursal);
@@ -130,11 +130,11 @@ public class Service {
 //        Empleado e = sucursalDao.getEmpleados().stream().filter(em -> em.getSucursal().getCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
 //        Punto p = sucursalDao.getUbicSucursales().stream().filter(em -> em.getSucursalCodigo().equals(sucursal.getCodigo())).findFirst().orElse(null);
 //            if (e == null) {
-//                sucursalDao.delete(sucursal);
-//                sucursalDao.getUbicSucursales().remove(p);
-//            }else{
+//               sucursalDao.delete(sucursal);
+//               sucursalDao.getUbicSucursales().remove(p);
+//           }else{
 //                JOptionPane.showMessageDialog (null, "Sucursal con empleados", "Error", JOptionPane.ERROR_MESSAGE);
-//            }
+//           }
     }
 
 //    public Sucursal sucursalGet(String codigo) throws Exception{

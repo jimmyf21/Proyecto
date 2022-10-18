@@ -142,7 +142,7 @@ public class SucursalDao {
 
 
 
-    public Sucursal from(ResultSet rs, String alias) throws Exception {
+    public static Sucursal from(ResultSet rs, String alias) throws Exception {
         Sucursal e = new Sucursal();
         e.setCodigo(rs.getString(alias + ".codigo"));
         e.setReferencia(rs.getString(alias + ".referencia"));

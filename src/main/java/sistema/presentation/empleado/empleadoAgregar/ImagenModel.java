@@ -23,8 +23,9 @@ public class ImagenModel extends JLabel {
         mostrarImagen();
     }
 
-    public ImagenModel(List<Point> ubicaciones) {
+    public ImagenModel(List<Point> ubicaciones, Point ubicRojo) {
         this.ubicSucursales= ubicaciones;
+        this.ubicRojo = ubicRojo;
         mostrarImagen();
     }
 
@@ -49,12 +50,11 @@ public class ImagenModel extends JLabel {
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
             if(ubicRojo !=null) {
                 mostrarPuntoRojo();
-            }else {
-                ubicRojo = new Point(50,50);
-                mostrarPuntoRojo();
             }
+
             this.setIcon(new ImageIcon(mapa));
             ubicRojo = null;
+
         } catch (Exception e) {
         }
         return this;

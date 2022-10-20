@@ -336,7 +336,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
         try {
-            model.setMapa(new ImagenModel(Service.instance().getPointSucursales()));
+            model.setMapa(new ImagenModel(Service.instance().getPointSucursales(), Service.instance().getPointSucursal(empleado.getSucursal())));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

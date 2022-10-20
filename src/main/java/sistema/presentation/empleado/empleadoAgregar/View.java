@@ -98,9 +98,8 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     double salarioParsiado = Double.valueOf(campoSalario);
                     if (JOptionPane.OK_OPTION == value) {
                         try {
-                            Sucursal s = Service.instance().sucursalSearch(campoSucursal);
+                            Sucursal s = Service.instance().sucursalSearchForReference(campoSucursal);
                             if(s != null) {
-
                                 Boolean b = controller.EmpleadoAdd(new Empleado(campoCedula, campoNombre, campoTelefono, salarioParsiado, s));
                                 if(b){
                                     resetLabelsTxt();

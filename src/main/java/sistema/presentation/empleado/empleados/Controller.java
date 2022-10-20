@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+
     private Model model;
     private View view;
 
@@ -56,12 +57,18 @@ public class Controller {
     }
 
     public void searchEmpleado(String filtro) throws Exception {
+        model.setEmpleados(Service.instance().empleadosSearch(filtro));
+        model.commit();
+    }
+
+    public void searchEmpleadoByName(String filtro) throws Exception {
+        List<Empleado> rows = null;
         try {
-            List<Empleado> rows = Service.instance().empleadosSearch(filtro);
+            rows = Service.instance().empleadosSearchByName(filtro);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        model.setEmpleados(Service.instance().empleadosSearch(filtro));
+        model.setEmpleados(rows);
         model.commit();
     }
 
@@ -87,7 +94,7 @@ public class Controller {
             Service.instance().empleadoDelete(e);
             Service.instance().store();
             this.searchEmpleado("");
-            this.searchEmpleado("");
+            model.commit();
         } catch (Exception ex) {}
     }
 
@@ -154,5 +161,8 @@ public class Controller {
         document.close();
     }
 
+    public Model getModel() {
+        return model;
+    }
 
 }

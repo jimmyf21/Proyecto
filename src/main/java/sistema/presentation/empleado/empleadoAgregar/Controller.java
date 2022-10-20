@@ -87,7 +87,6 @@ public class Controller {
                 result = true;
             }
             Application.EMPLEADOS.searchEmpleado("");
-            model.commit();
         }catch (Exception ex){
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

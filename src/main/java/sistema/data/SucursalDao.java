@@ -37,7 +37,7 @@ public class SucursalDao {
     public Sucursal read(String codigo) throws Exception {
         String sql = "select " +
                 "* " +
-                "from  Sucursal s " +
+                "from Sucursal s " +
                 "where s.codigo=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, codigo);
@@ -93,7 +93,7 @@ public class SucursalDao {
                 resultado.add(s);
             }
         } catch (SQLException ex) {
-
+            throw new Exception("Error al buscar sucursales", ex);
         }
         return resultado;
     }
@@ -133,6 +133,21 @@ public class SucursalDao {
                 "where s.codigo = ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, codigo);
+        ResultSet rs = db.executeQuery(stm);
+        if (rs.next()) {
+            return from(rs, "s");
+        } else {
+            throw new Exception("SUCURSAL NO EXISTE");
+        }
+    }
+
+    public Sucursal findByReference(String referencia) throws Exception {
+        String sql = "select * " +
+                "from " +
+                "Sucursal s " +
+                "where s.referencia = ?";
+        PreparedStatement stm = db.prepareStatement(sql);
+        stm.setString(1, referencia);
         ResultSet rs = db.executeQuery(stm);
         if (rs.next()) {
             return from(rs, "s");

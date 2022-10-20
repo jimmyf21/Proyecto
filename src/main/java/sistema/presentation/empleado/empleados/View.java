@@ -57,7 +57,7 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
             @Override
             public void keyTyped(KeyEvent e) {
                 try {
-                    controller.searchEmpleado(nombreEmpleado.getText());
+                    controller.searchEmpleadoByName(nombreEmpleado.getText());
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

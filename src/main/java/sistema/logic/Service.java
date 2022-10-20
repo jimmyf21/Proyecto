@@ -35,6 +35,10 @@ public class Service {
         return empleadoDao.findByCedula(cedula);
     }
 
+    public List<Empleado> empleadosSearchByName(String nombre) throws Exception{
+        return empleadoDao.findByName(nombre);
+    }
+
     public List<Empleado> empleadoAll() throws Exception{
         return empleadoDao.findAll();
     }
@@ -74,6 +78,10 @@ public class Service {
     }
     public Sucursal sucursalSearchForCode(String codigo) throws Exception {
         return sucursalDao.findByCode(codigo);
+    }
+
+    public Sucursal sucursalSearchForReference(String codigo) throws Exception {
+        return sucursalDao.findByReference(codigo);
     }
 
     public List<Sucursal> sucursalAll() throws Exception{

@@ -34,7 +34,7 @@ public class EmpleadoDao {
     public Empleado read(String cedula) throws Exception {
         String sql = "select " +
                 "* " +
-                "from  Empleado e " +
+                "from Empleado e " +
                 "where e.cedula=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, cedula);
@@ -53,8 +53,8 @@ public class EmpleadoDao {
         stm.setString(1, e.getNombre());
         stm.setString(2, e.getTelefono());
         stm.setDouble(3, e.getSalario());
-        stm.setString(4, e.getCedula());
-        stm.setString(5, e.getSucursal().getCodigo());
+        stm.setString(4, e.getSucursal().getCodigo());
+        stm.setString(5, e.getCedula());
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("EMPLEADO NO EXISTE");
@@ -62,10 +62,11 @@ public class EmpleadoDao {
     }
 
     public void delete(Empleado e) throws Exception {
-        String sql = "delete from Empleado where cedula=?";
+        String sql = "delete " +
+                "from Empleado " +
+                "where cedula=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, e.getCedula());
-        db.executeUpdate(stm);
         int count = db.executeUpdate(stm);
         if (count == 0) {
             throw new Exception("EMPLEADO NO EXISTE");
@@ -85,21 +86,16 @@ public class EmpleadoDao {
     }
 
     public List<Empleado> findByCedula(String cedula) throws Exception {
-        List<Empleado> resultado = new ArrayList<Empleado>();
-        String sql = "select * " +
-                "from " +
-                "empleado e " +
-                "where e.cedula like ?";
+        List<Empleado> r = new ArrayList<>();
+        String sql = "select * from Empleado e where e.cedula like ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, "%" + cedula + "%");
         ResultSet rs = db.executeQuery(stm);
-        Empleado e = new Empleado();
         while (rs.next()) {
-            e = from(rs, "e");
-            e.setSucursal(SucursalDao.from(rs, "s"));
-            resultado.add(e);
+            Empleado e = from(rs, "e");
+            r.add(e);
         }
-        return resultado;
+        return r;
     }
 
     public Empleado getEmpleadoEnBD(String cedula) throws Exception {
@@ -146,4 +142,19 @@ public class EmpleadoDao {
         e.setSucursal(new SucursalDao().read(rs.getString(alias + ".sucursal")));
         return e;
     }
+
+        public List<Empleado> findByName(String nombre) throws Exception {
+            List<Empleado> resultado = new ArrayList<Empleado>();
+            String sql = "select * " +
+                    "from " +
+                    "Empleado e " +
+                    "where e.nombre like ?";
+            PreparedStatement stm = db.prepareStatement(sql);
+            stm.setString(1, "%" + nombre + "%");
+            ResultSet rs = db.executeQuery(stm);
+            while (rs.next()) {
+                resultado.add(from(rs, "e"));
+            }
+            return resultado;
+        }
 }

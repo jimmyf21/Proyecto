@@ -231,7 +231,7 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
-                    model.getMapa().setUbicSucursal(model.getUbicacion());
+                    model.getMapa().setUbicRojo(model.getUbicacion());
                     JLabel imagen = model.getMapa().mostrarUbicaciones();
                     jLabelMapa.setIcon(imagen.getIcon());
                     sucursalEmpleadoTxt.setText(sucursal.getReferencia());
@@ -335,7 +335,6 @@ public class View extends javax.swing.JFrame implements java.util.Observer {
         telefonoEmpleadoTxt.setText(empleado.getTelefono());
         salarioEmpleadoTxt.setText(String.valueOf(empleado.getSalario()));
         sucursalEmpleadoTxt.setText(empleado.getSucursal().getReferencia());
-
         try {
             model.setMapa(new ImagenModel(Service.instance().getPointSucursales()));
         } catch (Exception e) {

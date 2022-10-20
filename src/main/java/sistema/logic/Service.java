@@ -113,6 +113,15 @@ public class Service {
             throw new Exception("Punto no existe");
     }
 
+    public Punto findUbicRojo (Sucursal sucursal) throws Exception{
+        for (Punto p: sucursalDao.getUbicSucursales()){
+            if (p.getSucursalCodigo().equals(sucursal.getCodigo())){
+                return p;
+            }
+        }
+        throw new Exception("Sucursal no existe");
+    }
+
     public List<Point> getPointSucursales() throws Exception {
         List<Point> p = new ArrayList<>();
         for (Punto punto : sucursalDao.getUbicSucursales()) {
@@ -121,7 +130,7 @@ public class Service {
         return p;
     }
 
-    public Sucursal getPoint(Point point) throws Exception {
+    public Sucursal findSucursalRangoPunto(Point point) throws Exception {
         Punto p = new Punto(point.getX(), point.getY());
         double x = p.getX(), y = p.getY();
         for (Sucursal sucursal : sucursalDao.findAll()) {

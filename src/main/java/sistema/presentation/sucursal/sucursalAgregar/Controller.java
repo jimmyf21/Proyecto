@@ -80,6 +80,7 @@ public class Controller {
                 result = true;
             }
             Application.SUCURSALES.searchSucursal("");
+            Application.EMPLEADOS.searchEmpleado("");
             model.commit();
 
 

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 import sistema.logic.Empleado;
+import sistema.logic.Punto;
 
 public class Model extends Observable {
     Empleado Empleado;
@@ -44,6 +45,7 @@ public class Model extends Observable {
     public ImagenModel getMapa() {
         return mapa;
     }
+
 
     public void setMapa(ImagenModel mapa) {
         this.mapa = mapa;

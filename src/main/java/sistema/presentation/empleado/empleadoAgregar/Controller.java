@@ -96,12 +96,13 @@ public class Controller {
     public Sucursal getSucursalFromPoint(Point p){
         Sucursal s = null;
         try {
-            s = Service.instance().findSucursalByPoint(p);
+            s = Service.instance().findSucursalRangoPunto(p);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return s;
     }
+
 
 
 }

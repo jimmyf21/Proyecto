@@ -1,6 +1,8 @@
 package sistema.presentation.empleado.empleadoAgregar;
 
 
+import sistema.logic.Service;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -14,10 +16,10 @@ public class ImagenModel extends JLabel {
     private BufferedImage mapa;
 
     private List<Point> ubicSucursales;
-    private Point ubicSucursal;
+    private Point ubicRojo;
 
     public ImagenModel(Point ubicaciones) {
-        this.ubicSucursal= ubicaciones;
+        this.ubicRojo = ubicaciones;
         mostrarImagen();
     }
 
@@ -45,11 +47,14 @@ public class ImagenModel extends JLabel {
                 graphics.drawImage(icono, ubicSucursales.get(i).x-16, ubicSucursales.get(i).y-30, null);
             }
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
-            if(ubicSucursal !=null) {
+            if(ubicRojo !=null) {
+                mostrarPuntoRojo();
+            }else {
+                ubicRojo = new Point(50,50);
                 mostrarPuntoRojo();
             }
             this.setIcon(new ImageIcon(mapa));
-            ubicSucursal = null;
+            ubicRojo = null;
         } catch (Exception e) {
         }
         return this;
@@ -61,7 +66,7 @@ public class ImagenModel extends JLabel {
 
             Graphics graphics = mapa.getGraphics();
             graphics.drawImage(mapa, 0, 0, null);
-            graphics.drawImage(icono, ubicSucursal.x-16, ubicSucursal.y-30, null);
+            graphics.drawImage(icono, ubicRojo.x-16, ubicRojo.y-30, null);
             ImageIO.write(mapa, "PNG", new File("mapaCargar.png"));
             this.setIcon(new ImageIcon(mapa));
 
@@ -79,11 +84,11 @@ public class ImagenModel extends JLabel {
         this.mapa = mapa;
     }
 
-    public Point getUbicSucursal() {
-        return ubicSucursal;
+    public Point getUbicRojo() {
+        return ubicRojo;
     }
 
-    public void setUbicSucursal(Point ubicSucursal) {
-        this.ubicSucursal = ubicSucursal;
+    public void setUbicRojo(Point ubicRojo) {
+        this.ubicRojo = ubicRojo;
     }
 }

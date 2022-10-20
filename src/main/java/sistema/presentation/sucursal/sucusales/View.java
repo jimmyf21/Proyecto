@@ -108,7 +108,8 @@ public class  View extends javax.swing.JFrame implements java.util.Observer   {
                     try {
                         controller.borrarSucursal(row);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        JOptionPane.showMessageDialog(null, "¡No se puede borrar la sucursal!", "Aviso",
+                                JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }

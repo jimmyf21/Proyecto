@@ -34,13 +34,16 @@ public class EmpleadoDao {
     public Empleado read(String cedula) throws Exception {
         String sql = "select " +
                 "* " +
-                "from Empleado e " +
+                "from Empleado e inner join Sucursal s on e.sucursal=s.codigo " +
                 "where e.cedula=?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, cedula);
         ResultSet rs = db.executeQuery(stm);
+        Empleado e;
         if (rs.next()) {
-            return from(rs, "e");
+            e = from(rs, "e");
+            e.setSucursal(SucursalDao.from(rs, "s"));
+            return e;
         } else {
             throw new Exception("EMPLEADO NO EXISTE");
         }
@@ -75,11 +78,12 @@ public class EmpleadoDao {
 
     public List<Empleado> findAll() throws Exception {
         List<Empleado> r = new ArrayList<>();
-        String sql = "select * from Empleado e";
+        String sql = "select * from Empleado e inner join Sucursal s on e.sucursal=s.codigo";
         PreparedStatement stm = db.prepareStatement(sql);
         ResultSet rs = db.executeQuery(stm);
         while (rs.next()) {
             Empleado e = from(rs, "e");
+            e.setSucursal(SucursalDao.from(rs, "s"));
             r.add(e);
         }
         return r;
@@ -87,50 +91,17 @@ public class EmpleadoDao {
 
     public List<Empleado> findByCedula(String cedula) throws Exception {
         List<Empleado> r = new ArrayList<>();
-        String sql = "select * from Empleado e where e.cedula like ?";
+        String sql = "select * from Empleado e inner join Sucursal s on e.sucursal=s.codigo where e.cedula like ?";
         PreparedStatement stm = db.prepareStatement(sql);
         stm.setString(1, "%" + cedula + "%");
         ResultSet rs = db.executeQuery(stm);
+        Empleado e;
         while (rs.next()) {
-            Empleado e = from(rs, "e");
+            e = from(rs, "e");
+            e.setSucursal(SucursalDao.from(rs, "s"));
             r.add(e);
         }
         return r;
-    }
-
-    public Empleado getEmpleadoEnBD(String cedula) throws Exception {
-        String sql = "select * " +
-                "from " +
-                "empleado e " +
-                "where e.cedula = ?";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, cedula);
-        ResultSet rs = db.executeQuery(stm);
-        Empleado e = new Empleado();
-        if (rs.next()) {
-            e = from(rs, "e");
-            e.setSucursal(SucursalDao.from(rs, "s"));
-            return e;
-        } else {
-            return null;
-        }
-    }
-
-    public Empleado findBySucursal(String codigo) throws Exception {
-        Empleado e = new Empleado();
-        String sql = "select * " +
-                "from empleado e " +
-                "where e.sucursal=?";
-        PreparedStatement stm = db.prepareStatement(sql);
-        stm.setString(1, codigo);
-        ResultSet rs = db.executeQuery(stm);
-        if (rs.next()) {
-            e = from(rs, "e");
-            e.setSucursal(SucursalDao.from(rs, "s"));
-            return e;
-        }else{
-            return null;
-        }
     }
 
     public Empleado from(ResultSet rs, String alias) throws Exception {
@@ -139,7 +110,6 @@ public class EmpleadoDao {
         e.setNombre(rs.getString(alias + ".nombre"));
         e.setTelefono(rs.getString(alias + ".telefono"));
         e.setSalario((float) rs.getDouble(alias + ".salario"));
-        e.setSucursal(new SucursalDao().read(rs.getString(alias + ".sucursal")));
         return e;
     }
 
@@ -147,13 +117,16 @@ public class EmpleadoDao {
             List<Empleado> resultado = new ArrayList<Empleado>();
             String sql = "select * " +
                     "from " +
-                    "Empleado e " +
+                    "Empleado e inner join Sucursal s on e.sucursal=codigo " +
                     "where e.nombre like ?";
             PreparedStatement stm = db.prepareStatement(sql);
             stm.setString(1, "%" + nombre + "%");
             ResultSet rs = db.executeQuery(stm);
+            Empleado e = new Empleado();
             while (rs.next()) {
-                resultado.add(from(rs, "e"));
+                e = from(rs, "e");
+                e.setSucursal(SucursalDao.from(rs, "s"));
+                resultado.add(e);
             }
             return resultado;
         }
